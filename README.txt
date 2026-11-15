@@ -1,25 +1,19 @@
-VALHAN MUSCLES — Static Website
+VALHAN MUSCLES — Browser-only website
 
-تشغيل الموقع:
-1) فك ضغط الملف بالكامل في مجلد واحد.
-2) افتح index.html مباشرة في المتصفح.
-3) لا يحتاج الموقع إلى Backend أو قاعدة بيانات أو Framework.
+Open index.html directly in a modern browser. No backend or build step is required.
 
-الصفحات:
-- index.html — الرئيسية
-- pages/workout-plans.html — الخطط التدريبية والفلاتر والتفاصيل
-- pages/workout-builder.html — منشئ الخطط والحفظ المحلي وتصدير PDF
-- pages/exercises.html — مكتبة التمارين والبحث والفلاتر
-- pages/academy.html — الأدلة التعليمية التفاعلية
-- pages/volume-calculator.html — حاسبة مجموعات العمل الأسبوعية
-- pages/about.html — من نحن
-- pages/privacy.html — سياسة الخصوصية
+Structure:
+- pages/: workout plans, builder, exercise library, academy, about
+- css/: global, header, footer and page styles
+- js/: shared shell, storage, builder, exercise library and calculator stub (calculator page removed)
+- assets/images/exercises/: categorized WebP exercise/equipment visuals
 
-البيانات:
-- تحفظ خطة المستخدم داخل Local Storage في المتصفح الحالي فقط.
-- لا يوجد حساب مستخدم أو مزامنة بين الأجهزة.
-- تصدير PDF يستخدم نافذة الطباعة في المتصفح؛ اختر Save as PDF.
-- الخطوط يتم تحميلها من Google Fonts عند توفر اتصال بالإنترنت، مع خطوط بديلة محلية من النظام.
+Features:
+- Arabic/English toggle (saved in localStorage)
+- Dark/light theme toggle (saved in localStorage)
+- Six workout templates including requested PPL 5-day volume template
+- Builder with local saving, image exercise picker, notes, reordering and print-to-PDF export
+- Dynamic exercise detail pages using ?exercise=<id>, with instructional cues and YouTube tutorial search links
+- Responsive layout and reveal/movement animations
 
-ملاحظة حول الصور:
-تم استخدام صور Brand Kit المرفقة في الواجهة وبطاقات مكتبة التمارين؛ الصور المتاحة في الملفات المرفقة هي صور هوية وصالة وأوزان وليست صور شرح تشريحية منفصلة لكل تمرين.
+Note: Exercise images are illustrative equipment renders, not anatomical demonstrations. Video links open YouTube search results rather than embedding a specific creator's video.
