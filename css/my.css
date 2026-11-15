@@ -1,0 +1,168 @@
+/* ## Start Global Rules ## */
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Main Colors */
+  --main-color: #0bacbd;
+  --main-color-alt: #0080b3;
+
+  /* Other Variables */
+  --main-transition: 0.3s ease;
+  --box-shadow: 0 0 10px 1px var(--main-color);
+  --main-padding: 50px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+}
+
+::selection {
+  background-color: var(--main-color);
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ul,
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--main-transition);
+}
+
+a:visited {
+  color: inherit;
+}
+
+a:active {
+  color: var(--main-color);
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+.container {
+  width: 100%;
+  padding-inline: 15px;
+  margin-inline: auto;
+}
+
+/* ## Start Container Responsive ## */
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+
+/* ## End Container Responsive ## */
+/* ## End Global Rules ## */
+
+
+/* ## Start Accessibility ## */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--main-color);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+}
+
+/* ## End Accessibility ## */
+
+
+/* ## Start Framework ## */
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.section-padding {
+  padding-block: var(--main-padding);
+}
+
+.english-text {
+  font-family: var(--font-en-serif);
+  direction: ltr;
+}
+
+/* Visually Hidden */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ## End Framework ## */
+
+
+/* ## Start Global Components ## */
+
+
+/* ## End Global Components ## */
