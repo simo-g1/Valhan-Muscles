@@ -1,0 +1,162 @@
+[
+  {
+    "category": "machines",
+    "name": "Assisted Pull Up",
+    "src": "machines/assisted-pull-up.webp"
+  },
+  {
+    "category": "machines",
+    "name": "Cable Crossover",
+    "src": "machines/cable-crossover.webp"
+  },
+  {
+    "category": "machines",
+    "name": "Chest Press",
+    "src": "machines/chest-press.webp"
+  },
+  {
+    "category": "machines",
+    "name": "Hack Squat",
+    "src": "machines/hack-squat.webp"
+  },
+  {
+    "category": "machines",
+    "name": "Hip Abductor",
+    "src": "machines/hip-abductor.webp"
+  },
+  {
+    "category": "machines",
+    "name": "Hip Adductor",
+    "src": "machines/hip-adductor.webp"
+  },
+  {
+    "category": "machines",
+    "name": "Lat Pulldown",
+    "src": "machines/lat-pulldown.webp"
+  },
+  {
+    "category": "machines",
+    "name": "Leg Extension",
+    "src": "machines/leg-extension.webp"
+  },
+  {
+    "category": "machines",
+    "name": "Leg Press",
+    "src": "machines/leg-press.webp"
+  },
+  {
+    "category": "machines",
+    "name": "Lying Leg Curl",
+    "src": "machines/lying-leg-curl.webp"
+  },
+  {
+    "category": "machines",
+    "name": "Pec Deck",
+    "src": "machines/pec-deck.webp"
+  },
+  {
+    "category": "machines",
+    "name": "Seated Leg Curl",
+    "src": "machines/seated-leg-curl.webp"
+  },
+  {
+    "category": "machines",
+    "name": "Seated Row",
+    "src": "machines/seated-row.webp"
+  },
+  {
+    "category": "machines",
+    "name": "Shoulder Press",
+    "src": "machines/shoulder-press.webp"
+  },
+  {
+    "category": "machines",
+    "name": "Smith Machine",
+    "src": "machines/smith-machine.webp"
+  },
+  {
+    "category": "machines",
+    "name": "Standing Calf Raise",
+    "src": "machines/standing-calf-raise.webp"
+  },
+  {
+    "category": "free-weights",
+    "name": "Adjustable Dumbbells",
+    "src": "free-weights/adjustable-dumbbells.webp"
+  },
+  {
+    "category": "free-weights",
+    "name": "Adjustable Incline Bench",
+    "src": "free-weights/adjustable-incline-bench.webp"
+  },
+  {
+    "category": "free-weights",
+    "name": "Decline Bench",
+    "src": "free-weights/decline-bench.webp"
+  },
+  {
+    "category": "free-weights",
+    "name": "Ez Curl Bar",
+    "src": "free-weights/ez-curl-bar.webp"
+  },
+  {
+    "category": "free-weights",
+    "name": "Flat Bench",
+    "src": "free-weights/flat-bench.webp"
+  },
+  {
+    "category": "free-weights",
+    "name": "Kettlebell",
+    "src": "free-weights/kettlebell.webp"
+  },
+  {
+    "category": "free-weights",
+    "name": "Olympic Barbell",
+    "src": "free-weights/olympic-barbell.webp"
+  },
+  {
+    "category": "free-weights",
+    "name": "Weight Plates",
+    "src": "free-weights/weight-plates.webp"
+  },
+  {
+    "category": "benches-racks",
+    "name": "Aerobic Step",
+    "src": "benches-racks/aerobic-step.webp"
+  },
+  {
+    "category": "benches-racks",
+    "name": "Dip Station",
+    "src": "benches-racks/dip-station.webp"
+  },
+  {
+    "category": "benches-racks",
+    "name": "Medicine Ball",
+    "src": "benches-racks/medicine-ball.webp"
+  },
+  {
+    "category": "benches-racks",
+    "name": "Power Rack",
+    "src": "benches-racks/power-rack.webp"
+  },
+  {
+    "category": "benches-racks",
+    "name": "Preacher Curl Bench",
+    "src": "benches-racks/preacher-curl-bench.webp"
+  },
+  {
+    "category": "benches-racks",
+    "name": "Pull Up Station",
+    "src": "benches-racks/pull-up-station.webp"
+  },
+  {
+    "category": "benches-racks",
+    "name": "Resistance Bands",
+    "src": "benches-racks/resistance-bands.webp"
+  },
+  {
+    "category": "benches-racks",
+    "name": "Squat Rack",
+    "src": "benches-racks/squat-rack.webp"
+  }
+]
