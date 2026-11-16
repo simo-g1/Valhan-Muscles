@@ -29,9 +29,9 @@
         </a>
         <nav class="nav" id="main-nav">
           ${links.map(x => {
-            const isActive = page === x[0] || (x[0] === 'team' && (page === 'developer' || page === 'coach'));
-            return `<a class="${isActive ? 'active' : ''}" href="${root}/${x[3]}">${t(x[1], x[2])}</a>`;
-          }).join('')}
+      const isActive = page === x[0] || (x[0] === 'team' && (page === 'developer' || page === 'coach' || (x[0] === 'academy' && page === 'article')));
+      return `<a class="${isActive ? 'active' : ''}" href="${root}/${x[3]}">${t(x[1], x[2])}</a>`;
+    }).join('')}
         </nav>
         <div class="head-actions">
           <button class="icon-btn" id="lang-toggle" type="button" aria-label="Change language">${lang() === 'ar' ? 'EN' : 'ع'}</button>
@@ -81,7 +81,11 @@
 
   const menuToggle = document.getElementById('menu-toggle');
   if (menuToggle) {
-    menuToggle.onclick = () => document.getElementById('main-nav')?.classList.toggle('open');
+    const nav = document.getElementById('main-nav');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.onclick = () => menuToggle.setAttribute('aria-expanded', nav.classList.toggle('open'));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && nav.classList.contains('open')) { nav.classList.remove('open'); menuToggle.setAttribute('aria-expanded', 'false'); menuToggle.focus(); } });
+    nav.addEventListener('click', e => { if (e.target.closest('a')) { nav.classList.remove('open'); menuToggle.setAttribute('aria-expanded', 'false'); } });
   }
 
   const themeToggle = document.getElementById('theme-toggle');

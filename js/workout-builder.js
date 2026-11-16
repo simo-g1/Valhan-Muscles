@@ -130,102 +130,152 @@
     return p;
   }
 
-  function toast(s) {
-    const t = $('#toast');
-    if (!t) return;
-    t.textContent = s;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2300);
-  }
+  const T = (a, b) => (window.ValhanT ? window.ValhanT(a, b) : a);
+  const IMPORT_KEY = 'valhan-builder-import';   // handoff from Workout Plans page
+  const BACKUP_KEY = 'valhan-builder-backup';   // previous plan kept before an import/replace
+  const store = window.ValhanStore;
 
+  function toast(s) {
+    const el = $('#toast');
+    if (!el) return;
+    el.textContent = s;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2300);
+  }
+  window.ValhanToast = toast;
+
+  const emptyPlan = () => ({ name: 'My VALHAN Program', split: 'custom', days: [makeDay('Day 1')] });
+  const hasContent = p => !!(p && Array.isArray(p.days) && p.days.some(d => d.exercises && d.exercises.length));
+
+  // ---- Ready-made plan (from app.js `plans`) -> builder format ----------
+  const ISOLATION = /(raise|fly|extension|curl|calves|adductor|triceps|biceps|traps|delts|lower back|shrug)/i;
+  function fromReady(p) {
+    const lib = n => exs().find(e => e.name.toLowerCase() === n.toLowerCase()) ||
+      exs().find(e => e.name.toLowerCase().includes(n.toLowerCase()));
+    return {
+      name: 'VALHAN ' + p.name,
+      split: 'custom',
+      source: p.name,
+      days: p.schedule.map(d => ({
+        name: d.day,
+        notes: '',
+        rest: !d.exercises.length,
+        exercises: d.exercises.map(ex => ({
+          id: lib(ex[0])?.id || '',
+          name: ex[0],
+          sets: parseInt(ex[2], 10) || 0,
+          reps: ISOLATION.test(ex[0]) ? '12-15' : '8-12',   // plan data has no reps; sensible default, editable
+          warm: 0,
+          warmReps: '10',
+          notes: ex[1] || ''
+        }))
+      }))
+    };
+  }
+  window.ValhanPlanToBuilder = fromReady;
+
+  // ---- PDF (print-to-PDF window generated on demand) --------------------
+  function printPlan(p) {
+    const ar = (window.ValhanLang ? window.ValhanLang() : 'ar') === 'ar';
+    const w = open('', '_blank');
+    if (!w) return toast(T('اسمح بالنوافذ المنبثقة لتصدير PDF.', 'Allow pop-ups to export PDF.'));
+    const total = p.days.reduce((a, d) => a + d.exercises.reduce((s, x) => s + (+x.sets || 0), 0), 0);
+    const trainDays = p.days.filter(d => !d.rest).length;
+    const label = p.split === 'custom' ? (p.source || T('خطة مخصصة', 'Custom plan')) : p.split;
+    const dayHtml = p.days.map((d, i) => d.rest ? `
+      <section class="day"><div class="dh"><span>${ar ? 'اليوم' : 'Day'} ${i + 1}: ${esc(d.name)}</span><span class="sub">${ar ? 'راحة' : 'Rest'}</span></div>
+      <div class="rest">${ar ? 'يوم راحة للاستشفاء.' : 'Rest day for recovery.'}${d.notes ? ' ' + esc(d.notes) : ''}</div></section>` : `
+      <section class="day"><div class="dh"><span>${ar ? 'اليوم' : 'Day'} ${i + 1}: ${esc(d.name)}</span><span class="sub">${d.exercises.length} ${ar ? 'تمارين' : 'exercises'}</span></div>
+      ${d.notes ? `<div class="dn">${esc(d.notes)}</div>` : ''}
+      <table><thead><tr><th>${ar ? 'التمرين' : 'Exercise'}</th><th class="c">${ar ? 'التكرارات' : 'Reps'}</th><th class="e">${ar ? 'المجاميع' : 'Sets'}</th></tr></thead><tbody>
+      ${d.exercises.map(x => `<tr><td><b>${esc(x.name)}</b>${x.notes ? `<div class="cue">${esc(x.notes)}</div>` : ''}</td>
+        <td class="c">${esc(x.reps || '8-12')}</td>
+        <td class="e"><b>${x.sets}</b>${+x.warm > 0 ? `<span class="wu">+${x.warm} ${ar ? 'إحماء' : 'warm-up'}</span>` : ''}</td></tr>`).join('')}
+      </tbody></table></section>`).join('');
+
+    w.document.write(`<!doctype html><html lang="${ar ? 'ar' : 'en'}" dir="${ar ? 'rtl' : 'ltr'}"><head><meta charset="utf-8">
+<title>${esc(p.name)} — VALHAN MUSCLES</title><style>
+*{box-sizing:border-box}body{font-family:"Cairo",-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:#0f172a;margin:0;padding:28px 32px;line-height:1.6}
+.top{border-bottom:3px solid #1a56db;padding-bottom:14px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+h1{margin:0;font-size:24px}h1 span{color:#e10600}.sm{font-size:12px;color:#64748b;margin:4px 0 0}
+.meta{font-size:12px;color:#475569}.meta b{display:block;font-size:15px;color:#1e293b}
+.day{margin-bottom:22px;page-break-inside:avoid}.dh{border-inline-start:4px solid #1a56db;padding-inline-start:12px;margin-bottom:8px;font-size:17px;font-weight:700;display:flex;justify-content:space-between}
+.sub{font-size:12px;font-weight:400;color:#64748b}.dn{font-size:12px;color:#64748b;font-style:italic;margin:0 16px 8px}
+table{width:100%;border-collapse:collapse;font-size:13px;border:1px solid #cbd5e1}
+th{background:#1e293b;color:#fff;padding:9px 12px;text-align:start;font-size:12px}td{padding:8px 12px;border-bottom:1px solid #e2e8f0}
+tr:nth-child(even) td{background:#f8fafc}.c{text-align:center}.e{text-align:end;white-space:nowrap}th.e{text-align:end}
+.cue{font-size:11px;color:#64748b}.wu{font-size:10px;background:#e2e8f0;border-radius:4px;padding:1px 6px;margin-inline-start:6px;color:#475569}
+.rest{border:1px dashed #94a3b8;border-radius:8px;padding:14px 16px;color:#475569;font-size:13px}
+.ft{border-top:1px solid #e2e8f0;margin-top:26px;padding-top:10px;font-size:11px;color:#94a3b8;display:flex;justify-content:space-between}
+@page{size:A4;margin:14mm 16mm}@media print{body{padding:0}}
+</style></head><body>
+<div class="top"><div><h1>VALHAN <span>MUSCLES</span></h1><p class="sm">${ar ? 'خطة تدريبية' : 'Workout plan'}</p></div>
+<div class="meta"><b>${esc(p.name)}</b>${esc(label)} · ${trainDays} ${ar ? 'أيام تدريب' : 'training days'} · ${p.days.length - trainDays} ${ar ? 'راحة' : 'rest'} · ${total} ${ar ? 'مجموعة عمل' : 'working sets'}</div></div>
+${dayHtml}
+<div class="ft"><span>VALHAN MUSCLES — Build Your Strength. Master Your Fitness.</span><span>${ar ? 'محتوى تعليمي عام' : 'General educational content'}</span></div>
+<script>onload=()=>setTimeout(()=>print(),350)<\/script></body></html>`);
+    w.document.close();
+  }
+  window.ValhanPDF = printPlan;
+
+  // ---- Rendering ---------------------------------------------------------
   function render() {
     const host = $('#builder-days');
     if (!host) return;
     host.innerHTML = plan.days.map((d, di) => `
-      <article class="day-card reveal" data-day="${di}">
+      <article class="day-card reveal is-visible${d.rest ? ' is-rest' : ''}" data-day="${di}">
         <div class="day-head">
-          <h3>${esc(d.name)}</h3>
+          <h3>${esc(d.name)}${d.rest ? ' · ' + T('راحة', 'Rest') : ''}</h3>
           <div class="reorder">
-            <button data-action="up-day" ${di === 0 ? 'disabled' : ''} title="Move Day Up">↑</button>
-            <button data-action="down-day" ${di === plan.days.length - 1 ? 'disabled' : ''} title="Move Day Down">↓</button>
-            <button class="remove-btn" data-action="remove-day" title="Delete Day">×</button>
+            <button type="button" data-action="up-day" ${di === 0 ? 'disabled' : ''} aria-label="${T('تحريك اليوم لأعلى', 'Move day up')}">↑</button>
+            <button type="button" data-action="down-day" ${di === plan.days.length - 1 ? 'disabled' : ''} aria-label="${T('تحريك اليوم لأسفل', 'Move day down')}">↓</button>
+            <button type="button" class="remove-btn" data-action="remove-day" ${plan.days.length === 1 ? 'disabled' : ''} aria-label="${T('حذف اليوم', 'Delete day')}">×</button>
           </div>
         </div>
-        <label class="field day-note">
-          ${window.ValhanT('اسم اليوم التدريبي', 'Day Name')}
-          <input class="day-name" value="${esc(d.name)}">
-        </label>
-        <label class="field day-note">
-          ${window.ValhanT('ملاحظات اليوم (التركيز أو الإرشادات)', 'Day Notes (Focus / Instructions)')}
-          <textarea class="day-notes" rows="2">${esc(d.notes)}</textarea>
-        </label>
-        ${d.exercises.map((x, ei) => exercise(x, di, ei)).join('')}
-        <button class="btn btn-outline" data-action="add-ex" style="margin-top:12px;">
-          ＋ ${window.ValhanT('إضافة تمرين', 'Add exercise')}
-        </button>
-      </article>
-    `).join('');
-
+        <label class="field day-note">${T('اسم اليوم', 'Day name')}<input class="day-name" value="${esc(d.name)}"></label>
+        <label class="field day-note">${T('ملاحظات اليوم', 'Day notes')}<textarea class="day-notes" rows="2">${esc(d.notes)}</textarea></label>
+        ${d.rest
+        ? `<p class="rest-note">${T('يوم راحة: لا توجد تمارين. يمكنك حذفه أو تحريكه.', 'Rest day: no exercises. You can move or delete it.')}</p>`
+        : `${d.exercises.map((x, ei) => exercise(x, di, ei)).join('')}
+             <button type="button" class="btn btn-outline" data-action="add-ex" style="margin-top:12px">＋ ${T('إضافة تمرين', 'Add exercise')}</button>`}
+      </article>`).join('');
     $('#builder-name').value = plan.name;
     set(plan);
-    window.ValhanReveal?.();
   }
 
   function exercise(x, di, ei) {
     const img = x.id ? window.ValhanExerciseImage(x.id) : '';
+    const n = plan.days[di].exercises.length;
     return `
       <div class="exercise-row" data-ex="${ei}">
         <div class="exercise-head">
-          <div class="picked">
-            ${img ? `<img src="${img}" alt="">` : ''}
-            <span>${esc(x.name || window.ValhanT('اختر تمريناً', 'Choose exercise'))}</span>
-          </div>
+          <div class="picked">${img ? `<img src="${img}" alt="">` : ''}<span>${esc(x.name || T('اختر تمرينًا', 'Choose exercise'))}</span></div>
           <div class="reorder">
-            <button data-action="pick" title="Pick from library">▧</button>
-            <button data-action="up-ex" ${ei === 0 ? 'disabled' : ''} title="Move Up">↑</button>
-            <button data-action="down-ex" ${ei === plan.days[di].exercises.length - 1 ? 'disabled' : ''} title="Move Down">↓</button>
-            <button class="remove-btn" data-action="remove-ex" title="Remove Exercise">×</button>
+            <button type="button" data-action="pick" aria-label="${T('اختيار من المكتبة', 'Pick from library')}">▧</button>
+            <button type="button" data-action="up-ex" ${ei === 0 ? 'disabled' : ''} aria-label="${T('تحريك لأعلى', 'Move up')}">↑</button>
+            <button type="button" data-action="down-ex" ${ei === n - 1 ? 'disabled' : ''} aria-label="${T('تحريك لأسفل', 'Move down')}">↓</button>
+            <button type="button" class="remove-btn" data-action="remove-ex" aria-label="${T('حذف التمرين', 'Remove exercise')}">×</button>
           </div>
         </div>
         <div class="exercise-fields">
-          <label>
-            ${window.ValhanT('اسم التمرين', 'Exercise')}
-            <input class="ex-name" value="${esc(x.name)}">
-          </label>
-          <label>
-            ${window.ValhanT('مجموعات العمل', 'Working sets')}
-            <input class="sets" type="number" min="0" max="30" value="${x.sets}">
-          </label>
-          <label>
-            ${window.ValhanT('التكرارات', 'Reps')}
-            <input class="reps" value="${esc(x.reps)}">
-          </label>
-          <label>
-            ${window.ValhanT('مجموعات الإحماء', 'Warm-up sets')}
-            <input class="warm" type="number" min="0" max="10" value="${x.warm}">
-          </label>
-          <label>
-            ${window.ValhanT('تكرارات الإحماء', 'Warm-up reps')}
-            <input class="warm-reps" value="${esc(x.warmReps)}">
-          </label>
+          <label>${T('اسم التمرين', 'Exercise')}<input class="ex-name" value="${esc(x.name)}"></label>
+          <label>${T('مجموعات العمل', 'Working sets')}<input class="sets" type="number" min="0" max="30" value="${x.sets}"></label>
+          <label>${T('التكرارات', 'Reps')}<input class="reps" value="${esc(x.reps)}"></label>
+          <label>${T('مجموعات الإحماء', 'Warm-up sets')}<input class="warm" type="number" min="0" max="10" value="${x.warm}"></label>
+          <label>${T('تكرارات الإحماء', 'Warm-up reps')}<input class="warm-reps" value="${esc(x.warmReps)}"></label>
         </div>
-        <label class="field" style="margin-top:6px;">
-          ${window.ValhanT('ملاحظات الأداء أو الحمل', 'Exercise Notes / Form Cues')}
-          <input class="notes" value="${esc(x.notes)}">
-        </label>
+        <label class="field" style="margin-top:6px">${T('ملاحظات الأداء', 'Exercise notes')}<input class="notes" value="${esc(x.notes)}"></label>
       </div>`;
   }
 
   function sync() {
     document.querySelectorAll('.day-card').forEach(card => {
-      const di = +card.dataset.day;
-      const d = plan.days[di];
+      const d = plan.days[+card.dataset.day];
       if (!d) return;
       d.name = card.querySelector('.day-name').value;
       d.notes = card.querySelector('.day-notes').value;
       card.querySelectorAll('.exercise-row').forEach(row => {
-        const ei = +row.dataset.ex;
-        const x = d.exercises[ei];
+        const x = d.exercises[+row.dataset.ex];
         if (!x) return;
         x.name = row.querySelector('.ex-name').value;
         x.sets = +row.querySelector('.sets').value || 0;
@@ -250,343 +300,153 @@
     $('#picker-modal').classList.add('open');
     $('#picker-search').value = '';
     pickerRender();
+    $('#picker-search').focus();
   }
+  const closePicker = () => $('#picker-modal')?.classList.remove('open');
 
   function pickerRender() {
     const q = $('#picker-search').value.toLowerCase();
     $('#picker-grid').innerHTML = exs()
       .filter(e => e.name.toLowerCase().includes(q) || e.muscle.toLowerCase().includes(q))
-      .map(e => `
-        <button class="picker-item" data-pick="${e.id}">
-          <img src="${window.ValhanExerciseImage(e.id)}" alt="${e.name}">
-          <span>${e.name}</span>
-          <small>${e.muscle}</small>
-        </button>
-      `).join('');
+      .map(e => `<button type="button" class="picker-item" data-pick="${e.id}"><img src="${window.ValhanExerciseImage(e.id)}" alt="${esc(e.name)}"><span>${esc(e.name)}</span><small>${esc(e.muscle)}</small></button>`).join('');
   }
 
-  // Export PDF with design matching reference-workout.pdf
-  function exportPDF() {
-    sync();
-    const w = open('', '_blank');
-    if (!w) return toast(window.ValhanT('اسمح بالنوافذ المنبثقة لتصدير PDF.', 'Allow pop-ups to export PDF.'));
+  const confirmReplace = () => !hasContent(plan) ||
+    confirm(T('سيتم استبدال التمارين الحالية في المنشئ. هل تريد المتابعة؟', 'This will replace the exercises currently in the builder. Continue?'));
 
-    const isAr = (window.ValhanLang ? window.ValhanLang() : 'ar') === 'ar';
-    const totalWorkingSets = plan.days.reduce((acc, d) => acc + d.exercises.reduce((sa, x) => sa + (+x.sets || 0), 0), 0);
+  // ---- Ready-made plans dropdown (accessible disclosure menu) ----------
+  function setupMenu() {
+    const btn = $('#tpl-btn'), panel = $('#tpl-menu');
+    if (!btn || !panel) return;
+    const arabicFor = k => {
+      const p = (window.ValhanPlans || []).find(x => x.name === k || (k.startsWith('PPL +') && x.id === 'ulppl'));
+      return p ? p.arabicName : '';
+    };
+    panel.innerHTML = Object.keys(defaults).map(k => `
+      <li role="none"><button type="button" role="menuitem" class="menu-item" tabindex="-1" data-tpl="${esc(k)}">${esc(k)}${arabicFor(k) ? `<small>${esc(arabicFor(k))}</small>` : ''}</button></li>`).join('');
+    const items = () => [...panel.querySelectorAll('[role="menuitem"]')];
+    const isOpen = () => !panel.hidden;
 
-    w.document.write(`<!doctype html>
-<html lang="${isAr ? 'ar' : 'en'}" dir="${isAr ? 'rtl' : 'ltr'}">
-<head>
-  <meta charset="utf-8">
-  <title>${esc(plan.name)} — VALHAN MUSCLES</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Cairo", Arial, sans-serif;
-      color: #0f172a;
-      background: #ffffff;
-      padding: 32px 36px;
-      line-height: 1.6;
-      margin: 0;
-    }
-    .header-bar {
-      border-bottom: 3px solid #1a56db;
-      padding-bottom: 18px;
-      margin-bottom: 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-    .brand-title {
-      font-size: 24px;
-      font-weight: 800;
-      color: #0f172a;
-      letter-spacing: .5px;
-      margin: 0;
-    }
-    .brand-title span { color: #e10600; }
-    .brand-subtitle {
-      font-size: 13px;
-      color: #64748b;
-      margin: 4px 0 0;
-    }
-    .plan-meta-badge {
-      text-align: ${isAr ? 'left' : 'right'};
-      font-size: 12px;
-      color: #475569;
-    }
-    .plan-meta-badge strong {
-      font-size: 15px;
-      color: #1e293b;
-      display: block;
-    }
-    .intro-box {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      padding: 12px 18px;
-      margin-bottom: 26px;
-      font-size: 12px;
-      color: #334155;
-    }
-    .day-section {
-      margin-bottom: 28px;
-      page-break-inside: avoid;
-    }
-    .day-heading {
-      border-inline-start: 4px solid #1a56db;
-      padding-inline-start: 12px;
-      margin: 0 0 10px;
-      font-size: 18px;
-      font-weight: 700;
-      color: #1e293b;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .day-notes {
-      font-size: 12px;
-      color: #64748b;
-      margin: -4px 0 10px 16px;
-      font-style: italic;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-      border: 1px solid #cbd5e1;
-      border-radius: 6px;
-      overflow: hidden;
-      margin-bottom: 8px;
-    }
-    thead th {
-      background: #1e293b;
-      color: #ffffff;
-      padding: 10px 14px;
-      text-align: ${isAr ? 'right' : 'left'};
-      font-weight: 700;
-      font-size: 12px;
-      letter-spacing: .3px;
-    }
-    thead th:last-child {
-      text-align: ${isAr ? 'left' : 'right'};
-    }
-    tbody td {
-      padding: 9px 14px;
-      border-bottom: 1px solid #e2e8f0;
-      color: #1e293b;
-    }
-    tbody tr:nth-child(even) {
-      background: #f8fafc;
-    }
-    tbody tr:last-child td {
-      border-bottom: none;
-    }
-    .ex-title {
-      font-weight: 700;
-    }
-    .ex-cues {
-      font-size: 11px;
-      color: #64748b;
-      margin-top: 2px;
-    }
-    .sets-col {
-      text-align: ${isAr ? 'left' : 'right'};
-      white-space: nowrap;
-      font-weight: 700;
-      color: #0f172a;
-    }
-    .warmup-badge {
-      font-size: 10px;
-      background: #e2e8f0;
-      padding: 2px 6px;
-      border-radius: 4px;
-      color: #475569;
-      font-weight: normal;
-      display: inline-block;
-      margin-inline-start: 6px;
-    }
-    .footer-doc {
-      border-top: 1px solid #e2e8f0;
-      padding-top: 12px;
-      margin-top: 30px;
-      display: flex;
-      justify-content: space-between;
-      color: #94a3b8;
-      font-size: 11px;
-    }
-    @page {
-      size: A4;
-      margin: 14mm 16mm;
-    }
-    @media print {
-      body { padding: 0; }
-      .no-print { display: none; }
-    }
-  </style>
-</head>
-<body>
-  <div class="header-bar">
-    <div>
-      <h1 class="brand-title">VALHAN <span>MUSCLES</span></h1>
-      <p class="brand-subtitle">${isAr ? 'دليل الجداول التدريبية الشامل — توزيع الحجم التدريبي المعتمد' : 'Comprehensive Workout Guide — Unified Volume System'}</p>
-    </div>
-    <div class="plan-meta-badge">
-      <strong>${esc(plan.name)}</strong>
-      <span>${esc(plan.split)} · ${plan.days.length} ${isAr ? 'أيام تدريب' : 'Days'} · ${totalWorkingSets} ${isAr ? 'مجموعات عمل' : 'Working Sets'}</span>
-    </div>
-  </div>
+    const close = (focusBtn) => {
+      if (!isOpen()) return;
+      panel.hidden = true;
+      btn.setAttribute('aria-expanded', 'false');
+      if (focusBtn) btn.focus();
+    };
+    const open_ = () => {
+      panel.hidden = false;
+      btn.setAttribute('aria-expanded', 'true');
+      panel.style.translate = '';
+      const r = panel.getBoundingClientRect();           // keep inside the viewport
+      const dx = r.left < 8 ? 8 - r.left : (r.right > innerWidth - 8 ? innerWidth - 8 - r.right : 0);
+      if (dx) panel.style.translate = dx + 'px 0';
+      items()[0]?.focus();
+    };
 
-  <div class="intro-box">
-    ${isAr 
-      ? 'تم تصميم هذا الدليل بناءً على الحجم التدريبي الأسبوعي المعتمد في VALHAN MUSCLES لضمان استمرار الحمل التدريبي والتوازن العضلي بين الأنظمة. مجموعات الإحماء منفصلة ولا تُحسب ضمن مجموعات العمل الفعلية.'
-      : 'Designed strictly according to the certified VALHAN MUSCLES weekly volume standards to preserve muscular balance and recovery. Warm-up sets are separate and excluded from working volume.'}
-  </div>
+    btn.addEventListener('click', () => (isOpen() ? close(true) : open_()));
+    btn.addEventListener('keydown', e => {
+      if ((e.key === 'ArrowDown' || e.key === 'ArrowUp') && !isOpen()) { e.preventDefault(); open_(); }
+    });
+    panel.addEventListener('keydown', e => {
+      const list = items(), i = list.indexOf(document.activeElement);
+      if (e.key === 'ArrowDown') { e.preventDefault(); list[(i + 1) % list.length].focus(); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); list[(i - 1 + list.length) % list.length].focus(); }
+      else if (e.key === 'Home') { e.preventDefault(); list[0].focus(); }
+      else if (e.key === 'End') { e.preventDefault(); list[list.length - 1].focus(); }
+      else if (e.key === 'Tab') close(false);
+    });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen()) close(true); });
+    document.addEventListener('pointerdown', e => { if (isOpen() && !e.target.closest('.menu-wrap')) close(false); });
+    panel.addEventListener('click', e => {
+      const b = e.target.closest('[data-tpl]');
+      if (!b) return;
+      close(true);
+      sync();
+      if (!confirmReplace()) return;
+      plan = template(b.dataset.tpl);
+      render();
+      toast(T('تم تحميل النموذج. يمكنك تعديله بحرية.', 'Template loaded. Edit it freely.'));
+    });
+  }
 
-  ${plan.days.map((d, i) => `
-    <section class="day-section">
-      <div class="day-heading">
-        <span>${isAr ? `اليوم ${i + 1}: ${esc(d.name)}` : `Day ${i + 1}: ${esc(d.name)}`}</span>
-        <span style="font-size:12px; font-weight:normal; color:#64748b;">${d.exercises.length} ${isAr ? 'تمارين' : 'exercises'}</span>
-      </div>
-      ${d.notes ? `<div class="day-notes">${esc(d.notes)}</div>` : ''}
-      <table>
-        <thead>
-          <tr>
-            <th>${isAr ? 'التمرين / الحركة' : 'Exercise / Movement'}</th>
-            <th style="width: 140px; text-align: center;">${isAr ? 'التكرار المستهدف' : 'Target Reps'}</th>
-            <th>${isAr ? 'المجاميع (عمل / إحماء)' : 'Sets (Work / Warm-up)'}</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${d.exercises.map(x => `
-            <tr>
-              <td>
-                <div class="ex-title">${esc(x.name)}</div>
-                ${x.notes ? `<div class="ex-cues">${esc(x.notes)}</div>` : ''}
-              </td>
-              <td style="text-align: center; color: #475569;">${esc(x.reps || '8-12')}</td>
-              <td class="sets-col">
-                <span>${x.sets} ${isAr ? 'مجموعات' : 'sets'}</span>
-                ${+x.warm > 0 ? `<span class="warmup-badge">+${x.warm} ${isAr ? 'إحماء' : 'warm'} (${esc(x.warmReps || '10')})</span>` : ''}
-              </td>
-            </tr>
-          `).join('')}
-        </tbody>
-      </table>
-    </section>
-  `).join('')}
-
-  <div class="footer-doc">
-    <span>VALHAN MUSCLES — Build Your Strength. Master Your Fitness.</span>
-    <span>${isAr ? 'دليل الجداول التدريبية الشامل' : 'Certified Training Protocol'}</span>
-  </div>
-
-  <script>
-    window.onload = () => setTimeout(() => window.print(), 350);
-  </script>
-</body>
-</html>`);
-    w.document.close();
+  // ---- Import from "Workout Plans" page ----------------------------------
+  function applyImport() {
+    const imp = store.get(IMPORT_KEY, null);
+    if (!imp) return;
+    store.remove(IMPORT_KEY);
+    if (!imp.days || !imp.days.length) return;
+    if (hasContent(plan)) {
+      const ok = confirm(T('لديك خطة محفوظة بها تمارين. هل تريد استبدالها بالخطة المختارة؟ (ستُحفظ نسخة احتياطية من خطتك الحالية).', 'You have a saved plan with exercises. Replace it with the selected plan? (Your current plan will be backed up.)'));
+      if (!ok) return toast(T('تم الإبقاء على خطتك الحالية.', 'Kept your current plan.'));
+      store.set(BACKUP_KEY, plan);
+    }
+    plan = imp;
+    toast(T('تم تحميل الخطة المختارة في المنشئ.', 'Selected plan loaded into the builder.'));
   }
 
   function init() {
     if (document.body.dataset.page !== 'builder') return;
-    plan = get() || blank();
+    plan = get();
+    if (!plan || !Array.isArray(plan.days) || !plan.days.length) plan = emptyPlan();   // blank custom plan by default
+    applyImport();
+    setupMenu();
 
-    const splitSelect = $('#builder-split');
-    if (splitSelect) {
-      splitSelect.innerHTML = Object.keys(defaults)
-        .map(s => `<option value="${s}" ${plan.split === s ? 'selected' : ''}>${s}</option>`)
-        .join('');
+    const restoreBtn = $('#restore-backup');
+    const syncRestore = () => { if (restoreBtn) restoreBtn.hidden = !store.get(BACKUP_KEY, null); };
+    syncRestore();
+    if (restoreBtn) restoreBtn.onclick = () => {
+      const b = store.get(BACKUP_KEY, null);
+      if (!b || !confirm(T('استعادة خطتك السابقة؟ سيتم استبدال الخطة الحالية.', 'Restore your previous plan? This replaces the current one.'))) return;
+      plan = b; store.remove(BACKUP_KEY); render(); syncRestore();
+    };
 
-      splitSelect.onchange = e => {
-        sync();
-        plan = template(e.target.value);
+    $('#builder-name').oninput = sync;
+
+    $('#new-empty').onclick = () => {
+      sync();
+      if (!confirmReplace()) return;
+      plan = emptyPlan();
+      render();
+    };
+    $('#add-day').onclick = () => { sync(); plan.days.push(makeDay(T('يوم ', 'Day ') + (plan.days.length + 1))); render(); };
+    $('#add-rest').onclick = () => { sync(); plan.days.push({ name: T('راحة', 'Rest'), notes: '', rest: true, exercises: [] }); render(); };
+    $('#clear-plan').onclick = () => {
+      if (confirm(T('هل ترغب في مسح جميع التمارين؟', 'Clear all exercises?'))) {
+        plan.days.forEach(d => { d.exercises = []; });
         render();
-      };
-    }
-
-    const nameInput = $('#builder-name');
-    if (nameInput) nameInput.oninput = sync;
-
-    const loadBtn = $('#load-template');
-    if (loadBtn) {
-      loadBtn.onclick = () => {
-        plan = template($('#builder-split').value);
-        render();
-        toast(window.ValhanT('تم تحميل النموذج التدريبي المعتمد.', 'Official template loaded.'));
-      };
-    }
-
-    const addDayBtn = $('#add-day');
-    if (addDayBtn) {
-      addDayBtn.onclick = () => {
-        sync();
-        plan.days.push(makeDay('Day ' + (plan.days.length + 1)));
-        render();
-      };
-    }
-
-    const clearBtn = $('#clear-plan');
-    if (clearBtn) {
-      clearBtn.onclick = () => {
-        if (confirm(window.ValhanT('هل ترغب في مسح جميع التمارين؟', 'Clear all exercises?'))) {
-          plan.days.forEach(d => d.exercises = []);
-          render();
-        }
-      };
-    }
-
-    const exportBtn = $('#export-pdf');
-    if (exportBtn) exportBtn.onclick = exportPDF;
+      }
+    };
+    $('#export-pdf').onclick = () => { sync(); printPlan(plan); };
 
     const daysHost = $('#builder-days');
-    if (daysHost) {
-      daysHost.addEventListener('input', sync);
-      daysHost.addEventListener('click', e => {
-        const b = e.target.closest('[data-action]');
-        if (!b) return;
-        sync();
-        const card = b.closest('.day-card');
-        const di = +card.dataset.day;
-        const day = plan.days[di];
-        const row = b.closest('.exercise-row');
-        const ei = row ? +row.dataset.ex : -1;
-        const a = b.dataset.action;
-
-        if (a === 'add-ex') day.exercises.push({ id: '', name: '', sets: 3, reps: '8-12', warm: 1, warmReps: '10', notes: '' });
-        if (a === 'remove-day' && plan.days.length > 1) plan.days.splice(di, 1);
-        if (a === 'up-day' || a === 'down-day') move(plan.days, di, di + (a === 'up-day' ? -1 : 1));
-        if (a === 'remove-ex') day.exercises.splice(ei, 1);
-        if (a === 'up-ex' || a === 'down-ex') move(day.exercises, ei, ei + (a === 'up-ex' ? -1 : 1));
-        if (a === 'pick') return openPicker(di, ei);
-        render();
-      });
-    }
-
-    const pickerSearch = $('#picker-search');
-    if (pickerSearch) pickerSearch.oninput = pickerRender;
-
-    const pickerGrid = $('#picker-grid');
-    if (pickerGrid) {
-      pickerGrid.onclick = e => {
-        const b = e.target.closest('[data-pick]');
-        if (!b || !pickTarget) return;
-        const ex = exs().find(x => x.id === b.dataset.pick);
-        if (ex && plan.days[pickTarget.di] && plan.days[pickTarget.di].exercises[pickTarget.ei]) {
-          const x = plan.days[pickTarget.di].exercises[pickTarget.ei];
-          x.id = ex.id;
-          x.name = ex.name;
-        }
-        $('#picker-modal').classList.remove('open');
-        render();
-      };
-    }
-
-    document.querySelectorAll('[data-close-modal]').forEach(b => {
-      b.onclick = () => $('#picker-modal').classList.remove('open');
+    daysHost.addEventListener('input', sync);
+    daysHost.addEventListener('click', e => {
+      const b = e.target.closest('[data-action]');
+      if (!b || b.disabled) return;
+      sync();
+      const di = +b.closest('.day-card').dataset.day, day = plan.days[di];
+      const row = b.closest('.exercise-row'), ei = row ? +row.dataset.ex : -1, a = b.dataset.action;
+      if (a === 'add-ex') day.exercises.push({ id: '', name: '', sets: 3, reps: '8-12', warm: 1, warmReps: '10', notes: '' });
+      if (a === 'remove-day' && plan.days.length > 1) plan.days.splice(di, 1);
+      if (a === 'up-day' || a === 'down-day') move(plan.days, di, di + (a === 'up-day' ? -1 : 1));
+      if (a === 'remove-ex') day.exercises.splice(ei, 1);
+      if (a === 'up-ex' || a === 'down-ex') move(day.exercises, ei, ei + (a === 'up-ex' ? -1 : 1));
+      if (a === 'pick') return openPicker(di, ei);
+      render();
     });
+
+    $('#picker-search').oninput = pickerRender;
+    $('#picker-grid').onclick = e => {
+      const b = e.target.closest('[data-pick]');
+      if (!b || !pickTarget) return;
+      const ex = exs().find(x => x.id === b.dataset.pick), x = plan.days[pickTarget.di]?.exercises[pickTarget.ei];
+      if (ex && x) { x.id = ex.id; x.name = ex.name; }
+      closePicker();
+      render();
+    };
+    document.querySelectorAll('[data-close-modal]').forEach(b => { b.onclick = closePicker; });
+    $('#picker-modal').addEventListener('click', e => { if (e.target.id === 'picker-modal') closePicker(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closePicker(); });
 
     render();
   }

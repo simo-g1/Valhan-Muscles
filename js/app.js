@@ -16,28 +16,6 @@
   const btn = (txt, url, outline = false) => `
     <a class="btn ${outline ? 'btn-outline' : 'btn-primary'}" href="${url}">${txt} ←</a>`;
 
-  // Approved unified weekly volume summary from reference-workout.pdf (Page 1)
-  const unifiedVolume = [
-    { exercise: 'Incline Chest', arabic: 'صدر عالي', sets: 4, category: 'Chest' },
-    { exercise: 'Fly Machine', arabic: 'تفتيح صدر', sets: 6, category: 'Chest' },
-    { exercise: 'Lateral Raises', arabic: 'كتف جانبي', sets: 6, category: 'Shoulders' },
-    { exercise: 'Front Delts', arabic: 'كتف أمامي', sets: 4, category: 'Shoulders' },
-    { exercise: 'Triceps', arabic: 'ترايسبس', sets: 8, category: 'Arms' },
-    { exercise: 'Lat Pulldown', arabic: 'سحب علوي واسع', sets: 6, category: 'Back' },
-    { exercise: 'T-Bar Row', arabic: 'سحب أرضي / تي بار', sets: 6, category: 'Back' },
-    { exercise: 'Close-Grip Pulldown', arabic: 'سحب علوي ضيق', sets: 4, category: 'Back' },
-    { exercise: 'Rear Delts', arabic: 'كتف خلفي', sets: 4, category: 'Shoulders' },
-    { exercise: 'Traps', arabic: 'ترابيس', sets: 4, category: 'Back' },
-    { exercise: 'Biceps', arabic: 'بايسبس', sets: 6, category: 'Arms' },
-    { exercise: 'Lower Back', arabic: 'أسفل الظهر', sets: 4, category: 'Back' },
-    { exercise: 'Leg Press', arabic: 'دفع رجل', sets: 4, category: 'Legs' },
-    { exercise: 'Leg Extension', arabic: 'أماميات رجل', sets: 6, category: 'Legs' },
-    { exercise: 'Leg Curl', arabic: 'خلفيات رجل - عزل', sets: 4, category: 'Legs' },
-    { exercise: 'RDL', arabic: 'خلفيات رجل - إطالة', sets: 4, category: 'Legs' },
-    { exercise: 'Adductors', arabic: 'ضامة', sets: 6, category: 'Legs' },
-    { exercise: 'Calves', arabic: 'سمانة', sets: 4, category: 'Calves' }
-  ];
-
   // Comprehensive 7 Workout Systems directly from reference-workout.pdf + PPL 5 Days
   const plans = [
     {
@@ -618,6 +596,9 @@
     }
   ];
 
+  // Shared with workout-builder.js (conversion + PDF) so there is a single source of truth
+  window.ValhanPlans = plans;
+
   function home() {
     return `
       <section class="hero">
@@ -625,9 +606,9 @@
           <span class="eyebrow"><i class="fa-solid fa-fire"></i> TRAIN WITH PURPOSE</span>
           <h1>BUILD YOUR <em>STRENGTH.</em><br>MASTER YOUR FITNESS.</h1>
           <p>${t(
-            'منصة رياضية متكاملة تساعدك على اختيار وتقسيم جدولك التدريبي، وفهم زوايا التمارين، وضبط الحجم التدريبي المعتمد (88 مجموعة أسبوعياً).',
-            'A comprehensive fitness platform helping you organize workout splits, understand movements, and maintain verified weekly volume (88 weekly sets).'
-          )}</p>
+      'منصة رياضية متكاملة تساعدك على اختيار وتقسيم جدولك التدريبي، وفهم زوايا التمارين، وضبط الحجم التدريبي ',
+      'A comprehensive fitness platform helping you organize workout splits, understand movements, and maintain verified weekly volume (88 weekly sets).'
+    )}</p>
           <div class="actions">
             ${btn(t('أنشئ خطتك الآن', 'Build your plan'), `${root}/pages/workout-builder.html`)}
             ${btn(t('اكتشف الجداول والخطط', 'Explore plans'), `${root}/pages/workout-plans.html`, true)}
@@ -645,7 +626,7 @@
             <h2 class="section-title">${t('كل أدوات تدريبك في مكان واحد', 'Your training tools in one place')}</h2>
             <p class="muted">${t('من اختيار التقسيمة العلمية إلى فهم تفاصيل التمرين ومراجعة فريق العمل.', 'From selecting scientific splits to mastering execution and exploring our team.')}</p>
           </div>
-          <div class="grid feature-grid" style="grid-template-columns: repeat(4, 1fr);">
+          <div class="grid feature-grid">
             <a class="card feature reveal" href="${root}/pages/workout-plans.html">
               <b>01</b>
               <h3>${t('جداول التدريب الشاملة', 'Comprehensive Plans')}</h3>
@@ -676,9 +657,9 @@
             <span class="eyebrow">PLAN. TRAIN. PROGRESS.</span>
             <h2 class="section-title">${t('التقدم ليس عشوائياً', 'Progress is not random')}</h2>
             <p class="muted">${t(
-              'تم بناء VALHAN MUSCLES بواسطة فريق متكامل: كابتن محمد حاتم في الجانب الرياضي وهندسة الأحمال، وسيمو في تطوير الواجهة والتجربة التفاعلية.',
-              'VALHAN MUSCLES is built by a dedicated team: Mohamed Hatem on fitness architecture and Simo on front-end engineering.'
-            )}</p>
+      'تم بناء VALHAN MUSCLES بواسطة فريق متكامل: كابتن محمد حاتم في الجانب الرياضي وهندسة الأحمال، وسيمو في تطوير الواجهة والتجربة التفاعلية.',
+      'VALHAN MUSCLES is built by a dedicated team: Mohamed Hatem on fitness architecture and Simo on front-end engineering.'
+    )}</p>
             <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top:20px;">
               ${btn(t('تعرف على فريق العمل', 'Meet the team'), `${root}/pages/our-team.html`)}
               ${btn(t('تصفح مكتبة التمارين', 'Browse exercises'), `${root}/pages/exercises.html`, true)}
@@ -688,9 +669,9 @@
             <span class="eyebrow">VALHAN MUSCLES PHILOSOPHY</span>
             <h2>BUILD YOUR STRENGTH.</h2>
             <p class="muted">${t(
-              'قوة في التركيز. وضوح في التدريب. 88 مجموعة أسبوعياً موزعة بدقة لضمان الاستشفاء والتطور العضلي المستمر.',
-              'Strength in focus. Clarity in training. 88 weekly sets carefully allocated for recovery and hypertrophy.'
-            )}</p>
+      'قوة في التركيز. وضوح في التدريب. 88 مجموعة أسبوعياً موزعة بدقة لضمان الاستشفاء والتطور العضلي المستمر.',
+      'Strength in focus. Clarity in training. 88 weekly sets carefully allocated for recovery and hypertrophy.'
+    )}</p>
           </div>
         </div>
       </section>`;
@@ -699,63 +680,22 @@
   function plansPage() {
     return `
       ${head(
-        'TRAINING PROGRAMS',
-        t('دليل الجداول التدريبية الشامل', 'Comprehensive Training Programs'),
-        t(
-          'توزيع الحجم التدريبي الموحد (تردد مرتين أسبوعياً) على 7 أنظمة تدريبية متكاملة لضمان ثبات الحمل التدريبي وسهولة التنقل بين الأنظمة.',
-          'Unified weekly training volume (twice-weekly frequency) distributed across 7 complete systems for consistent stimulus.'
-        )
-      )}
-
-      <!-- Approved Unified Weekly Volume Summary from reference-workout.pdf -->
-      <section class="section" style="padding-bottom: 20px;">
-        <div class="container">
-          <div class="volume-summary-box reveal">
-            <div class="volume-summary-header">
-              <h2>${t('ملخص الحجم التدريبي الأسبوعي المعتمد (الفوليوم)', 'Approved Weekly Training Volume Summary')}</h2>
-              <p>${t(
-                'تم تصميم هذا الدليل بناءً على الحجم التدريبي الأسبوعي المحدد بدقة (إجمالي 88 مجموعة أسبوعياً)، مع توزيع نفس إجمالي المجاميع على كافة أنظمة التدريب.',
-                'Designed with precise weekly volume (total 88 sets/week), distributing the exact same sets across all training systems.'
-              )}</p>
-            </div>
-
-            <div class="volume-table-wrap">
-              <table class="volume-table">
-                <thead>
-                  <tr>
-                    <th>${t('التمرين / العضلة المستهدفة', 'Exercise / Target Muscle')}</th>
-                    <th>${t('الفئة العضلية', 'Muscle Group')}</th>
-                    <th style="text-align: center;">${t('إجمالي المجاميع الأسبوعي', 'Total Weekly Sets')}</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${unifiedVolume.map(v => `
-                    <tr>
-                      <td><strong>${v.exercise}</strong> <span style="color:var(--muted); font-size:.85rem;">(${v.arabic})</span></td>
-                      <td><span class="tag">${v.category}</span></td>
-                      <td style="text-align: center;"><span class="volume-total-badge">${v.sets} ${t('مجاميع', 'sets')}</span></td>
-                    </tr>
-                  `).join('')}
-                  <tr style="background: rgba(225,6,0,0.08); font-weight: bold;">
-                    <td><strong>${t('الإجمالي الأسبوعي المعتمد', 'Total Unified Weekly Volume')}</strong></td>
-                    <td><span class="tag" style="background:var(--red); color:#fff;">18 ${t('تمرين', 'Exercises')}</span></td>
-                    <td style="text-align: center;"><span class="volume-total-badge" style="font-size:1rem; padding: 4px 14px;">88 ${t('مجموعة أسبوعياً', 'Sets / Week')}</span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
+      'TRAINING PROGRAMS',
+      t('دليل الجداول التدريبية الشامل', 'Comprehensive Training Programs'),
+      t(
+        'توزيع الحجم التدريبي الموحد (تردد مرتين أسبوعياً) على 7 أنظمة تدريبية متكاملة لضمان ثبات الحمل التدريبي وسهولة التنقل بين الأنظمة.',
+        'Unified weekly training volume (twice-weekly frequency) distributed across 7 complete systems for consistent stimulus.'
+      )
+    )}
 
       <!-- Plans Directory -->
-      <section class="section" style="padding-top: 10px;">
+      <section class="section" style="padding-top: 30px;">
         <div class="container">
           <div class="filter-bar">
             <label class="field">${t('عدد الأيام', 'Training days')}
               <select id="plan-days">
                 <option value="all">${t('الكل', 'All')}</option>
-                ${[4, 5, 6].map(n => `<option>${n}</option>`)}
+                ${[4, 5, 6].map(n => `<option>${n}</option>`).join('')}
               </select>
             </label>
             <label class="field">${t('المستوى', 'Level')}
@@ -780,9 +720,14 @@
                   <span><i class="fa-solid fa-calendar-days"></i> ${p.days} ${t('أيام / أسبوع', 'days / week')}</span>
                   <span><i class="fa-solid fa-dumbbell"></i> ${p.split}</span>
                 </div>
-                <button class="btn btn-outline" data-plan="${p.id}" style="margin-top:auto;">
-                  <i class="fa-solid fa-list-check"></i> ${t('عرض تفاصيل وجدول الحصص', 'View weekly schedule')}
-                </button>
+                <div class="plan-actions">
+                  <button type="button" class="btn btn-outline" data-plan="${p.id}">
+                    <i class="fa-solid fa-list-check"></i> ${t('عرض تفاصيل وجدول الحصص', 'View weekly schedule')}
+                  </button>
+                  <button type="button" class="btn btn-quiet" data-pdf="${p.id}" aria-label="PDF — ${t(p.arabicName, p.name)}">
+                    <i class="fa-solid fa-file-pdf"></i> PDF
+                  </button>
+                </div>
               </article>
             `).join('')}
           </div>
@@ -801,41 +746,47 @@
   function builderPage() {
     return `
       ${head(
-        'WORKOUT BUILDER',
-        t('ابنِ خطتك التدريبية بنفسك', 'Build Your Workout Program'),
-        t(
-          'اختر نموذجاً معتمداً من الـ 7 أنظمة في الدليل الشامل أو أنشئ أيامك الخاصة وصدّر ملف PDF بجودة طباعة عالية.',
-          'Select an official template from the 7 reference systems or customize your days, then export a print-ready PDF.'
-        )
-      )}
+      'WORKOUT BUILDER',
+      t('ابنِ خطتك التدريبية بنفسك', 'Build Your Workout Program'),
+      t(
+        'ابدأ بخطة فارغة وابنِ أيامك بنفسك، أو اختر نموذجاً جاهزاً كنقطة بداية اختيارية، ثم صدّر ملف PDF.',
+        'Start from a blank plan and build your own days, or pick a ready-made template as an optional starting point, then export a PDF.'
+      )
+    )}
       <section class="section">
         <div class="container">
           <div class="builder-toolbar">
             <label class="field">${t('اسم الخطة', 'Plan name')}
               <input id="builder-name" value="My VALHAN Program">
             </label>
-            <label class="field">${t('التقسيمة التدريبية', 'Training split')}
-              <select id="builder-split"></select>
-            </label>
-            <button class="btn btn-outline" id="load-template">
-              <i class="fa-solid fa-arrows-rotate"></i> ${t('تحميل النموذج المعتمد', 'Load official template')}
+            <div class="menu-wrap">
+              <button type="button" class="btn btn-outline" id="tpl-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="tpl-menu">
+                <span><i class="fa-solid fa-layer-group"></i> ${t('ابدأ من خطة جاهزة (اختياري)', 'Start from a ready-made plan (optional)')}</span>
+                <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+              </button>
+              <ul class="menu-panel" id="tpl-menu" role="menu" hidden></ul>
+            </div>
+            <button type="button" class="btn btn-outline" id="new-empty">
+              <i class="fa-solid fa-file"></i> ${t('خطة فارغة جديدة', 'New empty plan')}
             </button>
           </div>
 
           <div id="builder-days"></div>
 
           <div class="builder-actions">
-            <button class="btn btn-outline" id="add-day">＋ ${t('إضافة يوم جديد', 'Add day')}</button>
-            <button class="btn btn-outline" id="clear-plan">${t('مسح التمارين', 'Clear exercises')}</button>
-            <button class="btn btn-primary" id="export-pdf" style="margin-inline-start: auto;">
-              <i class="fa-solid fa-file-pdf"></i> ${t('تحميل وتصدير PDF المعتمد', 'Download workout PDF')}
+            <button type="button" class="btn btn-outline" id="add-day">＋ ${t('إضافة يوم', 'Add day')}</button>
+            <button type="button" class="btn btn-outline" id="add-rest">＋ ${t('إضافة يوم راحة', 'Add rest day')}</button>
+            <button type="button" class="btn btn-outline" id="clear-plan">${t('مسح التمارين', 'Clear exercises')}</button>
+            <button type="button" class="btn btn-quiet" id="restore-backup" hidden>${t('استعادة خطتي السابقة', 'Restore previous plan')}</button>
+            <button type="button" class="btn btn-primary" id="export-pdf" style="margin-inline-start: auto;">
+              <i class="fa-solid fa-file-pdf"></i> ${t('تصدير PDF', 'Export PDF')}
             </button>
           </div>
           <p class="muted">
             ${t(
-              'يتم حفظ التعديلات محلياً في متصفحك. التصدير مطابق لتصميم وألوان دليل الجداول التدريبية الشامل (PDF).',
-              'Your changes save automatically in your browser. PDF export strictly follows the official VALHAN MUSCLES design.'
-            )}
+      'يتم حفظ التعديلات محلياً في متصفحك تلقائياً.',
+      'Your changes save automatically in your browser.'
+    )}
           </p>
         </div>
       </section>
@@ -869,10 +820,6 @@
         t('اختيار المجموعات والتكرارات يعتمد على الهدف والخبرة وقرب المجموعة من الفشل مع الحفاظ على جودة الأداء.', 'Sets and reps depend on goals, experience and effort while maintaining sound technique.')
       ],
       [
-        t('الحجم التدريبي المعتمد (88 مجموعة)', 'Understanding unified volume (88 sets)'),
-        t('الحجم التدريبي الأسبوعي المعتمد في VALHAN MUSCLES يبلغ 88 مجموعة أسبوعياً موزعة بالتساوي مرتين أسبوعياً لكل عضلة.', 'The certified VALHAN volume standard is 88 working sets per week, distributed twice weekly per muscle group.')
-      ],
-      [
         t('تتبع التقدم والاستمرارية', 'Tracking progress & consistency'),
         t('سجل الأوزان والتكرارات وجودة الأداء، وراقب الاتجاه على مدى أسابيع بدل الحكم من حصة واحدة. الاستمرارية هي الأساس.', 'Record loads, reps and execution quality. Look at trends over weeks rather than judging one session.')
       ]
@@ -890,7 +837,8 @@
             </article>
           `).join('')}
         </div>
-      </section>`;
+      </section>
+      <div id="article-center"></div>`;
   }
 
   function about() {
@@ -902,13 +850,13 @@
             <span class="eyebrow">OUR MISSION</span>
             <h2 class="section-title">BUILD YOUR STRENGTH. MASTER YOUR FITNESS.</h2>
             <p>${t(
-              'هدفنا تبسيط التخطيط التدريبي وإتاحة أدوات عملية سهلة الاستخدام تساعد المتدرب على فهم التمارين وبناء جدول يناسب ظروفه. نؤمن أن الاستمرارية والمعرفة أهم من مطاردة الحلول السريعة.',
-              'Our mission is to make training organization easier through accessible tools that help people understand exercises and build plans that fit their circumstances. We value consistency and knowledge over quick fixes.'
-            )}</p>
+      'هدفنا تبسيط التخطيط التدريبي وإتاحة أدوات عملية سهلة الاستخدام تساعد المتدرب على فهم التمارين وبناء جدول يناسب ظروفه. نؤمن أن الاستمرارية والمعرفة أهم من مطاردة الحلول السريعة.',
+      'Our mission is to make training organization easier through accessible tools that help people understand exercises and build plans that fit their circumstances. We value consistency and knowledge over quick fixes.'
+    )}</p>
             <p class="muted">${t(
-              'الموقع لا يقدم تشخيصاً أو علاجاً طبياً، والمعلومات عامة وتعليمية. اختر أحمالاً مناسبة لمستواك واستشر مختصاً عند وجود إصابة أو حالة صحية.',
-              'This website does not provide medical diagnosis or treatment. Information is general and educational. Consult a professional if you have injuries or medical conditions.'
-            )}</p>
+      'الموقع لا يقدم تشخيصاً أو علاجاً طبياً، والمعلومات عامة وتعليمية. اختر أحمالاً مناسبة لمستواك واستشر مختصاً عند وجود إصابة أو حالة صحية.',
+      'This website does not provide medical diagnosis or treatment. Information is general and educational. Consult a professional if you have injuries or medical conditions.'
+    )}</p>
             <div style="margin-top: 24px;">
               <a class="btn btn-primary" href="${root}/pages/our-team.html">
                 <i class="fa-solid fa-users"></i> ${t('تعرف على فريق العمل (Simo & Mohamed Hatem)', 'Meet Our Team (Simo & Mohamed Hatem)')}
@@ -926,9 +874,9 @@
           <span class="eyebrow"><i class="fa-solid fa-users"></i> VALHAN MUSCLES TEAM</span>
           <h1>${t('فريق عمل المنصة', 'The Minds Behind VALHAN MUSCLES')}</h1>
           <p>${t(
-            'تعرف على الفريق وراء VALHAN MUSCLES — المطور سيمو والمدرب محمد حاتم، وتعرف على الأدوات والتقنيات المستخدمة في بناء المشروع.',
-            'Meet the team behind VALHAN MUSCLES — Front-End Developer Simo and Fitness Coach Mohamed Hatem, and discover the tools and technologies behind the project.'
-          )}</p>
+      'تعرف على الفريق وراء VALHAN MUSCLES — المطور سيمو والمدرب محمد حاتم، وتعرف على الأدوات والتقنيات المستخدمة في بناء المشروع.',
+      'Meet the team behind VALHAN MUSCLES — Front-End Developer Simo and Fitness Coach Mohamed Hatem, and discover the tools and technologies behind the project.'
+    )}</p>
         </div>
       </section>
 
@@ -938,9 +886,9 @@
             <span class="eyebrow">PORTFOLIO DIRECTORY</span>
             <h2 class="section-title">${t('اختر البورتفوليو للاستكشاف', 'Explore Portfolios')}</h2>
             <p class="muted">${t(
-              'يمثل مشروع VALHAN MUSCLES نتاج تعاون تكاملي بين خبرة التدريب الرياضي وتطوير واجهات الويب الحديثة.',
-              'VALHAN MUSCLES is built upon the synergy between fitness coaching methodology and modern front-end web engineering.'
-            )}</p>
+      'يمثل مشروع VALHAN MUSCLES نتاج تعاون تكاملي بين خبرة التدريب الرياضي وتطوير واجهات الويب الحديثة.',
+      'VALHAN MUSCLES is built upon the synergy between fitness coaching methodology and modern front-end web engineering.'
+    )}</p>
           </div>
 
           <div class="team-grid">
@@ -954,9 +902,9 @@
                 <span class="role-badge"><i class="fa-solid fa-laptop-code"></i> Front-End Developer</span>
                 <h3 class="team-card-name">Simo</h3>
                 <p class="team-card-desc">${t(
-                  'مطور واجهات أمامية مهتم ببناء وتطوير تجارب ويب تفاعلية وسريعة تجمع بين الهيكلة البرمجية النظيفة والتصميم المتجاوب وسهولة الاستخدام عبر مختلف الأجهزة.',
-                  'Front-End Developer focused on building responsive, clean, and interactive web experiences with high performance and modular architecture.'
-                )}</p>
+      'مطور واجهات أمامية مهتم ببناء وتطوير تجارب ويب تفاعلية وسريعة تجمع بين الهيكلة البرمجية النظيفة والتصميم المتجاوب وسهولة الاستخدام عبر مختلف الأجهزة.',
+      'Front-End Developer focused on building responsive, clean, and interactive web experiences with high performance and modular architecture.'
+    )}</p>
                 <a class="btn btn-dev" href="${root}/pages/developer.html">
                   <span>${t('استكشف بورتفوليو المطور', 'Explore Developer Portfolio')}</span>
                   <i class="fa-solid fa-arrow-left"></i>
@@ -974,9 +922,9 @@
                 <span class="role-badge"><i class="fa-solid fa-dumbbell"></i> Fitness Coach</span>
                 <h3 class="team-card-name">Mohamed Hatem</h3>
                 <p class="team-card-desc">${t(
-                  'مدرب لياقة بدنية مسؤول عن الهيكلة العلمية للجداول التدريبية، إدارة الفوليوم التدريبي (88 مجموعة)، والتوزيع المتوازن لمجموعات التمارين المعتمدة في منصة VALHAN MUSCLES.',
-                  'Fitness Coach responsible for the scientific workout architecture, weekly volume allocation (88 sets), and approved exercise programming in VALHAN MUSCLES.'
-                )}</p>
+      'مدرب لياقة بدنية مسؤول عن الهيكلة العلمية للجداول التدريبية، إدارة الفوليوم التدريبي (88 مجموعة)، والتوزيع المتوازن لمجموعات التمارين المعتمدة في منصة VALHAN MUSCLES.',
+      'Fitness Coach responsible for the scientific workout architecture, weekly volume allocation (88 sets), and approved exercise programming in VALHAN MUSCLES.'
+    )}</p>
                 <a class="btn btn-coach" href="${root}/pages/coach.html">
                   <span>${t('استكشف بورتفوليو المدرب', 'Explore Coach Portfolio')}</span>
                   <i class="fa-solid fa-arrow-left"></i>
@@ -989,9 +937,9 @@
             <div>
               <strong><i class="fa-solid fa-circle-check" style="color:var(--green)"></i> ${t('تعاون تخصصي واضح:', 'Clear Specialized Collaboration:')}</strong>
               <p class="muted">${t(
-                'شخصان منفصلان بأدوار تخصصية واضحة — هندسة وتطوير الواجهة الأمامية بواسطة Simo، والتخطيط التدريبي والأنظمة الرياضية بواسطة Mohamed Hatem.',
-                'Two distinct individuals with dedicated responsibilities — Front-End engineering by Simo, and workout architecture & fitness systems by Mohamed Hatem.'
-              )}</p>
+      'شخصان منفصلان بأدوار تخصصية واضحة — هندسة وتطوير الواجهة الأمامية بواسطة Simo، والتخطيط التدريبي والأنظمة الرياضية بواسطة Mohamed Hatem.',
+      'Two distinct individuals with dedicated responsibilities — Front-End engineering by Simo, and workout architecture & fitness systems by Mohamed Hatem.'
+    )}</p>
             </div>
             <a class="btn btn-outline" href="${root}/index.html">${t('العودة للرئيسية', 'Back to Home')}</a>
           </div>
@@ -1005,9 +953,9 @@
             <span class="eyebrow">STACK & WORKFLOW</span>
             <h2 class="section-title">${t('الأدوات والتقنيات المستخدمة في بناء VALHAN MUSCLES', 'Tools & Technologies Behind VALHAN MUSCLES')}</h2>
             <p class="muted">${t(
-              'استعراض حقيقي للأدوات، التقنيات البرمجية، ومنهجية العمل المتبعة لتطوير منصة VALHAN MUSCLES وفق معايير الويب الحديثة.',
-              'Authentic breakdown of the actual development tools, web technologies, and workflow used in building VALHAN MUSCLES.'
-            )}</p>
+      'استعراض حقيقي للأدوات، التقنيات البرمجية، ومنهجية العمل المتبعة لتطوير منصة VALHAN MUSCLES وفق معايير الويب الحديثة.',
+      'Authentic breakdown of the actual development tools, web technologies, and workflow used in building VALHAN MUSCLES.'
+    )}</p>
           </div>
 
           <!-- Development Tools -->
@@ -1022,9 +970,9 @@
                 </div>
               </div>
               <p class="tech-card-desc">${t(
-                'محرر الأكواد الأساسي المستخدم في كتابة، تنظيم، وهيكلة جميع ملفات الويب البرمجية للمشروع بكفاءة وسرعة.',
-                'The primary code editor used for writing, organizing, and structuring all front-end codebase files efficiently.'
-              )}</p>
+      'محرر الأكواد الأساسي المستخدم في كتابة، تنظيم، وهيكلة جميع ملفات الويب البرمجية للمشروع بكفاءة وسرعة.',
+      'The primary code editor used for writing, organizing, and structuring all front-end codebase files efficiently.'
+    )}</p>
             </div>
 
             <div class="tech-card reveal">
@@ -1036,9 +984,9 @@
                 </div>
               </div>
               <p class="tech-card-desc">${t(
-                'استُخدم كأداة ذكاء اصطناعي للمساعدة في العصف الذهني، صياغة النصوص التوضيحية، ومراجعة المحتوى اللغوي.',
-                'Used for ideation, drafting explanatory copy, and linguistic content refinement.'
-              )}</p>
+      'استُخدم كأداة ذكاء اصطناعي للمساعدة في العصف الذهني، صياغة النصوص التوضيحية، ومراجعة المحتوى اللغوي.',
+      'Used for ideation, drafting explanatory copy, and linguistic content refinement.'
+    )}</p>
             </div>
 
             <div class="tech-card reveal">
@@ -1050,9 +998,9 @@
                 </div>
               </div>
               <p class="tech-card-desc">${t(
-                'استُخدم كأداة ذكاء اصطناعي للمساعدة في التحليل المعماري للمتطلبات، وتدقيق تعليمات البرمجة، وتنظيم التناسق العام للمنصة.',
-                'Leveraged for architectural reasoning, prompt instruction audit, and UI consistency evaluation.'
-              )}</p>
+      'استُخدم كأداة ذكاء اصطناعي للمساعدة في التحليل المعماري للمتطلبات، وتدقيق تعليمات البرمجة، وتنظيم التناسق العام للمنصة.',
+      'Leveraged for architectural reasoning, prompt instruction audit, and UI consistency evaluation.'
+    )}</p>
             </div>
           </div>
 
@@ -1068,9 +1016,9 @@
                 </div>
               </div>
               <p class="tech-card-desc">${t(
-                'بناء الهيكل الدلالي (Semantic HTML) وتوفير أسس إمكانية الوصول والتنقل السلس وتوافق محركات البحث.',
-                'Semantic markup ensuring accessibility standards, accessible layouts, and clean web structure.'
-              )}</p>
+      'بناء الهيكل الدلالي (Semantic HTML) وتوفير أسس إمكانية الوصول والتنقل السلس وتوافق محركات البحث.',
+      'Semantic markup ensuring accessibility standards, accessible layouts, and clean web structure.'
+    )}</p>
             </div>
 
             <div class="tech-card reveal">
@@ -1082,9 +1030,9 @@
                 </div>
               </div>
               <p class="tech-card-desc">${t(
-                'تصميم عصري متجاوب بالكامل باستخدام CSS Grid وFlexbox، ودعم النمطين الداكن والفاتح (Dark/Light Modes) ومتغيرات الألوان.',
-                'Fluid responsive layouts using CSS Grid and Flexbox, with native dark/light theme switching.'
-              )}</p>
+      'تصميم عصري متجاوب بالكامل باستخدام CSS Grid وFlexbox، ودعم النمطين الداكن والفاتح (Dark/Light Modes) ومتغيرات الألوان.',
+      'Fluid responsive layouts using CSS Grid and Flexbox, with native dark/light theme switching.'
+    )}</p>
             </div>
 
             <div class="tech-card reveal">
@@ -1096,15 +1044,15 @@
                 </div>
               </div>
               <p class="tech-card-desc">${t(
-                'برمجة منطق الموقع بالكامل بدون أطر عمل خارجية ثقيلة، لإدارة الحالة محلياً، وتصفية التمارين، وتوليد وطباعة ملفات PDF.',
-                'Zero-dependency modern JavaScript handling client-side routing, filtering, offline local storage, and PDF rendering.'
-              )}</p>
+      'برمجة منطق الموقع بالكامل بدون أطر عمل خارجية ثقيلة، لإدارة الحالة محلياً، وتصفية التمارين، وتوليد وطباعة ملفات PDF.',
+      'Zero-dependency modern JavaScript handling client-side routing, filtering, offline local storage, and PDF rendering.'
+    )}</p>
             </div>
           </div>
 
           <!-- Development Workflow -->
           <h3 class="tech-group-title"><i class="fa-solid fa-code-branch"></i> ${t('منهجية وسير العمل (Development Workflow)', 'Development Workflow')}</h3>
-          <div class="tech-grid" style="grid-template-columns: repeat(2, 1fr);">
+          <div class="tech-grid two">
             <div class="tech-card reveal">
               <div class="tech-card-header">
                 <div class="tech-icon-box" style="color:#f05032"><i class="fa-brands fa-git-alt"></i></div>
@@ -1114,9 +1062,9 @@
                 </div>
               </div>
               <p class="tech-card-desc">${t(
-                'نظام إدارة ومتابعة النسخ الموزع لتسجيل التعديلات والتحكم بإصدارات الكود وتتبع التطور الزمني للمشروع بدقة.',
-                'Distributed version control tracking revisions, branch workflows, and codebase history.'
-              )}</p>
+      'نظام إدارة ومتابعة النسخ الموزع لتسجيل التعديلات والتحكم بإصدارات الكود وتتبع التطور الزمني للمشروع بدقة.',
+      'Distributed version control tracking revisions, branch workflows, and codebase history.'
+    )}</p>
             </div>
 
             <div class="tech-card reveal">
@@ -1128,9 +1076,9 @@
                 </div>
               </div>
               <p class="tech-card-desc">${t(
-                'المنصة السحابية لاستضافة المستودع البرمجي، ومراجعة سجل الالتزامات (Commits)، وإدارة المشروع وتوثيقه.',
-                'Cloud hosting platform for repository management, version control archiving, and collaboration.'
-              )}</p>
+      'المنصة السحابية لاستضافة المستودع البرمجي، ومراجعة سجل الالتزامات (Commits)، وإدارة المشروع وتوثيقه.',
+      'Cloud hosting platform for repository management, version control archiving, and collaboration.'
+    )}</p>
             </div>
           </div>
         </div>
@@ -1164,9 +1112,9 @@
             </span>
             <h1>Simo</h1>
             <p class="portfolio-intro">${t(
-              'مطور واجهات أمامية (Front-End Developer) مهتم ببناء وتطوير مواقع وتطبيقات ويب سريعة، متجاوبة وتفاعلية. أركز على كتابة كود نظيف ومعياري يحقق تجربة مستخدم سلسة وأداءً عاليًا عبر مختلف الشاشات والأجهزة.',
-              'Front-End Developer passionate about building responsive, interactive, and high-performance web experiences. Focused on clean, modular architecture and intuitive UX across devices.'
-            )}</p>
+      'مطور واجهات أمامية (Front-End Developer) مهتم ببناء وتطوير مواقع وتطبيقات ويب سريعة، متجاوبة وتفاعلية. أركز على كتابة كود نظيف ومعياري يحقق تجربة مستخدم سلسة وأداءً عاليًا عبر مختلف الشاشات والأجهزة.',
+      'Front-End Developer passionate about building responsive, interactive, and high-performance web experiences. Focused on clean, modular architecture and intuitive UX across devices.'
+    )}</p>
 
             <div>
               <span class="eyebrow" style="color:var(--muted);"><i class="fa-solid fa-link"></i> ${t('قنوات التواصل الرسمية', 'Official Contact & Links')}</span>
@@ -1203,9 +1151,9 @@
             <span class="eyebrow">PORTFOLIO WORK</span>
             <h2 class="section-title">${t('المشاريع الحقيقية (Featured Projects)', 'Real Projects')}</h2>
             <p class="muted">${t(
-              'مشاريع ويب حقيقية مطورة تركز على تصميم الواجهات التفاعلية، سرعة التحميل، والتجربة الشاملة للمستخدم.',
-              'Real projects focused on responsive front-end design, speed, and intuitive user experiences.'
-            )}</p>
+      'مشاريع ويب حقيقية مطورة تركز على تصميم الواجهات التفاعلية، سرعة التحميل، والتجربة الشاملة للمستخدم.',
+      'Real projects focused on responsive front-end design, speed, and intuitive user experiences.'
+    )}</p>
           </div>
 
           <div class="projects-grid">
@@ -1223,9 +1171,9 @@
               <div class="project-card-body">
                 <h3 class="project-card-title">HyperNest</h3>
                 <p class="project-card-desc">${t(
-                  'مشروع واجهة ويب حديث يتميز بتصميم هيكلي متجاوب وجذاب، مع تركيز دقيق على انسيابية التنقل، وتناسق الألوان والعناصر التفاعلية لتوفير تجربة مستخدم عصرية ومميزة.',
-                  'A modern web interface project highlighting responsive layouts, sleek visual aesthetics, and intuitive section navigation.'
-                )}</p>
+      'مشروع واجهة ويب حديث يتميز بتصميم هيكلي متجاوب وجذاب، مع تركيز دقيق على انسيابية التنقل، وتناسق الألوان والعناصر التفاعلية لتوفير تجربة مستخدم عصرية ومميزة.',
+      'A modern web interface project highlighting responsive layouts, sleek visual aesthetics, and intuitive section navigation.'
+    )}</p>
                 <div class="tech-tags-row">
                   <span class="tech-tag"><i class="fa-brands fa-html5"></i> HTML5</span>
                   <span class="tech-tag"><i class="fa-brands fa-css3-alt"></i> CSS3</span>
@@ -1259,9 +1207,9 @@
               <div class="project-card-body">
                 <h3 class="project-card-title">Mr.Ahmed</h3>
                 <p class="project-card-desc">${t(
-                  'منصة ويب تعليمية تفاعلية مصممة لتقديم المناهج الدراسية والمواد التعليمية للطلاب بأسلوب منظم وسهل الوصول، مع واجهة مستخدم مبسطة تخدم العملية التعليمية بكفاءة.',
-                  'An interactive educational web platform designed to present study content, lessons, and resources in an organized, user-friendly layout.'
-                )}</p>
+      'منصة ويب تعليمية تفاعلية مصممة لتقديم المناهج الدراسية والمواد التعليمية للطلاب بأسلوب منظم وسهل الوصول، مع واجهة مستخدم مبسطة تخدم العملية التعليمية بكفاءة.',
+      'An interactive educational web platform designed to present study content, lessons, and resources in an organized, user-friendly layout.'
+    )}</p>
                 <div class="tech-tags-row">
                   <span class="tech-tag"><i class="fa-brands fa-html5"></i> HTML5</span>
                   <span class="tech-tag"><i class="fa-brands fa-css3-alt"></i> CSS3</span>
@@ -1323,9 +1271,9 @@
             </span>
             <h1>Mohamed Hatem</h1>
             <p class="portfolio-intro">${t(
-              'مدرب لياقة بدنية (Fitness Coach) ومصمم الأنظمة التدريبية في منصة VALHAN MUSCLES. أعمل على وضع برامج تدريبية مدروسة تعتمد على توزيع الفوليوم الأسبوعي المتوازن، واختيار التمارين الفعالة، وبناء خطط تساعد المتدرب على الاستمرار وتحقيق نتائج حقيقية بعيداً عن العشوائية.',
-              'Fitness Coach and workout system designer for VALHAN MUSCLES. Focused on evidence-based training programs, balanced weekly volume distribution, and sustainable progressive routines.'
-            )}</p>
+      'مدرب لياقة بدنية (Fitness Coach) ومصمم الأنظمة التدريبية في منصة VALHAN MUSCLES. أعمل على وضع برامج تدريبية مدروسة تعتمد على توزيع الفوليوم الأسبوعي المتوازن، واختيار التمارين الفعالة، وبناء خطط تساعد المتدرب على الاستمرار وتحقيق نتائج حقيقية بعيداً عن العشوائية.',
+      'Fitness Coach and workout system designer for VALHAN MUSCLES. Focused on evidence-based training programs, balanced weekly volume distribution, and sustainable progressive routines.'
+    )}</p>
 
             <div style="margin-top: 14px;">
               <a class="social-btn btn-ig" href="https://www.instagram.com/_mohameddhatem1" target="_blank" rel="noopener noreferrer" style="padding: 13px 24px; font-size: 1rem; border-radius: 12px; display: inline-flex; align-items: center; gap: 10px;">
@@ -1345,13 +1293,13 @@
             <span class="eyebrow"><i class="fa-solid fa-clipboard-check"></i> ROLE IN VALHAN MUSCLES</span>
             <h2 class="section-title">${t('دور المدرب في مشروع VALHAN MUSCLES', 'Role in VALHAN MUSCLES')}</h2>
             <p>${t(
-              'تتمحور مساهمة كابتن محمد حاتم في منصة VALHAN MUSCLES حول بناء وتدقيق الأسس التدريبية للموقع؛ بداية من تحديد <strong>الحجم التدريبي المعتمد (88 مجموعة أسبوعياً)</strong> وتوزيعه بتردد متكافئ على الأنظمة التدريبية المختلفة، وصولاً إلى اختيار زوايا التمارين المناسبة وإرشادات الأداء الحركي.',
-              'Coach Mohamed Hatem engineered the training methodology of VALHAN MUSCLES: establishing the <strong>approved unified volume (88 sets/week)</strong> across the 7 training systems, selecting optimal exercise variations, and providing form execution cues.'
-            )}</p>
+      'تتمحور مساهمة كابتن محمد حاتم في منصة VALHAN MUSCLES حول بناء وتدقيق الأسس التدريبية للموقع؛ بداية من تحديد <strong>الحجم التدريبي المعتمد (88 مجموعة أسبوعياً)</strong> وتوزيعه بتردد متكافئ على الأنظمة التدريبية المختلفة، وصولاً إلى اختيار زوايا التمارين المناسبة وإرشادات الأداء الحركي.',
+      'Coach Mohamed Hatem engineered the training methodology of VALHAN MUSCLES: establishing the <strong>approved unified volume (88 sets/week)</strong> across the 7 training systems, selecting optimal exercise variations, and providing form execution cues.'
+    )}</p>
             <p class="muted">${t(
-              'الهدف الأساسي هو تقديم محتوى تدريبي واقعي ومنظم يمكن لأي متدرب تطبيقه والالتزام به، مع مراعاة التعافي العضلي وتجنب الإجهاد الزائد، والابتعاد تماماً عن الممارسات العشوائية أو الوعود غير المنطقية.',
-              'The core mission is providing realistic, structured workout plans with adequate recovery intervals, eliminating random routines and unverified promises.'
-            )}</p>
+      'الهدف الأساسي هو تقديم محتوى تدريبي واقعي ومنظم يمكن لأي متدرب تطبيقه والالتزام به، مع مراعاة التعافي العضلي وتجنب الإجهاد الزائد، والابتعاد تماماً عن الممارسات العشوائية أو الوعود غير المنطقية.',
+      'The core mission is providing realistic, structured workout plans with adequate recovery intervals, eliminating random routines and unverified promises.'
+    )}</p>
             <div style="margin-top: 20px;">
               <a class="btn btn-primary" href="${root}/pages/workout-plans.html">
                 <span>${t('تصفح الجداول التدريبية المعتمدة', 'Explore Certified Workout Plans')}</span>
@@ -1369,9 +1317,9 @@
             <span class="eyebrow">COACHING PILLARS</span>
             <h2 class="section-title">${t('فلسفة ومنهجية التدريب (Coaching Philosophy)', 'Coaching Philosophy')}</h2>
             <p class="muted">${t(
-              'مبادئ تدريبية علمية تضمن سلامة الأداء، فاعلية التحفيز العضلي، والتطور المستمر على المدى البعيد.',
-              'Fundamental training principles ensuring joint safety, effective muscle stimulus, and sustainable long-term progression.'
-            )}</p>
+      'مبادئ تدريبية علمية تضمن سلامة الأداء، فاعلية التحفيز العضلي، والتطور المستمر على المدى البعيد.',
+      'Fundamental training principles ensuring joint safety, effective muscle stimulus, and sustainable long-term progression.'
+    )}</p>
           </div>
 
           <div class="philosophy-grid">
@@ -1379,45 +1327,45 @@
               <span class="philosophy-number">01</span>
               <h3 class="philosophy-title">${t('التخطيط التدريبي المنظم', 'Structured Workout Planning')}</h3>
               <p class="philosophy-desc">${t(
-                'تنظيم الحصص الأسبوعية بناءً على أيام التدريب وفترات الراحة يضمن استشفاء العضلات والجهاز العصبي، ويمنع تراكم الإجهاد السلبي الذي يعيق التطور.',
-                'Scheduling sessions with planned rest intervals guarantees muscle and central nervous system recovery, preventing cumulative fatigue.'
-              )}</p>
+      'تنظيم الحصص الأسبوعية بناءً على أيام التدريب وفترات الراحة يضمن استشفاء العضلات والجهاز العصبي، ويمنع تراكم الإجهاد السلبي الذي يعيق التطور.',
+      'Scheduling sessions with planned rest intervals guarantees muscle and central nervous system recovery, preventing cumulative fatigue.'
+    )}</p>
             </article>
 
             <article class="philosophy-card reveal">
               <span class="philosophy-number">02</span>
               <h3 class="philosophy-title">${t('اختيار التمارين المناسبة', 'Exercise Selection')}</h3>
               <p class="philosophy-desc">${t(
-                'اختيار التمارين التي توفر ثباتاً مفصلياً ومقاومة ملائمة لطبيعة الجسم الحركية، والجمع المتوازن بين التمارين المركبة ذات العائد العالي وتمارين العزل المستهدفة.',
-                'Selecting movements that provide joint stability and optimal resistance curves, balancing high-yield compound lifts with targeted isolation.'
-              )}</p>
+      'اختيار التمارين التي توفر ثباتاً مفصلياً ومقاومة ملائمة لطبيعة الجسم الحركية، والجمع المتوازن بين التمارين المركبة ذات العائد العالي وتمارين العزل المستهدفة.',
+      'Selecting movements that provide joint stability and optimal resistance curves, balancing high-yield compound lifts with targeted isolation.'
+    )}</p>
             </article>
 
             <article class="philosophy-card reveal">
               <span class="philosophy-number">03</span>
               <h3 class="philosophy-title">${t('التنظيم الصحيح للحصة', 'Proper Training Organization')}</h3>
               <p class="philosophy-desc">${t(
-                'ترتيب التمارين داخل الحصة بذكاء؛ تقديم الحركات التي تتطلب طاقة وتركيزاً أعلى أولاً، مع موازنة حجم التدريب وتفادي التكرار غير المفيد.',
-                'Sequencing exercises strategically: placing high-demand compound lifts first, balancing session volume, and avoiding redundant fatigue.'
-              )}</p>
+      'ترتيب التمارين داخل الحصة بذكاء؛ تقديم الحركات التي تتطلب طاقة وتركيزاً أعلى أولاً، مع موازنة حجم التدريب وتفادي التكرار غير المفيد.',
+      'Sequencing exercises strategically: placing high-demand compound lifts first, balancing session volume, and avoiding redundant fatigue.'
+    )}</p>
             </article>
 
             <article class="philosophy-card reveal">
               <span class="philosophy-number">04</span>
               <h3 class="philosophy-title">${t('التطور والتحميل التدريجي', 'Progressive Development')}</h3>
               <p class="philosophy-desc">${t(
-                'التركيز على إتقان التكنيك الحركي، ومدى الحركة الكامل، والتحكم في مرحلة النزول، ثم التدرج المحسوب في الأوزان أو التكرارات عبر الأسابيع.',
-                'Mastering movement execution, full range of motion, and eccentric control, followed by measured increases in weight or repetitions over time.'
-              )}</p>
+      'التركيز على إتقان التكنيك الحركي، ومدى الحركة الكامل، والتحكم في مرحلة النزول، ثم التدرج المحسوب في الأوزان أو التكرارات عبر الأسابيع.',
+      'Mastering movement execution, full range of motion, and eccentric control, followed by measured increases in weight or repetitions over time.'
+    )}</p>
             </article>
 
             <article class="philosophy-card reveal" style="grid-column: span 2;">
               <span class="philosophy-number">05</span>
               <h3 class="philosophy-title">${t('الاستمرارية والالتزام', 'Consistency & Adherence')}</h3>
               <p class="philosophy-desc">${t(
-                'أفضل خطة تدريبية هي الخطة التي تستطيع الالتزام بها بانتظام على مدار الشهور والسنوات. الاستمرارية في أداء الأساسيات والتغذية والراحة هي جوهر البناء البدني الحقيقي.',
-                'The best training program is the one you can adhere to consistently over months and years. Consistency in basics, nutrition, and rest drives true physical development.'
-              )}</p>
+      'أفضل خطة تدريبية هي الخطة التي تستطيع الالتزام بها بانتظام على مدار الشهور والسنوات. الاستمرارية في أداء الأساسيات والتغذية والراحة هي جوهر البناء البدني الحقيقي.',
+      'The best training program is the one you can adhere to consistently over months and years. Consistency in basics, nutrition, and rest drives true physical development.'
+    )}</p>
             </article>
           </div>
         </div>
@@ -1430,9 +1378,9 @@
             <span class="eyebrow" style="color:var(--red2);"><i class="fa-solid fa-envelope-open-text"></i> CONTACT & INQUIRIES</span>
             <h2>${t('تواصل مع كابتن محمد حاتم', 'Get in Touch with Coach Mohamed Hatem')}</h2>
             <p>${t(
-              'للاستفسارات الرياضية ومتابعة المحتوى التدريبي اليومي والنصائح العملية، يمكنك التواصل مباشرة عبر الحساب الرسمي على Instagram:',
-              'For coaching inquiries, daily training tips, and practical workout guidance, connect directly via Instagram:'
-            )}</p>
+      'للاستفسارات الرياضية ومتابعة المحتوى التدريبي اليومي والنصائح العملية، يمكنك التواصل مباشرة عبر الحساب الرسمي على Instagram:',
+      'For coaching inquiries, daily training tips, and practical workout guidance, connect directly via Instagram:'
+    )}</p>
 
             <div style="margin-bottom: 24px;">
               <a class="social-btn btn-ig" href="https://www.instagram.com/_mohameddhatem1" target="_blank" rel="noopener noreferrer" style="padding: 14px 28px; font-size: 1.05rem; display: inline-flex;">
@@ -1476,6 +1424,8 @@
   // Handle Plans Page Interactions
   if (page === 'plans') {
     const grid = document.getElementById('plans-grid');
+    const planModal = document.getElementById('plan-modal');
+
     const filter = () => {
       const d = document.getElementById('plan-days').value;
       const l = document.getElementById('plan-level').value;
@@ -1537,20 +1487,39 @@
         </h3>
         <div>${scheduleHtml}</div>
         <div style="margin-top:24px; display:flex; gap:12px; flex-wrap:wrap;">
-          <a class="btn btn-primary" href="${root}/pages/workout-builder.html">
-            <i class="fa-solid fa-wrench"></i> ${t('فتح في منشئ الخطط والتعديل', 'Open in Workout Builder')}
-          </a>
-          <a class="btn btn-outline" href="${root}/assets/reference-workout.pdf" target="_blank">
-            <i class="fa-solid fa-file-pdf"></i> ${t('عرض الدليل المرجعي الكامل PDF', 'View Full Reference PDF')}
-          </a>
+          <button type="button" class="btn btn-primary" data-use-plan="${p.id}">
+            <i class="fa-solid fa-wrench"></i> ${t('أنشئ خطتك من هذه الخطة', 'Create your plan from this one')}
+          </button>
+          <button type="button" class="btn btn-quiet" data-pdf="${p.id}">
+            <i class="fa-solid fa-file-pdf"></i> ${t('تحميل PDF', 'Download PDF')}
+          </button>
         </div>`;
 
-      document.getElementById('plan-modal')?.classList.add('open');
+      planModal?.classList.add('open');
     });
 
-    document.querySelector('[data-close]')?.addEventListener('click', () => {
-      document.getElementById('plan-modal')?.classList.remove('open');
+    // PDF download + hand-off to the builder (works from cards and from the modal)
+    document.addEventListener('click', e => {
+      const pdf = e.target.closest('[data-pdf]');
+      if (pdf) {
+        const p = plans.find(x => x.id === pdf.dataset.pdf);
+        if (p) window.ValhanPDF?.(window.ValhanPlanToBuilder(p));
+        return;
+      }
+      const use = e.target.closest('[data-use-plan]');
+      if (use) {
+        const p = plans.find(x => x.id === use.dataset.usePlan);
+        if (!p) return;
+        if (!window.ValhanStore.set('valhan-builder-import', window.ValhanPlanToBuilder(p))) {
+          return window.ValhanToast?.(t('تعذر نقل الخطة (التخزين غير متاح).', 'Could not transfer the plan (storage unavailable).'));
+        }
+        location.href = `${root}/pages/workout-builder.html`;
+      }
     });
+
+    document.querySelector('[data-close]')?.addEventListener('click', () => planModal?.classList.remove('open'));
+    planModal?.addEventListener('click', e => { if (e.target === planModal) planModal.classList.remove('open'); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') planModal?.classList.remove('open'); });
   }
 
   // Scroll reveal observer
