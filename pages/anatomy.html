@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b0b0c">
+  <meta name="description" content="VALHAN MUSCLES — خطط تدريب ومكتبة تمارين لبناء قوتك بوعي.">
+  <title>VALHAN MUSCLES — Anatomy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Cairo:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/all.min.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/header.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/pages/pages.css">
+</head>
+
+<body data-root=".." data-page="anatomy"><a class="skip-link" href="#main-content">تخطَّ إلى المحتوى</a>
+  <header id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="VALHAN MUSCLES - Home">
+        <img src="../assets/logos/logo.webp" alt="VALHAN MUSCLES">
+        <span>VALHAN <b>MUSCLES</b></span>
+      </a>
+      <nav class="nav" id="main-nav" aria-label="Main navigation">
+        <a class="" href="../index.html" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
+        <a class="" href="../pages/workout-plans.html" data-ar="الخطط" data-en="Plans">الخطط</a>
+        <a class="" href="../pages/workout-builder.html" data-ar="أنشئ خطتك" data-en="Builder">أنشئ خطتك</a>
+        <a href="../pages/exercises.html" data-ar="التمارين" data-en="Exercises">التمارين</a>
+        <a class="active" href="../pages/anatomy.html" data-ar="تشريح العضلات" data-en="Anatomy">تشريح العضلات</a>
+        <a class="" href="../pages/academy.html" data-ar="الأكاديمية" data-en="Academy">الأكاديمية</a>
+        <a class="" href="../pages/our-team.html" data-ar="فريق العمل" data-en="Our Team">فريق العمل</a>
+        <a class="" href="../pages/about.html" data-ar="من نحن" data-en="About">من نحن</a>
+      </nav>
+      <div class="head-actions">
+        <button class="icon-btn" id="lang-toggle" type="button" aria-label="Change language">EN</button>
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Toggle theme">☼</button>
+        <button class="menu-btn" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"
+          aria-controls="main-nav">☰</button>
+      </div>
+    </div>
+  </header>
+  <main id="main-content">
+    <section class="page-hero"><div class="container">
+      <span class="eyebrow">INTERACTIVE ANATOMY</span>
+      <h1><span data-ar="خريطة العضلات" data-en="Muscle Map">خريطة العضلات</span></h1>
+      <p data-ar="استكشف المجموعات العضلية واختر مجموعة لعرض التمارين المرتبطة بها. البيانات التشريحية قيد مراجعة المدرب." data-en="Explore muscle groups and select one to view linked exercises. Anatomy data is pending coach review.">استكشف المجموعات العضلية واختر مجموعة لعرض التمارين المرتبطة بها. البيانات التشريحية قيد مراجعة المدرب.</p>
+    </div></section>
+    <section class="section anatomy-section">
+      <div class="container anatomy-layout">
+        <aside class="anatomy-groups card" aria-label="Muscle groups">
+          <h2 data-ar="المجموعات العضلية" data-en="Muscle Groups">المجموعات العضلية</h2>
+          <div id="anatomy-group-list" class="anatomy-group-list"></div>
+          <p class="anatomy-side-note" data-ar="اضغط على أي مجموعة لعرض عضلاتها." data-en="Choose a group to explore its muscles.">اضغط على أي مجموعة لعرض عضلاتها.</p>
+        </aside>
+        <div class="anatomy-center">
+          <div class="anatomy-stage card">
+            <div class="anatomy-stage-head">
+              <div><span class="eyebrow">INTERACTIVE BODY MAP</span><h2 data-ar="استكشف عضلات الجسم" data-en="Explore the Muscular System">استكشف عضلات الجسم</h2></div>
+              <div class="anatomy-tabs" role="group" aria-label="Anatomy view">
+                <button class="chip active" type="button" data-view="all" aria-pressed="true"><span data-ar="الجسم كاملًا" data-en="Both Views">الجسم كاملًا</span></button>
+                <button class="chip" type="button" data-view="front" aria-pressed="false"><span data-ar="الأمام" data-en="Front">الأمام</span></button>
+                <button class="chip" type="button" data-view="back" aria-pressed="false"><span data-ar="الخلف" data-en="Back">الخلف</span></button>
+              </div>
+            </div>
+            <svg class="anatomy-figure anatomy-figure-pair" viewBox="0 0 760 650" role="group" aria-label="Interactive front and back muscle maps">
+              <defs><linearGradient id="bodyShade" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#aebbd5"/><stop offset="1" stop-color="#68758f"/></linearGradient></defs>
+              <g class="anatomy-person anatomy-person-front" data-person="front" transform="translate(10 4)">
+                <text class="anatomy-view-label" x="180" y="24" text-anchor="middle">FRONT</text>
+                <g class="body-base"><circle cx="180" cy="67" r="29"/><path d="M151 101 Q130 105 117 132 L105 214 Q112 244 130 257 L139 326 L126 438 L118 572 Q138 590 158 578 L176 448 L184 448 L202 578 Q222 590 242 572 L234 438 L221 326 L230 257 Q248 244 255 214 L243 132 Q230 105 209 101 Q180 88 151 101Z"/><path d="M119 126 Q96 130 88 159 L55 278 Q49 303 65 313 Q79 319 88 298 L126 205 L143 145Z M241 126 Q264 130 272 159 L305 278 Q311 303 295 313 Q281 319 272 298 L234 205 L217 145Z"/><path d="M139 565 Q116 576 108 600 Q104 613 121 616 L171 616 Q183 609 180 590 L176 573Z M221 565 Q244 576 252 600 Q256 613 239 616 L189 616 Q177 609 180 590 L184 573Z"/></g>
+                <g class="anatomy-zones" data-anatomy-front>
+                  <path data-muscle="front-delts" d="M119 128 Q130 105 151 119 L145 164 Q126 176 111 158Z M209 119 Q230 105 241 128 L249 158 Q234 176 215 164Z"/>
+                  <path data-muscle="chest" d="M143 143 Q160 126 178 143 L176 198 Q151 204 132 184Z M182 143 Q200 126 217 143 L228 184 Q209 204 184 198Z"/>
+                  <path data-muscle="biceps" d="M94 177 Q108 164 123 180 L105 247 Q88 256 82 238Z M237 180 Q252 164 266 177 L278 238 Q272 256 255 247Z"/>
+                  <path data-muscle="side-delts" d="M106 139 Q116 119 128 130 L124 171 Q110 180 99 164Z M232 130 Q244 119 254 139 L261 164 Q250 180 236 171Z"/>
+                  <path data-muscle="core" d="M151 204 L177 207 L175 300 L150 300Z M183 207 L209 204 L210 300 L185 300Z"/>
+                  <path data-muscle="adductors" d="M151 313 L178 315 L173 420 L151 435 L139 372Z M182 315 L209 313 L221 372 L209 435 L187 420Z"/>
+                  <path data-muscle="quads" d="M137 324 L151 314 L174 319 L167 447 L140 459 L128 410Z M209 314 L223 324 L232 410 L220 459 L193 447 L186 319Z"/>
+                  <path data-muscle="calves" d="M133 463 L165 455 L160 552 L139 572 L126 552Z M195 455 L227 463 L234 552 L221 572 L200 552Z"/>
+                </g>
+              </g>
+              <g class="anatomy-person anatomy-person-back" data-person="back" transform="translate(380 4)">
+                <text class="anatomy-view-label" x="180" y="24" text-anchor="middle">BACK</text>
+                <g class="body-base"><circle cx="180" cy="67" r="29"/><path d="M151 101 Q130 105 117 132 L105 214 Q112 244 130 257 L139 326 L126 438 L118 572 Q138 590 158 578 L176 448 L184 448 L202 578 Q222 590 242 572 L234 438 L221 326 L230 257 Q248 244 255 214 L243 132 Q230 105 209 101 Q180 88 151 101Z"/><path d="M119 126 Q96 130 88 159 L55 278 Q49 303 65 313 Q79 319 88 298 L126 205 L143 145Z M241 126 Q264 130 272 159 L305 278 Q311 303 295 313 Q281 319 272 298 L234 205 L217 145Z"/><path d="M139 565 Q116 576 108 600 Q104 613 121 616 L171 616 Q183 609 180 590 L176 573Z M221 565 Q244 576 252 600 Q256 613 239 616 L189 616 Q177 609 180 590 L184 573Z"/></g>
+                <g class="anatomy-zones" data-anatomy-back>
+                  <path data-muscle="traps" d="M151 112 L180 101 L209 112 L222 164 L180 202 L138 164Z"/>
+                  <path data-muscle="rear-delts" d="M119 128 Q130 105 151 119 L145 164 Q126 176 111 158Z M209 119 Q230 105 241 128 L249 158 Q234 176 215 164Z"/>
+                  <path data-muscle="triceps" d="M94 177 Q108 164 123 180 L105 247 Q88 256 82 238Z M237 180 Q252 164 266 177 L278 238 Q272 256 255 247Z"/>
+                  <path data-muscle="lats" d="M139 174 L176 198 L171 294 L143 315 L125 244Z M184 198 L221 174 L235 244 L217 315 L189 294Z"/>
+                  <path data-muscle="mid-back" d="M177 203 L183 203 L190 285 L180 302 L170 285Z"/>
+                  <path data-muscle="lower-back" d="M151 292 L177 299 L177 335 L151 342Z M183 299 L209 292 L209 342 L183 335Z"/>
+                  <path data-muscle="glutes" d="M139 344 L177 339 L178 405 L151 423 L132 390Z M183 339 L221 344 L228 390 L209 423 L182 405Z"/>
+                  <path data-muscle="hamstrings" d="M139 424 L174 410 L168 516 L142 535 L129 483Z M186 410 L221 424 L231 483 L218 535 L192 516Z"/>
+                  <path data-muscle="calves" d="M133 463 L165 455 L160 552 L139 572 L126 552Z M195 455 L227 463 L234 552 L221 572 L200 552Z"/>
+                </g>
+              </g>
+            </svg>
+            <div class="anatomy-legend"><span><i class="legend-selected"></i><b data-ar="العضلة المحددة" data-en="Selected muscle">العضلة المحددة</b></span><span><i class="legend-neutral"></i><b data-ar="مناطق أخرى" data-en="Other regions">مناطق أخرى</b></span><span><i class="legend-pending"></i><b data-ar="البيانات قيد المراجعة" data-en="Pending coach review">البيانات قيد المراجعة</b></span></div>
+          </div>
+          <p class="anatomy-disclaimer" data-ar="ملاحظة: الخريطة توضيحية للتصفح فقط، وتوزيع العضلات وارتباط التمارين بها قيد مراجعة الكوتش." data-en="Note: This map is for navigation only. Muscle mapping and exercise associations are pending coach review.">ملاحظة: الخريطة توضيحية للتصفح فقط، وتوزيع العضلات وارتباط التمارين بها قيد مراجعة الكوتش.</p>
+        </div>
+        <aside class="anatomy-panel card" aria-live="polite">
+          <span class="eyebrow">MUSCLE DETAILS</span><h2 id="anatomy-title" data-ar="اختر مجموعة عضلية" data-en="Select a muscle group">اختر مجموعة عضلية</h2>
+          <p id="anatomy-description" class="muted" data-ar="اضغط على عضلة في الخريطة أو اختر مجموعة من القائمة." data-en="Select a muscle on the map or choose a group from the list.">اضغط على عضلة في الخريطة أو اختر مجموعة من القائمة.</p>
+          <div id="anatomy-selected-meta" class="anatomy-selected-meta"></div><div id="anatomy-muscle-list" class="anatomy-muscle-list"></div>
+          <div class="anatomy-panel-divider"></div><div class="anatomy-related-head"><h3 data-ar="التمارين المرتبطة" data-en="Related Exercises">التمارين المرتبطة</h3><span id="anatomy-exercise-count">0</span></div>
+          <div id="anatomy-exercises" class="anatomy-exercise-list"><p class="muted" data-ar="اختر عضلة لعرض التمارين." data-en="Choose a muscle to see related exercises.">اختر عضلة لعرض التمارين.</p></div>
+          <a class="anatomy-all-exercises" href="./exercises.html"><span data-ar="عرض جميع التمارين" data-en="View all exercises">عرض جميع التمارين</span> <span aria-hidden="true">←</span></a>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <footer id="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="../index.html">
+            <img src="../assets/logos/logo.webp" alt="VALHAN MUSCLES">
+            <span>VALHAN <b>MUSCLES</b></span>
+          </a>
+          <p data-ar="خطط أوضح. تدريب أذكى. تقدم مستمر." data-en="Clear plans. Smarter training. Consistent progress.">
+            خطط أوضح. تدريب أذكى. تقدم مستمر.</p>
+        </div>
+        <div>
+          <h3 class="footer-title" data-ar="استكشف" data-en="Explore">استكشف</h3>
+          <ul class="footer-links">
+            <li><a href="../pages/workout-plans.html" data-ar="الخطط" data-en="Plans">الخطط</a></li>
+            <li><a href="../pages/workout-builder.html" data-ar="أنشئ خطتك" data-en="Builder">أنشئ خطتك</a></li>
+            <li><a href="../pages/exercises.html" data-ar="التمارين" data-en="Exercises">التمارين</a></li>
+            <li><a href="../pages/academy.html" data-ar="الأكاديمية" data-en="Academy">الأكاديمية</a></li>
+            <li><a href="../pages/our-team.html" data-ar="فريق العمل" data-en="Our Team">فريق العمل</a></li>
+            <li><a href="../pages/about.html" data-ar="من نحن" data-en="About">من نحن</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer-title" data-ar="فريق العمل" data-en="Our Team">فريق العمل</h3>
+          <ul class="footer-links">
+            <li><a href="../pages/our-team.html" data-ar="فريق المشروع" data-en="Team Hub">فريق المشروع</a></li>
+            <li><a href="../pages/developer.html" data-ar="المطور: سيمو" data-en="Developer: Simo">المطور: سيمو</a></li>
+            <li><a href="../pages/coach.html" data-ar="المدرب: محمد حاتم" data-en="Coach: Mohamed Hatem">المدرب: محمد
+                حاتم</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer-title" data-ar="معلومة مهمة" data-en="Important note">معلومة مهمة</h3>
+          <p data-ar="المحتوى تعليمي ورياضي ولا يغني عن استشارة مختص طبي عند الحاجة."
+            data-en="Educational fitness content; seek qualified medical advice when needed.">المحتوى تعليمي ورياضي ولا
+            يغني عن استشارة مختص طبي عند الحاجة.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="current-year">2026</span> VALHAN MUSCLES</span>
+        <span>Build Your Strength. Master Your Fitness.</span>
+      </div>
+    </div>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="../js/main.js" defer></script>
+  <script src="../js/data/muscles.js" defer></script>
+  <script src="../js/data/equipment.js" defer></script>
+  <script src="../js/data/exercises.js" defer></script>
+  <script src="../js/anatomy.js" defer></script>
+  <script src="../js/exercises.js" defer></script>
+  <script src="../js/features/page-interactions.js" defer></script>
+</body>
+
+</html>

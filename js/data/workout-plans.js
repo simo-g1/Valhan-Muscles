@@ -580,5 +580,35 @@
   ];
 
   // Shared with workout-builder.js (conversion + PDF) so there is a single source of truth
+
+  const exerciseIds = {
+    'Incline Chest': 'incline-chest-smith', 'Incline Chest Press (Smith)': 'incline-chest-smith',
+    'Fly Machine': 'chest-fly-machine', 'Machine Chest Fly': 'chest-fly-machine',
+    'Lat Pulldown': 'lat-pulldown', 'T-Bar Row': 't-bar-row',
+    'Close-Grip Pulldown': 'close-grip-lat-pulldown', 'Close Grip Lat Pulldown': 'close-grip-lat-pulldown',
+    'Leg Press': 'leg-press', 'Leg Extension': 'leg-extension', 'RDL': 'romanian-deadlift',
+    'Romanian Deadlift': 'romanian-deadlift', 'Leg Curl': 'leg-curl', 'Seated Leg Curl': 'leg-curl',
+    'Hip Adductor': 'hip-adductor', 'Standing Calf Raise': 'standing-calf-raise',
+    'Back Extension': 'lower-back-extension', 'Cable Biceps Curl': 'cable-biceps-curl',
+    'Cable Lateral Raise': 'cable-lateral-raise', 'Dumbbell Shrugs': 'shrugs',
+    'Rear Delt Fly': 'rear-delt-fly', 'Machine Shoulder Press': 'machine-shoulder-press',
+    'Triceps Pushdown': 'triceps-pushdown'
+  };
+  const focusIds = {
+    'Front Delts': 'front-delts', 'Lateral Raises': 'side-delts', 'Rear Delts': 'rear-delts',
+    'Traps': 'traps', 'Biceps': 'biceps', 'Triceps': 'triceps', 'Calves': 'calves',
+    'Adductors': 'adductors', 'Lower Back': 'lower-back'
+  };
+  plans.forEach(plan => {
+    plan.normalizedSchedule = plan.schedule.map(day => ({
+      day: day.day,
+      entries: day.exercises.map(([label, arabicLabel, setsText]) => {
+        const exerciseId = exerciseIds[label];
+        const sets = Number((setsText.match(/\d+/) || [0])[0]);
+        if (exerciseId) return { type: 'exercise', exerciseId, label: { ar: arabicLabel, en: label }, sets, reps: null };
+        return { type: 'muscle-focus', muscleId: focusIds[label] || null, label: { ar: arabicLabel, en: label }, sets, reps: null, reviewStatus: 'pending' };
+      })
+    }));
+  });
   window.ValhanPlans = plans;
 })();

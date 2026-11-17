@@ -11,7 +11,23 @@
   const rtl = () => document.documentElement.dir === 'rtl';
   const cat = id => A.cats.find(c => c.id === id) || A.cats[0];
   const href = slug => `${root}/pages/article.html?a=${encodeURIComponent(slug)}`;
+
   const mins = n => `${n} ${t('دقائق قراءة', 'min read')}`;
+  const SAVED_KEY = 'valhan-saved-articles-v1';
+  const PROGRESS_KEY = 'valhan-reading-progress-v1';
+  const readStore = key => window.ValhanStore?.get(key, {}) || {};
+  const writeStore = (key, value) => window.ValhanStore?.set(key, value);
+  const savedArticles = () => readStore(SAVED_KEY);
+  const readingProgress = () => readStore(PROGRESS_KEY);
+  const isSaved = slug => Boolean(savedArticles()[slug]);
+  const progressFor = slug => Math.max(0, Math.min(100, Number(readingProgress()[slug]?.percent || 0)));
+  const toggleSaved = slug => {
+    const saved = savedArticles();
+    if (saved[slug]) delete saved[slug]; else saved[slug] = { savedAt: Date.now() };
+    writeStore(SAVED_KEY, saved);
+    return Boolean(saved[slug]);
+  };
+
 
   /* ---------- Inline SVG diagrams (theme aware via CSS variables) ---------- */
   const svg = (h, label, body) =>
@@ -90,12 +106,18 @@
   const art = (c, cls = '') => `<div class="art art-${c.id} ${cls}" aria-hidden="true"><i class="fa-solid ${c.icon}"></i></div>`;
   const card = a => {
     const c = cat(a.cat);
-    return `<article class="card a-card reveal">
+
+    const saved = isSaved(a.slug);
+    const progress = progressFor(a.slug);
+    return `<article class="card a-card reveal" data-article-card="${esc(a.slug)}">
       ${art(c)}
       <div class="a-card-body">
         <span class="tag">${esc(L(c.n))}</span>
         <h3><a href="${href(a.slug)}">${esc(L(a.title))}</a></h3>
         <p>${esc(L(a.intro))}</p>
+        <div class="a-card-progress" ${progress ? '' : 'hidden'}><span style="width:${progress}%"></span></div>
+        <div class="a-card-status"><small>${progress >= 95 ? t('مكتمل', 'Completed') : progress ? `${t('تقدم القراءة', 'Reading progress')} ${progress}%` : t('لم تبدأ القراءة', 'Not started')}</small>
+          <button type="button" class="bookmark-btn ${saved ? 'is-saved' : ''}" data-bookmark="${esc(a.slug)}" aria-pressed="${saved}" aria-label="${saved ? t('إزالة من المحفوظات', 'Remove bookmark') : t('حفظ المقال', 'Save article')}"><i class="fa-${saved ? 'solid' : 'regular'} fa-bookmark" aria-hidden="true"></i></button></div>
         <div class="a-meta"><span><i class="fa-regular fa-clock" aria-hidden="true"></i> ${mins(a.min)}</span>
         <a class="a-more" href="${href(a.slug)}" aria-label="${esc(t('اقرأ المقال: ', 'Read article: ') + L(a.title))}">${t('اقرأ المقال', 'Read')} <i class="fa-solid ${rtl() ? 'fa-arrow-left' : 'fa-arrow-right'}" aria-hidden="true"></i></a></div>
       </div></article>`;
@@ -105,22 +127,26 @@
   function renderCenter() {
     const host = document.getElementById('article-center');
     if (!host) return;
-
     const chips = host.querySelector('#article-categories');
     const grid = host.querySelector('#art-grid');
     const empty = host.querySelector('#art-empty');
     const search = host.querySelector('#art-q');
+    const difficulty = host.querySelector('#art-difficulty');
+    const savedToggle = host.querySelector('#saved-articles-toggle');
     if (!chips || !grid || !empty || !search) return;
 
-    let active = 'all';
-    let query = '';
+    let active = 'all', query = '', savedOnly = false;
     chips.innerHTML = `<button type="button" class="chip" data-cat="all" aria-pressed="true">${t('الكل', 'All')}</button>` +
       A.cats.map(category => `<button type="button" class="chip" data-cat="${category.id}" aria-pressed="false">${esc(L(category.n))}</button>`).join('');
 
     const draw = () => {
+      const level = difficulty?.value || 'all';
+      const saved = savedArticles();
       const list = A.list.filter(article =>
         (active === 'all' || article.cat === active) &&
-        (L(article.title) + ' ' + L(article.intro)).toLowerCase().includes(query)
+        (level === 'all' || (article.difficulty || 'unrated') === level) &&
+        (!savedOnly || Boolean(saved[article.slug])) &&
+        (article.title.join(' ') + ' ' + article.intro.join(' ')).toLowerCase().includes(query)
       );
       grid.innerHTML = list.map(card).join('');
       empty.hidden = list.length > 0;
@@ -134,8 +160,19 @@
       chips.querySelectorAll('.chip').forEach(chip => chip.setAttribute('aria-pressed', String(chip === button)));
       draw();
     });
-    search.addEventListener('input', event => {
-      query = event.target.value.trim().toLowerCase();
+    search.addEventListener('input', event => { query = event.target.value.trim().toLowerCase(); draw(); });
+    difficulty?.addEventListener('change', draw);
+    savedToggle?.addEventListener('click', event => {
+      event.preventDefault();
+      savedOnly = !savedOnly;
+      savedToggle.dataset.showSaved = String(savedOnly);
+      savedToggle.classList.toggle('active', savedOnly);
+      draw();
+    });
+    grid.addEventListener('click', event => {
+      const button = event.target.closest('[data-bookmark]');
+      if (!button) return;
+      toggleSaved(button.dataset.bookmark);
       draw();
     });
     draw();
@@ -152,6 +189,15 @@
       return;
     }
     const c = cat(a.cat);
+    const progressMap = readingProgress();
+    const saved = isSaved(a.slug);
+    const metadata = `<section class="article-credentials card" aria-label="${t('بيانات المقال', 'Article details')}">
+      <div><strong>${t('الكاتب', 'Author')}</strong><span>${a.author ? esc(a.author) : t('لم يُحدد بعد', 'Not assigned')}</span></div>
+      <div><strong>${t('مراجعة المدرب', 'Coach review')}</strong><span>${a.reviewer ? esc(a.reviewer) : t('بانتظار المراجعة', 'Pending review')}</span></div>
+      <div><strong>${t('حالة المحتوى', 'Content status')}</strong><span>${a.reviewStatus === 'approved' ? t('تمت المراجعة', 'Reviewed') : t('قيد المراجعة', 'Pending review')}</span></div>
+      ${a.reviewDate ? `<div><strong>${t('آخر مراجعة', 'Last reviewed')}</strong><span>${esc(a.reviewDate)}</span></div>` : ''}
+      ${a.sources?.length ? `<div class="article-sources"><strong>${t('المصادر', 'References')}</strong><ul>${a.sources.map(source => `<li>${source.url ? `<a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.title || source.url)}</a>` : esc(source.title || source)}</li>`).join('')}</ul></div>` : `<p class="muted">${t('المصادر ستُضاف بعد مراجعة المقال واعتمادها.', 'References will be added after the article is reviewed and approved.')}</p>`}
+    </section>`;
     document.title = `${L(a.title)} | VALHAN MUSCLES`;
     const md = document.querySelector('meta[name="description"]');
     if (md) md.content = L(a.intro);
@@ -176,8 +222,10 @@
         <span class="eyebrow">${esc(L(c.n))}</span>
         <h1>${esc(L(a.title))}</h1>
         <p class="article-meta muted"><i class="fa-regular fa-clock" aria-hidden="true"></i> ${mins(a.min)}</p>
+        <button type="button" class="btn btn-outline article-bookmark ${saved ? 'active' : ''}" id="article-bookmark" aria-pressed="${saved}"><i class="fa-${saved ? 'solid' : 'regular'} fa-bookmark" aria-hidden="true"></i> ${saved ? t('إزالة من المحفوظات', 'Remove bookmark') : t('حفظ المقال', 'Save article')}</button>
         <p class="article-intro">${esc(L(a.intro))}</p>
       </header>
+      <div class="container">${metadata}</div>
       <div class="container article-layout">
         <nav aria-label="${t('محتويات المقال', 'Table of contents')}">
           <details class="toc" open><summary>${t('محتويات المقال', 'On this page')}</summary>
@@ -197,6 +245,48 @@
     main.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
     const toc = main.querySelector('.toc');
     if (toc && matchMedia('(max-width:900px)').matches) toc.open = false;
+
+    main.addEventListener('click', event => {
+      const cardBookmark = event.target.closest('[data-bookmark]');
+      if (!cardBookmark) return;
+      const nowSaved = toggleSaved(cardBookmark.dataset.bookmark);
+      cardBookmark.classList.toggle('is-saved', nowSaved);
+      cardBookmark.setAttribute('aria-pressed', String(nowSaved));
+      cardBookmark.setAttribute('aria-label', nowSaved ? t('إزالة من المحفوظات', 'Remove bookmark') : t('حفظ المقال', 'Save article'));
+      cardBookmark.innerHTML = `<i class="fa-${nowSaved ? 'solid' : 'regular'} fa-bookmark" aria-hidden="true"></i>`;
+    });
+
+    const saveButton = main.querySelector('#article-bookmark');
+    saveButton?.addEventListener('click', () => {
+      const nowSaved = toggleSaved(a.slug);
+      saveButton.classList.toggle('active', nowSaved);
+      saveButton.setAttribute('aria-pressed', String(nowSaved));
+      saveButton.innerHTML = `<i class="fa-${nowSaved ? 'solid' : 'regular'} fa-bookmark" aria-hidden="true"></i> ${nowSaved ? t('إزالة من المحفوظات', 'Remove bookmark') : t('حفظ المقال', 'Save article')}`;
+    });
+
+    const progressBar = document.querySelector('#article-reading-progress span');
+    let restored = false;
+    const updateProgress = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const percent = max > 0 ? Math.round(Math.max(0, Math.min(1, window.scrollY / max)) * 100) : 100;
+      if (progressBar) progressBar.style.width = `${percent}%`;
+      const map = readingProgress();
+      const previous = map[a.slug] || {};
+      map[a.slug] = { percent: Math.max(percent, Number(previous.percent || 0)), updatedAt: Date.now() };
+      writeStore(PROGRESS_KEY, map);
+    };
+    const previousProgress = Number(progressMap[a.slug]?.percent || 0);
+    if (previousProgress > 0 && previousProgress < 95) {
+      requestAnimationFrame(() => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        window.scrollTo(0, max * previousProgress / 100);
+        restored = true;
+      });
+    }
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress);
+    setTimeout(() => { if (!restored) updateProgress(); }, 250);
+
   }
 
   document.addEventListener('DOMContentLoaded', () => (page === 'academy' ? renderCenter() : renderArticle()));

@@ -4,31 +4,34 @@
   const root = document.body.dataset.root || '.';
   const exercises = window.ValhanExercises || [];
   const t = window.ValhanT;
+  const lang = () => window.ValhanLang?.() || 'ar';
+  const exName = ex => window.ValhanExerciseName?.(ex) || ex.legacyName || ex.name?.en || '';
+  const muscleName = ex => ex.muscle;
 
   const imageFor = id => `${root}/assets/images/exercises/${exercises.find(item => item.id === id)?.image || 'machines/chest-press.webp'}`;
   window.ValhanExerciseImage = imageFor;
   const cardFor = exercise => `
     <article class="card exercise-card reveal" data-exercise="${exercise.id}" tabindex="0" role="button">
-      <img src="${imageFor(exercise.id)}" alt="${exercise.name}" loading="lazy">
+      <img src="${imageFor(exercise.id)}" alt="${exName(exercise)}" loading="lazy">
       <div class="body">
-        <h3>${exercise.name}</h3>
-        <p>${exercise.muscle} · ${exercise.equipment}</p>
+        <h3>${exName(exercise)}</h3>
+        <p>${muscleName(exercise)} · ${exercise.equipment}</p>
         <span class="tag">${t('التفاصيل والفيديوهات', 'Details & videos')} ←</span>
       </div>
     </article>`;
 
   const detailFor = exercise => {
-    const query = encodeURIComponent(`${exercise.name} exercise tutorial`);
+    const query = encodeURIComponent(`${exName(exercise)} exercise tutorial`);
     return `
       <section class="page-hero"><div class="container">
-        <span class="eyebrow">EXERCISE GUIDE</span><h1>${exercise.name}</h1>
-        <p>${exercise.muscle} · ${exercise.equipment}</p>
+        <span class="eyebrow">EXERCISE GUIDE</span><h1>${exName(exercise)}</h1>
+        <p>${muscleName(exercise)} · ${exercise.equipment}</p>
       </div></section>
       <section class="section"><div class="container detail-layout">
-        <img class="detail-image" src="${imageFor(exercise.id)}" alt="${exercise.name}">
-        <div><span class="eyebrow">HOW TO PERFORM</span><h2>${exercise.name}</h2>
+        <img class="detail-image" src="${imageFor(exercise.id)}" alt="${exName(exercise)}">
+        <div><span class="eyebrow">HOW TO PERFORM</span><h2>${exName(exercise)}</h2>
           <p>${exercise.how}</p>
-          <div class="badge-row"><span class="tag">${exercise.muscle}</span><span class="tag">${exercise.equipment}</span><span class="tag">${exercise.target}</span></div>
+          <div class="badge-row"><span class="tag">${muscleName(exercise)}</span><span class="tag">${exercise.equipment}</span><span class="tag">${exercise.target}</span></div>
           <h3>${t('خطوات الأداء', 'Execution cues')}</h3>
           <ol>
             <li>${t('اضبط الجهاز أو وضع البداية بما يناسبك.', 'Set up the machine and starting position.')}</li>
@@ -37,9 +40,10 @@
           </ol>
           <div class="video-list"><h3>${t('فيديوهات توضيحية', 'Video tutorials')}</h3>
             <a class="video-link" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/results?search_query=${query}">▶ ${t('ابحث عن شرح التمرين على YouTube', 'Find exercise demonstrations on YouTube')}</a>
-            <a class="video-link" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/results?search_query=${encodeURIComponent(`${exercise.name} form mistakes`)}">▶ ${t('الأخطاء الشائعة وطريقة الأداء الصحيحة', 'Common mistakes and proper form')}</a>
+            <a class="video-link" target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/results?search_query=${encodeURIComponent(`${exName(exercise)} form mistakes`)}">▶ ${t('الأخطاء الشائعة وطريقة الأداء الصحيحة', 'Common mistakes and proper form')}</a>
           </div>
           <p class="muted" style="margin-top:14px;font-size:.82rem">${t('روابط البحث تفتح نتائج فيديوهات حديثة؛ اختر شرحًا من مدرب موثوق.', 'Search links open current video results; choose instruction from a qualified source.')}</p>
+          ${exercise.primaryMuscles?.length ? `<a class="btn btn-outline" href="${root}/pages/anatomy.html?muscle=${encodeURIComponent(exercise.primaryMuscles[0])}">${t('استكشف العضلة تشريحيًا', 'Explore muscle anatomy')}</a>` : ''}
           <a class="btn btn-outline" href="${root}/pages/exercises.html">${t('العودة إلى مكتبة التمارين', 'Back to Exercise Library')}</a>
         </div>
       </div></section>`;
@@ -72,7 +76,7 @@
         library.hidden = true;
         detail.hidden = false;
         detail.innerHTML = detailFor(exercise);
-        document.title = `${exercise.name} | VALHAN MUSCLES`;
+        document.title = `${exName(exercise)} | VALHAN MUSCLES`;
         return;
       }
     }
@@ -80,7 +84,7 @@
     const draw = () => {
       const query = search.value.trim().toLowerCase();
       const filtered = exercises.filter(item =>
-        (item.name.toLowerCase().includes(query) || item.muscle.toLowerCase().includes(query)) &&
+        (exName(item).toLowerCase().includes(query) || item.legacyName.toLowerCase().includes(query) || item.muscle.toLowerCase().includes(query)) &&
         (muscle.value === 'all' || item.muscle === muscle.value) &&
         (equipment.value === 'all' || item.equipment === equipment.value)
       );

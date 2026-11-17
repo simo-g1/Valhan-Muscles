@@ -31,6 +31,7 @@
         <a class="" href="../pages/workout-plans.html" data-ar="الخطط" data-en="Plans">الخطط</a>
         <a class="" href="../pages/workout-builder.html" data-ar="أنشئ خطتك" data-en="Builder">أنشئ خطتك</a>
         <a class="" href="../pages/exercises.html" data-ar="التمارين" data-en="Exercises">التمارين</a>
+        <a href="../pages/anatomy.html" data-ar="تشريح العضلات" data-en="Anatomy">تشريح العضلات</a>
         <a class="active" href="../pages/academy.html" data-ar="الأكاديمية" data-en="Academy">الأكاديمية</a>
         <a class="" href="../pages/our-team.html" data-ar="فريق العمل" data-en="Our Team">فريق العمل</a>
         <a class="" href="../pages/about.html" data-ar="من نحن" data-en="About">من نحن</a>
@@ -112,10 +113,16 @@
         <div class="article-tools">
           <div class="chips" id="article-categories" role="group" aria-label="تصنيفات المقالات"
             data-ar-aria-label="تصنيفات المقالات" data-en-aria-label="Article categories"></div>
-          <label class="field article-search"><span data-ar="بحث في المقالات" data-en="Search articles">بحث في
-              المقالات</span>
-            <input id="art-q" type="search" placeholder="ابحث..." data-ar-placeholder="ابحث..."
-              data-en-placeholder="Search..."></label>
+          <label class="field article-search"><span data-ar="بحث في المقالات" data-en="Search articles">بحث في المقالات</span>
+            <input id="art-q" type="search" placeholder="ابحث..." data-ar-placeholder="ابحث..." data-en-placeholder="Search..."></label>
+          <label class="field article-difficulty"><span data-ar="مستوى الصعوبة" data-en="Difficulty">مستوى الصعوبة</span>
+            <select id="art-difficulty"><option value="all" data-ar="كل المستويات" data-en="All levels">كل المستويات</option>
+              <option value="beginner" data-ar="مبتدئ" data-en="Beginner">مبتدئ</option>
+              <option value="intermediate" data-ar="متوسط" data-en="Intermediate">متوسط</option>
+              <option value="advanced" data-ar="متقدم" data-en="Advanced">متقدم</option>
+              <option value="unrated" data-ar="غير مصنف بعد" data-en="Not classified">غير مصنف بعد</option></select></label>
+          <a class="btn btn-outline saved-articles-link" href="#article-center" id="saved-articles-toggle" data-show-saved="false">
+            <i class="fa-regular fa-bookmark" aria-hidden="true"></i> <span data-ar="مقالاتي المحفوظة" data-en="Saved articles">مقالاتي المحفوظة</span></a>
         </div>
         <div class="grid article-grid" id="art-grid" aria-live="polite"></div>
         <p class="empty" id="art-empty" hidden><span data-ar="لا توجد مقالات مطابقة." data-en="No matching articles.">لا
@@ -170,6 +177,7 @@
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="../js/main.js" defer></script>
   <script src="../js/features/page-interactions.js" defer></script>
+  <script src="../js/storage.js" defer></script>
   <script src="../js/articles-data.js" defer></script>
   <script src="../js/articles.js" defer></script>
 </body>

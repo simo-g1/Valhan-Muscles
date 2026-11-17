@@ -17,6 +17,7 @@
   };
 
   const exs = () => window.ValhanExercises || [];
+  const exerciseName = exercise => window.ValhanExerciseName?.(exercise) || exercise?.legacyName || exercise?.name?.en || '';
   const key = 'valhan-builder-v3';
   const get = () => window.ValhanStore.get(key, null);
   const set = p => window.ValhanStore.set(key, p);
@@ -37,12 +38,12 @@
 
   function template(split) {
     const p = blank(split);
-    const find = n => exs().find(e => e.name.toLowerCase().includes(n.toLowerCase()));
+    const find = n => exs().find(e => (e.legacyName || '').toLowerCase().includes(n.toLowerCase()) || exerciseName(e).toLowerCase().includes(n.toLowerCase()));
     const add = (day, n, sets, reps = '8-12', notes = '') => {
       const e = find(n);
       day.exercises.push({
         id: e?.id || '',
-        name: e?.name || n,
+        name: e ? exerciseName(e) : n,
         sets,
         reps,
         warm: 1,
@@ -150,25 +151,28 @@
   // ---- Ready-made plan (from app.js `plans`) -> builder format ----------
   const ISOLATION = /(raise|fly|extension|curl|calves|adductor|triceps|biceps|traps|delts|lower back|shrug)/i;
   function fromReady(p) {
-    const lib = n => exs().find(e => e.name.toLowerCase() === n.toLowerCase()) ||
-      exs().find(e => e.name.toLowerCase().includes(n.toLowerCase()));
     return {
       name: 'VALHAN ' + p.name,
       split: 'custom',
       source: p.name,
-      days: p.schedule.map(d => ({
+      days: (p.normalizedSchedule || []).map(d => ({
         name: d.day,
         notes: '',
-        rest: !d.exercises.length,
-        exercises: d.exercises.map(ex => ({
-          id: lib(ex[0])?.id || '',
-          name: ex[0],
-          sets: parseInt(ex[2], 10) || 0,
-          reps: ISOLATION.test(ex[0]) ? '12-15' : '8-12',   // plan data has no reps; sensible default, editable
-          warm: 0,
-          warmReps: '10',
-          notes: ex[1] || ''
-        }))
+        rest: !d.entries.length,
+        exercises: d.entries.map(entry => {
+          const exercise = entry.type === 'exercise' ? exs().find(item => item.id === entry.exerciseId) : null;
+          return {
+            id: entry.exerciseId || '',
+            type: entry.type,
+            muscleId: entry.muscleId || null,
+            name: exercise ? exerciseName(exercise) : T(entry.label.ar, entry.label.en),
+            sets: entry.sets || 0,
+            reps: entry.reps || (ISOLATION.test(entry.label.en) ? '12-15' : '8-12'),
+            warm: 0,
+            warmReps: '10',
+            notes: entry.type === 'muscle-focus' ? `${entry.label.ar} — ${entry.label.en}` : ''
+          };
+        })
       }))
     };
   }
@@ -249,7 +253,7 @@ ${dayHtml}
     return `
       <div class="exercise-row" data-ex="${ei}">
         <div class="exercise-head">
-          <div class="picked">${img ? `<img src="${img}" alt="">` : ''}<span>${esc(x.name || T('اختر تمرينًا', 'Choose exercise'))}</span></div>
+          <div class="picked">${img ? `<img src="${img}" alt="">` : ''}<span>${esc(x.name || T('اختر تمرينًا', 'Choose exercise'))}${x.type === 'muscle-focus' ? `<small class="focus-type">${T('تركيز عضلي — ليس تمرينًا محددًا', 'Muscle focus — not a specific exercise')}</small>` : ''}</span></div>
           <div class="reorder">
             <button type="button" data-action="pick" aria-label="${T('اختيار من المكتبة', 'Pick from library')}">▧</button>
             <button type="button" data-action="up-ex" ${ei === 0 ? 'disabled' : ''} aria-label="${T('تحريك لأعلى', 'Move up')}">↑</button>
@@ -307,8 +311,8 @@ ${dayHtml}
   function pickerRender() {
     const q = $('#picker-search').value.toLowerCase();
     $('#picker-grid').innerHTML = exs()
-      .filter(e => e.name.toLowerCase().includes(q) || e.muscle.toLowerCase().includes(q))
-      .map(e => `<button type="button" class="picker-item" data-pick="${e.id}"><img src="${window.ValhanExerciseImage(e.id)}" alt="${esc(e.name)}"><span>${esc(e.name)}</span><small>${esc(e.muscle)}</small></button>`).join('');
+      .filter(e => exerciseName(e).toLowerCase().includes(q) || (e.legacyName || '').toLowerCase().includes(q) || e.muscle.toLowerCase().includes(q))
+      .map(e => `<button type="button" class="picker-item" data-pick="${e.id}"><img src="${window.ValhanExerciseImage(e.id)}" alt="${esc(exerciseName(e))}"><span>${esc(exerciseName(e))}</span><small>${esc(e.muscle)}</small></button>`).join('');
   }
 
   const confirmReplace = () => !hasContent(plan) ||
@@ -440,7 +444,7 @@ ${dayHtml}
       const b = e.target.closest('[data-pick]');
       if (!b || !pickTarget) return;
       const ex = exs().find(x => x.id === b.dataset.pick), x = plan.days[pickTarget.di]?.exercises[pickTarget.ei];
-      if (ex && x) { x.id = ex.id; x.name = ex.name; }
+      if (ex && x) { x.id = ex.id; x.name = exerciseName(ex); x.type = 'exercise'; x.muscleId = null; x.notes = ''; }
       closePicker();
       render();
     };
