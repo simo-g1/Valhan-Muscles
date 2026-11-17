@@ -1,1 +1,32 @@
-window.ValhanStore = { get(key, fallback = null) { try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback } catch { return fallback } }, set(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); return true } catch { return false } }, remove(key) { localStorage.removeItem(key) } };
+(() => {
+  'use strict';
+
+  window.ValhanStore = {
+    get(key, fallback = null) {
+      try {
+        const value = localStorage.getItem(key);
+        return value ? JSON.parse(value) : fallback;
+      } catch {
+        return fallback;
+      }
+    },
+
+    set(key, value) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+        return true;
+      } catch {
+        return false;
+      }
+    },
+
+    remove(key) {
+      try {
+        localStorage.removeItem(key);
+        return true;
+      } catch {
+        return false;
+      }
+    }
+  };
+})();

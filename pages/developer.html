@@ -22,7 +22,29 @@
 
 <body data-root=".." data-page="developer">
   <a class="skip-link" href="#main-content">تخطَّ إلى المحتوى</a>
-  <header id="site-header"></header>
+  <header id="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="../index.html" aria-label="VALHAN MUSCLES - Home">
+        <img src="../assets/logos/logo.webp" alt="VALHAN MUSCLES">
+        <span>VALHAN <b>MUSCLES</b></span>
+      </a>
+      <nav class="nav" id="main-nav" aria-label="Main navigation">
+        <a class="" href="../index.html" data-ar="الرئيسية" data-en="Home">الرئيسية</a>
+        <a class="" href="../pages/workout-plans.html" data-ar="الخطط" data-en="Plans">الخطط</a>
+        <a class="" href="../pages/workout-builder.html" data-ar="أنشئ خطتك" data-en="Builder">أنشئ خطتك</a>
+        <a class="" href="../pages/exercises.html" data-ar="التمارين" data-en="Exercises">التمارين</a>
+        <a class="" href="../pages/academy.html" data-ar="الأكاديمية" data-en="Academy">الأكاديمية</a>
+        <a class="active" href="../pages/our-team.html" data-ar="فريق العمل" data-en="Our Team">فريق العمل</a>
+        <a class="" href="../pages/about.html" data-ar="من نحن" data-en="About">من نحن</a>
+      </nav>
+      <div class="head-actions">
+        <button class="icon-btn" id="lang-toggle" type="button" aria-label="Change language">EN</button>
+        <button class="icon-btn" id="theme-toggle" type="button" aria-label="Toggle theme">☼</button>
+        <button class="menu-btn" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false"
+          aria-controls="main-nav">☰</button>
+      </div>
+    </div>
+  </header>
 
   <main id="main-content">
     <!-- Breadcrumb / Back Bar -->
@@ -201,14 +223,53 @@
     </section>
   </main>
 
-  <footer id="site-footer"></footer>
+  <footer id="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="../index.html">
+            <img src="../assets/logos/logo.webp" alt="VALHAN MUSCLES">
+            <span>VALHAN <b>MUSCLES</b></span>
+          </a>
+          <p data-ar="خطط أوضح. تدريب أذكى. تقدم مستمر." data-en="Clear plans. Smarter training. Consistent progress.">
+            خطط أوضح. تدريب أذكى. تقدم مستمر.</p>
+        </div>
+        <div>
+          <h3 class="footer-title" data-ar="استكشف" data-en="Explore">استكشف</h3>
+          <ul class="footer-links">
+            <li><a href="../pages/workout-plans.html" data-ar="الخطط" data-en="Plans">الخطط</a></li>
+            <li><a href="../pages/workout-builder.html" data-ar="أنشئ خطتك" data-en="Builder">أنشئ خطتك</a></li>
+            <li><a href="../pages/exercises.html" data-ar="التمارين" data-en="Exercises">التمارين</a></li>
+            <li><a href="../pages/academy.html" data-ar="الأكاديمية" data-en="Academy">الأكاديمية</a></li>
+            <li><a href="../pages/our-team.html" data-ar="فريق العمل" data-en="Our Team">فريق العمل</a></li>
+            <li><a href="../pages/about.html" data-ar="من نحن" data-en="About">من نحن</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer-title" data-ar="فريق العمل" data-en="Our Team">فريق العمل</h3>
+          <ul class="footer-links">
+            <li><a href="../pages/our-team.html" data-ar="فريق المشروع" data-en="Team Hub">فريق المشروع</a></li>
+            <li><a href="../pages/developer.html" data-ar="المطور: سيمو" data-en="Developer: Simo">المطور: سيمو</a></li>
+            <li><a href="../pages/coach.html" data-ar="المدرب: محمد حاتم" data-en="Coach: Mohamed Hatem">المدرب: محمد
+                حاتم</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="footer-title" data-ar="معلومة مهمة" data-en="Important note">معلومة مهمة</h3>
+          <p data-ar="المحتوى تعليمي ورياضي ولا يغني عن استشارة مختص طبي عند الحاجة."
+            data-en="Educational fitness content; seek qualified medical advice when needed.">المحتوى تعليمي ورياضي ولا
+            يغني عن استشارة مختص طبي عند الحاجة.</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© <span id="current-year">2026</span> VALHAN MUSCLES</span>
+        <span>Build Your Strength. Master Your Fitness.</span>
+      </div>
+    </div>
+  </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-  <script src="../js/storage.js" defer></script>
   <script src="../js/main.js" defer></script>
-  <script src="../js/exercises.js" defer></script>
-  <script src="../js/workout-builder.js" defer></script>
-  <script src="../js/app.js" defer></script>
+  <script src="../js/features/page-interactions.js" defer></script>
 </body>
 
 </html>

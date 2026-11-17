@@ -105,45 +105,45 @@
   function renderCenter() {
     const host = document.getElementById('article-center');
     if (!host) return;
-    let active = 'all', q = '';
-    host.innerHTML = `<section class="section" style="border-top:1px solid var(--line)"><div class="container">
-      <div class="section-head"><span class="eyebrow">ARTICLE CENTER</span>
-        <h2 class="section-title">${t('مركز المقالات', 'Article Center')}</h2>
-        <p class="muted">${t('مقالات تعليمية متوازنة في التدريب والتغذية والاستشفاء وعلوم التمرين.', 'Balanced educational articles on training, nutrition, recovery and exercise science.')}</p></div>
-      <div class="article-tools">
-        <div class="chips" role="group" aria-label="${t('تصنيفات المقالات', 'Article categories')}">
-          <button type="button" class="chip" data-cat="all" aria-pressed="true">${t('الكل', 'All')}</button>
-          ${A.cats.map(c => `<button type="button" class="chip" data-cat="${c.id}" aria-pressed="false">${esc(L(c.n))}</button>`).join('')}
-        </div>
-        <label class="field article-search">${t('بحث في المقالات', 'Search articles')}
-          <input id="art-q" type="search" placeholder="${t('ابحث...', 'Search...')}"></label>
-      </div>
-      <div class="grid article-grid" id="art-grid" aria-live="polite"></div>
-      <p class="empty" id="art-empty" hidden>${t('لا توجد مقالات مطابقة.', 'No matching articles.')}</p>
-    </div></section>`;
 
-    const grid = host.querySelector('#art-grid'), empty = host.querySelector('#art-empty');
+    const chips = host.querySelector('#article-categories');
+    const grid = host.querySelector('#art-grid');
+    const empty = host.querySelector('#art-empty');
+    const search = host.querySelector('#art-q');
+    if (!chips || !grid || !empty || !search) return;
+
+    let active = 'all';
+    let query = '';
+    chips.innerHTML = `<button type="button" class="chip" data-cat="all" aria-pressed="true">${t('الكل', 'All')}</button>` +
+      A.cats.map(category => `<button type="button" class="chip" data-cat="${category.id}" aria-pressed="false">${esc(L(category.n))}</button>`).join('');
+
     const draw = () => {
-      const list = A.list.filter(a => (active === 'all' || a.cat === active) &&
-        (L(a.title) + ' ' + L(a.intro)).toLowerCase().includes(q));
+      const list = A.list.filter(article =>
+        (active === 'all' || article.cat === active) &&
+        (L(article.title) + ' ' + L(article.intro)).toLowerCase().includes(query)
+      );
       grid.innerHTML = list.map(card).join('');
-      empty.hidden = !!list.length;
-      grid.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+      empty.hidden = list.length > 0;
+      grid.querySelectorAll('.reveal').forEach(element => element.classList.add('is-visible'));
     };
-    host.querySelector('.chips').addEventListener('click', e => {
-      const b = e.target.closest('[data-cat]');
-      if (!b) return;
-      active = b.dataset.cat;
-      host.querySelectorAll('.chip').forEach(x => x.setAttribute('aria-pressed', x === b));
+
+    chips.addEventListener('click', event => {
+      const button = event.target.closest('[data-cat]');
+      if (!button) return;
+      active = button.dataset.cat;
+      chips.querySelectorAll('.chip').forEach(chip => chip.setAttribute('aria-pressed', String(chip === button)));
       draw();
     });
-    host.querySelector('#art-q').addEventListener('input', e => { q = e.target.value.trim().toLowerCase(); draw(); });
+    search.addEventListener('input', event => {
+      query = event.target.value.trim().toLowerCase();
+      draw();
+    });
     draw();
   }
 
   /* ---------- Article page ---------- */
   function renderArticle() {
-    const main = document.getElementById('main-content');
+    const main = document.getElementById('article-content');
     const slug = new URLSearchParams(location.search).get('a');
     const a = A.list.find(x => x.slug === slug);
     const back = `<a class="nav-back-link" href="${root}/pages/academy.html"><i class="fa-solid ${rtl() ? 'fa-arrow-right' : 'fa-arrow-left'}" aria-hidden="true"></i><span>${t('العودة إلى الأكاديمية', 'Back to Academy')}</span></a>`;

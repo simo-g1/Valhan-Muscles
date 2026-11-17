@@ -147,6 +147,11 @@ h3 {
   color: var(--red2)
 }
 
+.btn-outline:last-child:hover {
+  background-color: rgba(0, 210, 255, 0.4) !important;
+  border-color: rgb(246, 246, 246) !important;
+}
+
 .btn-quiet {
   background: var(--card2);
   border-color: var(--line)
