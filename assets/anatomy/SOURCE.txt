@@ -1,0 +1,20 @@
+Anatomy polygon data provenance
+
+Direct source used by this project:
+- Package: react-body-highlighter
+- Version: 2.0.5
+- Repository: https://github.com/giavinh79/react-body-highlighter
+- Copyright: GV79
+- License: MIT (see LICENSE-MIT.txt)
+
+Upstream geometry lineage:
+- The react-body-highlighter README states that its SVG polygons were leveraged from:
+  https://github.com/HichamELBSI/react-native-body-highlighter
+- Original author: ELABBASSI Hicham
+- License: MIT (see LICENSE-RN-MIT.txt)
+
+Project adaptation:
+- SVG polygon point data was extracted/adapted into js/data/anatomy-map.js.
+- Project-specific muscle IDs, precision flags, grouping notes, and interaction logic are maintained separately.
+- The upstream geometry does not establish medical/anatomical precision beyond the source's documented body-part regions.
+- Both MIT notices are retained to preserve attribution through the documented geometry lineage.

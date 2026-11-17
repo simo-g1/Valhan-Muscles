@@ -10,15 +10,23 @@
 
   const imageFor = id => `${root}/assets/images/exercises/${exercises.find(item => item.id === id)?.image || 'machines/chest-press.webp'}`;
   window.ValhanExerciseImage = imageFor;
-  const cardFor = exercise => `
-    <article class="card exercise-card reveal" data-exercise="${exercise.id}" tabindex="0" role="button">
-      <img src="${imageFor(exercise.id)}" alt="${exName(exercise)}" loading="lazy">
-      <div class="body">
-        <h3>${exName(exercise)}</h3>
-        <p>${muscleName(exercise)} · ${exercise.equipment}</p>
-        <span class="tag">${t('التفاصيل والفيديوهات', 'Details & videos')} ←</span>
-      </div>
-    </article>`;
+  const cardFor = exercise => {
+    const saved = window.ValhanSavedHub?.isExerciseSaved(exercise.id) || false;
+    return `
+      <article class="card exercise-card reveal" data-exercise="${exercise.id}">
+        <a class="exercise-card-link" href="?exercise=${encodeURIComponent(exercise.id)}">
+          <img src="${imageFor(exercise.id)}" alt="${exName(exercise)}" loading="lazy">
+          <div class="body">
+            <h3>${exName(exercise)}</h3>
+            <p>${muscleName(exercise)} · ${exercise.equipment}</p>
+            <span class="tag">${t('التفاصيل والفيديوهات', 'Details & videos')} ←</span>
+          </div>
+        </a>
+        <button type="button" class="bookmark-btn exercise-card-bookmark ${saved ? 'is-saved' : ''}" data-bookmark-exercise="${exercise.id}" aria-pressed="${saved}" aria-label="${t('حفظ التمرين', 'Save exercise')}">
+          <i class="fa-${saved ? 'solid' : 'regular'} fa-bookmark" aria-hidden="true"></i>
+        </button>
+      </article>`;
+  };
 
   const detailFor = exercise => {
     const query = encodeURIComponent(`${exName(exercise)} exercise tutorial`);
@@ -30,6 +38,9 @@
       <section class="section"><div class="container detail-layout">
         <img class="detail-image" src="${imageFor(exercise.id)}" alt="${exName(exercise)}">
         <div><span class="eyebrow">HOW TO PERFORM</span><h2>${exName(exercise)}</h2>
+          <button type="button" class="btn btn-outline bookmark-btn ${window.ValhanSavedHub?.isExerciseSaved(exercise.id) ? 'is-saved' : ''}" data-bookmark-exercise="${exercise.id}" aria-pressed="${window.ValhanSavedHub?.isExerciseSaved(exercise.id) || false}">
+            <i class="fa-${window.ValhanSavedHub?.isExerciseSaved(exercise.id) ? 'solid' : 'regular'} fa-bookmark" aria-hidden="true"></i> ${t('حفظ التمرين', 'Save exercise')}
+          </button>
           <p>${exercise.how}</p>
           <div class="badge-row"><span class="tag">${muscleName(exercise)}</span><span class="tag">${exercise.equipment}</span><span class="tag">${exercise.target}</span></div>
           <h3>${t('خطوات الأداء', 'Execution cues')}</h3>
@@ -91,20 +102,10 @@
       grid.innerHTML = filtered.map(cardFor).join('');
       empty.hidden = filtered.length > 0;
       window.ValhanReveal?.();
+      window.ValhanSavedHub?.updateUI();
     };
 
     [search, muscle, equipment].forEach(control => control.addEventListener('input', draw));
-    grid.addEventListener('click', event => {
-      const card = event.target.closest('[data-exercise]');
-      if (card) location.href = `?exercise=${encodeURIComponent(card.dataset.exercise)}`;
-    });
-    grid.addEventListener('keydown', event => {
-      if (event.key !== 'Enter' && event.key !== ' ') return;
-      const card = event.target.closest('[data-exercise]');
-      if (!card) return;
-      event.preventDefault();
-      location.href = `?exercise=${encodeURIComponent(card.dataset.exercise)}`;
-    });
     draw();
   }
 

@@ -22,6 +22,7 @@
   const isSaved = slug => Boolean(savedArticles()[slug]);
   const progressFor = slug => Math.max(0, Math.min(100, Number(readingProgress()[slug]?.percent || 0)));
   const toggleSaved = slug => {
+    if (window.ValhanSavedHub) return window.ValhanSavedHub.toggleArticle(slug);
     const saved = savedArticles();
     if (saved[slug]) delete saved[slug]; else saved[slug] = { savedAt: Date.now() };
     writeStore(SAVED_KEY, saved);
@@ -144,7 +145,7 @@
       const saved = savedArticles();
       const list = A.list.filter(article =>
         (active === 'all' || article.cat === active) &&
-        (level === 'all' || (article.difficulty || 'unrated') === level) &&
+        (level === 'all' || (article.difficulty || 'unspecified') === level) &&
         (!savedOnly || Boolean(saved[article.slug])) &&
         (article.title.join(' ') + ' ' + article.intro.join(' ')).toLowerCase().includes(query)
       );
@@ -191,13 +192,11 @@
     const c = cat(a.cat);
     const progressMap = readingProgress();
     const saved = isSaved(a.slug);
-    const metadata = `<section class="article-credentials card" aria-label="${t('بيانات المقال', 'Article details')}">
-      <div><strong>${t('الكاتب', 'Author')}</strong><span>${a.author ? esc(a.author) : t('لم يُحدد بعد', 'Not assigned')}</span></div>
-      <div><strong>${t('مراجعة المدرب', 'Coach review')}</strong><span>${a.reviewer ? esc(a.reviewer) : t('بانتظار المراجعة', 'Pending review')}</span></div>
-      <div><strong>${t('حالة المحتوى', 'Content status')}</strong><span>${a.reviewStatus === 'approved' ? t('تمت المراجعة', 'Reviewed') : t('قيد المراجعة', 'Pending review')}</span></div>
-      ${a.reviewDate ? `<div><strong>${t('آخر مراجعة', 'Last reviewed')}</strong><span>${esc(a.reviewDate)}</span></div>` : ''}
-      ${a.sources?.length ? `<div class="article-sources"><strong>${t('المصادر', 'References')}</strong><ul>${a.sources.map(source => `<li>${source.url ? `<a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.title || source.url)}</a>` : esc(source.title || source)}</li>`).join('')}</ul></div>` : `<p class="muted">${t('المصادر ستُضاف بعد مراجعة المقال واعتمادها.', 'References will be added after the article is reviewed and approved.')}</p>`}
-    </section>`;
+    const sourceItems = a.sources?.length ? `<div class="article-sources"><strong>${t('المصادر', 'References')}</strong><ul>${a.sources.map(source => `<li>${source.url ? `<a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.title || source.url)}</a>` : esc(source.title || source)}</li>`).join('')}</ul></div>` : '';
+    const authorItem = a.author ? `<div><strong>${t('الكاتب', 'Author')}</strong><span>${esc(a.author)}</span></div>` : '';
+    const metadata = authorItem || sourceItems
+      ? `<section class="article-credentials card" aria-label="${t('بيانات المقال', 'Article details')}">${authorItem}${sourceItems}</section>`
+      : '';
     document.title = `${L(a.title)} | VALHAN MUSCLES`;
     const md = document.querySelector('meta[name="description"]');
     if (md) md.content = L(a.intro);
@@ -222,10 +221,10 @@
         <span class="eyebrow">${esc(L(c.n))}</span>
         <h1>${esc(L(a.title))}</h1>
         <p class="article-meta muted"><i class="fa-regular fa-clock" aria-hidden="true"></i> ${mins(a.min)}</p>
-        <button type="button" class="btn btn-outline article-bookmark ${saved ? 'active' : ''}" id="article-bookmark" aria-pressed="${saved}"><i class="fa-${saved ? 'solid' : 'regular'} fa-bookmark" aria-hidden="true"></i> ${saved ? t('إزالة من المحفوظات', 'Remove bookmark') : t('حفظ المقال', 'Save article')}</button>
+        <button type="button" class="btn btn-outline article-bookmark ${saved ? 'active' : ''}" id="article-bookmark" data-bookmark="${esc(a.slug)}" aria-pressed="${saved}"><i class="fa-${saved ? 'solid' : 'regular'} fa-bookmark" aria-hidden="true"></i> ${saved ? t('إزالة من المحفوظات', 'Remove bookmark') : t('حفظ المقال', 'Save article')}</button>
         <p class="article-intro">${esc(L(a.intro))}</p>
       </header>
-      <div class="container">${metadata}</div>
+      ${metadata ? `<div class="container">${metadata}</div>` : ''}
       <div class="container article-layout">
         <nav aria-label="${t('محتويات المقال', 'Table of contents')}">
           <details class="toc" open><summary>${t('محتويات المقال', 'On this page')}</summary>
@@ -245,24 +244,6 @@
     main.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
     const toc = main.querySelector('.toc');
     if (toc && matchMedia('(max-width:900px)').matches) toc.open = false;
-
-    main.addEventListener('click', event => {
-      const cardBookmark = event.target.closest('[data-bookmark]');
-      if (!cardBookmark) return;
-      const nowSaved = toggleSaved(cardBookmark.dataset.bookmark);
-      cardBookmark.classList.toggle('is-saved', nowSaved);
-      cardBookmark.setAttribute('aria-pressed', String(nowSaved));
-      cardBookmark.setAttribute('aria-label', nowSaved ? t('إزالة من المحفوظات', 'Remove bookmark') : t('حفظ المقال', 'Save article'));
-      cardBookmark.innerHTML = `<i class="fa-${nowSaved ? 'solid' : 'regular'} fa-bookmark" aria-hidden="true"></i>`;
-    });
-
-    const saveButton = main.querySelector('#article-bookmark');
-    saveButton?.addEventListener('click', () => {
-      const nowSaved = toggleSaved(a.slug);
-      saveButton.classList.toggle('active', nowSaved);
-      saveButton.setAttribute('aria-pressed', String(nowSaved));
-      saveButton.innerHTML = `<i class="fa-${nowSaved ? 'solid' : 'regular'} fa-bookmark" aria-hidden="true"></i> ${nowSaved ? t('إزالة من المحفوظات', 'Remove bookmark') : t('حفظ المقال', 'Save article')}`;
-    });
 
     const progressBar = document.querySelector('#article-reading-progress span');
     let restored = false;

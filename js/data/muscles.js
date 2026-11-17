@@ -1,22 +1,24 @@
 (() => {
   'use strict';
   window.ValhanMuscles = [
-    { id: "chest", name: { ar: "الصدر", en: "Chest" }, groupId: "upper-body", description: { ar: '', en: '' }, reviewStatus: 'pending' },
-    { id: "front-delts", name: { ar: "الكتف الأمامي", en: "Front Delts" }, groupId: "shoulders", description: { ar: '', en: '' }, reviewStatus: 'pending' },
-    { id: "side-delts", name: { ar: "الكتف الجانبي", en: "Side Delts" }, groupId: "shoulders", description: { ar: '', en: '' }, reviewStatus: 'pending' },
-    { id: "rear-delts", name: { ar: "الكتف الخلفي", en: "Rear Delts" }, groupId: "shoulders", description: { ar: '', en: '' }, reviewStatus: 'pending' },
-    { id: "lats", name: { ar: "العضلات الظهرية العريضة", en: "Latissimus Dorsi" }, groupId: "back", description: { ar: '', en: '' }, reviewStatus: 'pending' },
-    { id: "mid-back", name: { ar: "منتصف الظهر", en: "Mid Back" }, groupId: "back", description: { ar: '', en: '' }, reviewStatus: 'pending' },
-    { id: "traps", name: { ar: "الترابيس", en: "Trapezius" }, groupId: "back", description: { ar: '', en: '' }, reviewStatus: 'pending' },
-    { id: "biceps", name: { ar: "البايسبس", en: "Biceps" }, groupId: "arms", description: { ar: '', en: '' }, reviewStatus: 'pending' },
-    { id: "triceps", name: { ar: "الترايسبس", en: "Triceps" }, groupId: "arms", description: { ar: '', en: '' }, reviewStatus: 'pending' },
-    { id: "lower-back", name: { ar: "أسفل الظهر", en: "Lower Back" }, groupId: "back", description: { ar: '', en: '' }, reviewStatus: 'pending' },
-    { id: "quads", name: { ar: "العضلات الأمامية للفخذ", en: "Quadriceps" }, groupId: "lower-body", description: { ar: '', en: '' }, reviewStatus: 'pending' },
-    { id: "hamstrings", name: { ar: "العضلات الخلفية للفخذ", en: "Hamstrings" }, groupId: "lower-body", description: { ar: '', en: '' }, reviewStatus: 'pending' },
-    { id: "glutes", name: { ar: "عضلات المؤخرة", en: "Glutes" }, groupId: "lower-body", description: { ar: '', en: '' }, reviewStatus: 'pending' },
-    { id: "adductors", name: { ar: "العضلات الضامة", en: "Adductors" }, groupId: "lower-body", description: { ar: '', en: '' }, reviewStatus: 'pending' },
-    { id: "calves", name: { ar: "السمانة", en: "Calves" }, groupId: "lower-body", description: { ar: '', en: '' }, reviewStatus: 'pending' },
-    { id: "core", name: { ar: "عضلات الجذع", en: "Core" }, groupId: "core", description: { ar: '', en: '' }, reviewStatus: 'pending' },
-    { id: "shoulders", name: { ar: "الأكتاف", en: "Shoulders" }, groupId: "shoulders", description: { ar: '', en: '' }, reviewStatus: 'pending' }
+    { id: "chest", name: { ar: "الصدر", en: "Chest" }, groupId: "upper-body", description: { ar: 'عضلات الصدر الرئيسية المسؤولة عن حركات الدفع والتقريب الأفقي للذراع.', en: 'Pectoral muscles responsible for pushing movements and horizontal arm adduction.' } },
+    { id: "front-delts", name: { ar: "الكتف الأمامي", en: "Front Delts" }, groupId: "shoulders", description: { ar: 'الرأس الأمامي لعضلة الكتف المسؤول عن رفع الذراع للأمام والمشاركة في حركات الدفع.', en: 'Anterior deltoid head responsible for shoulder flexion and pushing assistance.' } },
+    { id: "side-delts", name: { ar: "الكتف الجانبي", en: "Side Delts" }, groupId: "shoulders", description: { ar: 'الرأس الجانبي لعضلة الكتف المسؤول عن إبعاد الذراع جانبًا وعرض الكتفين.', en: 'Lateral deltoid head responsible for shoulder abduction and lateral shoulder width.' } },
+    { id: "rear-delts", name: { ar: "الكتف الخلفي", en: "Rear Delts" }, groupId: "shoulders", description: { ar: 'الرأس الخلفي لعضلة الكتف المسؤول عن السحب الأفقي وثبات مفصل الكتف.', en: 'Posterior deltoid head responsible for horizontal abduction and shoulder stability.' } },
+    { id: "lats", name: { ar: "العضلات الظهرية العريضة", en: "Latissimus Dorsi" }, groupId: "back", description: { ar: 'العضلة الظهرية العريضة المسؤولة عن سحب الذراع للأسفل وللخلف وتمنح الظهر شكل V.', en: 'Large back muscle responsible for shoulder adduction and extension, providing the V-taper.' } },
+    { id: "mid-back", name: { ar: "منتصف الظهر", en: "Mid Back" }, groupId: "back", description: { ar: 'عضلات منتصف الظهر (الرومبويدز وألياف الترابيس الوسطى) المسؤولة عن ضم لوحي الكتف.', en: 'Rhomboids and mid-trapezius fibers responsible for scapular retraction.' } },
+    { id: "traps", name: { ar: "الترابيس", en: "Trapezius" }, groupId: "back", description: { ar: 'عضلة الترابيس المسؤولة عن رفع لوحي الكتف وثبات الرقبة وأعلى الظهر.', en: 'Trapezius muscle responsible for scapular elevation and neck/upper-back support.' } },
+    { id: "biceps", name: { ar: "البايسبس", en: "Biceps" }, groupId: "arms", description: { ar: 'العضلة ذات الرأسين المسؤولة عن ثني المرفق وتدوير الساعد.', en: 'Biceps brachii responsible for elbow flexion and forearm supination.' } },
+    { id: "triceps", name: { ar: "الترايسبس", en: "Triceps" }, groupId: "arms", description: { ar: 'العضلة ثلاثية الرؤوس المسؤولة عن مد المرفق وتشكل الجزء الأكبر من حجم الذراع.', en: 'Triceps brachii responsible for elbow extension, making up the bulk of upper arm mass.' } },
+    { id: "forearms", name: { ar: "الساعدين", en: "Forearms" }, groupId: "arms", description: { ar: 'عضلات الساعد المسؤولة عن حركة المعصم والأصابع وقوة القبضة.', en: 'Forearm flexors and extensors responsible for wrist movement and grip strength.' } },
+    { id: "lower-back", name: { ar: "أسفل الظهر", en: "Lower Back" }, groupId: "back", description: { ar: 'عضلات أسفل الظهر (ناصبات العمود الفقري) المسؤولة عن مد الجذع وثبات العمود الفقري.', en: 'Erector spinae muscles responsible for trunk extension and spinal stabilization.' } },
+    { id: "quads", name: { ar: "العضلات الأمامية للفخذ", en: "Quadriceps" }, groupId: "lower-body", description: { ar: 'العضلة رباعية الرؤوس المسؤولة عن مد الركبة وثبات مفصل الركبة.', en: 'Quadriceps femoris responsible for knee extension and lower-body stability.' } },
+    { id: "hamstrings", name: { ar: "العضلات الخلفية للفخذ", en: "Hamstrings" }, groupId: "lower-body", description: { ar: 'عضلات الفخذ الخلفية المسؤولة عن ثني الركبة ومد مفصل الورك.', en: 'Posterior thigh muscles responsible for knee flexion and hip extension.' } },
+    { id: "glutes", name: { ar: "عضلات المؤخرة", en: "Glutes" }, groupId: "lower-body", description: { ar: 'عضلات الألوية المسؤولة عن مد الورك وقوة الدفع السفلية وثبات الحوض.', en: 'Gluteal muscles responsible for hip extension, abduction, and pelvic stability.' } },
+    { id: "adductors", name: { ar: "العضلات الضامة", en: "Adductors" }, groupId: "lower-body", description: { ar: 'العضلات الضامة في الفخذ الداخلي المسؤولة عن تقريب الساقين وثبات الحوض.', en: 'Inner thigh adductors responsible for bringing legs toward the midline and pelvic stability.' } },
+    { id: "calves", name: { ar: "السمانة", en: "Calves" }, groupId: "lower-body", description: { ar: 'عضلات الساق الخلفية (السمانة والنعلية) المسؤولة عن رفع الكعب وثبات الكاحل.', en: 'Gastrocnemius and soleus muscles responsible for ankle plantarflexion.' } },
+    { id: "core", name: { ar: "عضلات الجذع والبطن", en: "Core & Abs" }, groupId: "core", description: { ar: 'عضلات البطن المستقيمة والعميقة المسؤولة عن ثبات الجذع وحماية العمود الفقري.', en: 'Rectus abdominis and deep core musculature responsible for trunk stability.' } },
+    { id: "obliques", name: { ar: "عضلات البطن الجانبية", en: "Obliques" }, groupId: "core", description: { ar: 'عضلات البطن المائلة المسؤولة عن تدوير الجذع والثبات ضد الانحناء الجانبي.', en: 'Internal and external obliques responsible for trunk rotation and lateral stability.' } },
+    { id: "shoulders", name: { ar: "الأكتاف كاملة", en: "Shoulders" }, groupId: "shoulders", description: { ar: 'المجموعة الكاملة لعضلات الكتف (الأمامي، الجانبي، الخلفي).', en: 'The complete deltoid muscle complex comprising anterior, lateral, and posterior heads.' } }
   ];
 })();

@@ -606,9 +606,11 @@
         const exerciseId = exerciseIds[label];
         const sets = Number((setsText.match(/\d+/) || [0])[0]);
         if (exerciseId) return { type: 'exercise', exerciseId, label: { ar: arabicLabel, en: label }, sets, reps: null };
-        return { type: 'muscle-focus', muscleId: focusIds[label] || null, label: { ar: arabicLabel, en: label }, sets, reps: null, reviewStatus: 'pending' };
+        return { type: 'muscle-focus', muscleId: focusIds[label] || null, label: { ar: arabicLabel, en: label }, sets, reps: null };
       })
     }));
   });
   window.ValhanPlans = plans;
+  // Stable public alias used by cross-content relations and future features.
+  window.ValhanWorkoutPlans = plans;
 })();

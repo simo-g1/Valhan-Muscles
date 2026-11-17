@@ -177,13 +177,10 @@ window.ValhanArticles = {
   ]
 };
 
-// Metadata is intentionally pending until the coach confirms authorship, review and sources.
+// Optional article metadata. Real author and sources are kept when provided; nothing is invented.
 window.ValhanArticles.list.forEach(article => {
   article.id = article.id || article.slug;
   article.author = article.author || null;
-  article.reviewer = article.reviewer || null;
-  article.reviewDate = article.reviewDate || null;
   article.sources = Array.isArray(article.sources) ? article.sources : [];
-  article.reviewStatus = article.reviewStatus || 'pending';
-  article.difficulty = article.difficulty || 'unrated';
+  article.difficulty = !article.difficulty || article.difficulty === 'unrated' ? 'unspecified' : article.difficulty;
 });

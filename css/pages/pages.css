@@ -1768,13 +1768,12 @@ body.light {
 .anatomy-person[hidden]{display:none}
 .anatomy-legend{display:flex;justify-content:space-evenly;gap:12px;flex-wrap:wrap;margin:10px 4px 0;padding:13px 8px;border:1px solid var(--line);border-radius:12px;background:var(--card2)}
 .anatomy-legend span{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.78rem}
-.anatomy-legend i{width:13px;height:13px;border-radius:4px;background:#ff922e;display:inline-block}.anatomy-legend .legend-neutral{background:#7d89a3}.anatomy-legend .legend-pending{background:transparent;border:2px dashed var(--muted)}
+.anatomy-legend i{width:13px;height:13px;border-radius:4px;background:#ff922e;display:inline-block}.anatomy-legend .legend-neutral{background:#7d89a3}
 .anatomy-disclaimer{max-width:none;margin:10px 4px 0;padding:11px 14px;border:1px solid var(--line);border-radius:11px;background:var(--surface);color:var(--muted);font-size:.76rem;line-height:1.8;text-align:center}
 .anatomy-panel{min-width:0}
 .anatomy-panel h2{margin:8px 0 10px;font-size:1.35rem}
 .anatomy-panel>p{font-size:.88rem;line-height:1.8}
 .anatomy-selected-meta{margin:10px 0}
-.anatomy-review-badge{display:inline-flex;padding:5px 10px;border-radius:99px;background:#ff922e18;color:#ff9b42;font-size:.72rem}
 .anatomy-muscle-list{display:grid;grid-template-columns:1fr;gap:7px;margin-top:15px}
 .anatomy-muscle-option{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card2);color:var(--text);text-align:start;cursor:pointer}
 .anatomy-muscle-option[aria-pressed="true"]{border-color:#ff922e;background:#ff922e16;color:#ffad56}
@@ -1792,3 +1791,44 @@ body.light {
 @media(max-width:1180px){.anatomy-section .anatomy-layout{grid-template-columns:185px minmax(360px,1fr)}.anatomy-panel{grid-column:1/-1}.anatomy-panel .anatomy-muscle-list{grid-template-columns:repeat(3,minmax(0,1fr))}.anatomy-exercise-list{grid-template-columns:repeat(2,minmax(0,1fr));max-height:none}}
 @media(max-width:760px){.anatomy-section .anatomy-layout{grid-template-columns:1fr;gap:14px}.anatomy-groups{position:static}.anatomy-group-list{grid-template-columns:repeat(3,minmax(0,1fr))}.anatomy-group-option{justify-content:center;flex-direction:column;gap:5px;text-align:center;font-size:.78rem}.anatomy-group-dot{display:none}.anatomy-side-note{margin-top:12px}.anatomy-panel{grid-column:auto}.anatomy-panel .anatomy-muscle-list{grid-template-columns:repeat(2,minmax(0,1fr))}.anatomy-stage-head{align-items:flex-start;flex-direction:column}.anatomy-figure-pair{min-width:560px}.anatomy-stage{overflow-x:auto}.anatomy-exercise-list{grid-template-columns:1fr}}
 @media(max-width:430px){.anatomy-group-list{grid-template-columns:repeat(2,minmax(0,1fr))}.anatomy-legend{justify-content:flex-start}.anatomy-panel .anatomy-muscle-list{grid-template-columns:1fr}}
+
+
+/* Saved content hub + exercise bookmarks */
+.header-saved-btn { position: relative; }
+.header-saved-btn .hub-count-badge {
+  position: absolute;
+  inset-block-start: -5px;
+  inset-inline-end: -5px;
+  min-width: 17px;
+  height: 17px;
+  padding-inline: 4px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--accent, #f08a32);
+  color: #111;
+  font-size: .68rem;
+  font-weight: 800;
+  line-height: 1;
+}
+.saved-hub-modal { z-index: 1200; }
+.saved-hub-box { max-height: min(86vh, 760px); overflow: auto; }
+.exercise-card { position: relative; }
+.exercise-card-link { display: block; color: inherit; text-decoration: none; }
+.exercise-card-bookmark {
+  position: absolute;
+  inset-block-start: 10px;
+  inset-inline-end: 10px;
+  z-index: 2;
+  background: var(--surface, #17191d);
+  border: 1px solid var(--line);
+  box-shadow: 0 3px 12px #0002;
+}
+.exercise-card-bookmark.is-saved,
+.bookmark-btn.is-saved { color: var(--accent, #f08a32); }
+.exercise-card-link:focus-visible,
+.bookmark-btn:focus-visible,
+.header-saved-btn:focus-visible {
+  outline: 2px solid var(--accent, #f08a32);
+  outline-offset: 3px;
+}
