@@ -1,1 +1,0 @@
-/* Training volume calculator intentionally removed from VALHAN navigation and pages. */

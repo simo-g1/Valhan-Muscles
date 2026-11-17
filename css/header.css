@@ -21,7 +21,12 @@
   gap: 10px;
   direction: ltr;
   font: 800 1.45rem var(--head);
-  letter-spacing: 1px
+  letter-spacing: 1px;
+  justify-content: flex-end;
+}
+
+html:lang(en) .brand {
+  justify-content: flex-start;
 }
 
 .brand img {

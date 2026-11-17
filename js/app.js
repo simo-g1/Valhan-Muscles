@@ -630,7 +630,7 @@
             <a class="card feature reveal" href="${root}/pages/workout-plans.html">
               <b>01</b>
               <h3>${t('جداول التدريب الشاملة', 'Comprehensive Plans')}</h3>
-              <p>${t('7 أنظمة متكاملة مبنية على الحجم التدريبي الموحد (88 مجموعة).', '7 unified systems based on verified weekly volume.')}</p>
+              <p>${t(' أنظمة متكاملة مبنية على الحجم التدريبي الموحد .', '7 unified systems based on verified weekly volume.')}</p>
             </a>
             <a class="card feature reveal" href="${root}/pages/workout-builder.html">
               <b>02</b>
