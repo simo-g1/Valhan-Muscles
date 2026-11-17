@@ -677,6 +677,10 @@ html:lang(ar) .hero {
   flex-shrink: 0;
 }
 
+body.light i.fa-brands.fa-github {
+  color: black !important;
+}
+
 .tech-card-title {
   font-size: 1.15rem;
   margin: 0;
