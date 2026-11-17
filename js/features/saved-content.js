@@ -9,7 +9,8 @@
 
   function readStore(key) {
     try {
-      return JSON.parse(localStorage.getItem(key) || '{}');
+      const parsed = JSON.parse(localStorage.getItem(key) || '{}');
+      return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
     } catch {
       return {};
     }
@@ -27,11 +28,19 @@
   }
 
   function toast(msg) {
-    const el = document.getElementById('toast');
-    if (!el) return;
+    let el = document.getElementById('toast');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'toast';
+      el.className = 'toast';
+      el.setAttribute('role', 'status');
+      el.setAttribute('aria-live', 'polite');
+      document.body.appendChild(el);
+    }
     el.textContent = msg;
     el.classList.add('show');
-    setTimeout(() => el.classList.remove('show'), 2400);
+    clearTimeout(el._savedToastTimer);
+    el._savedToastTimer = setTimeout(() => el.classList.remove('show'), 2400);
   }
 
   const SavedHub = {
@@ -43,6 +52,10 @@
       return Boolean(readStore(ARTICLES_KEY)[slug]);
     },
     toggleArticle(slug) {
+      if (typeof slug !== 'string' || !slug.trim()) {
+        toast(t('تعذر حفظ المقال: معرّف المقال غير صالح.', 'Could not save article: invalid article ID.'));
+        return false;
+      }
       const data = readStore(ARTICLES_KEY);
       let isNowSaved = false;
       if (data[slug]) { delete data[slug]; }
@@ -61,6 +74,10 @@
       return Boolean(readStore(EXERCISES_KEY)[id]);
     },
     toggleExercise(id) {
+      if (typeof id !== 'string' || !id.trim()) {
+        toast(t('تعذر حفظ التمرين: معرّف التمرين غير صالح.', 'Could not save exercise: invalid exercise ID.'));
+        return false;
+      }
       const data = readStore(EXERCISES_KEY);
       let isNowSaved = false;
       if (data[id]) { delete data[id]; }
@@ -300,6 +317,21 @@
     button.innerHTML = '<i class="fa-regular fa-bookmark" aria-hidden="true"></i>';
     actions.insertBefore(button, actions.firstChild);
   }
+
+  window.addEventListener('storage', event => {
+    if (event.key !== ARTICLES_KEY && event.key !== EXERCISES_KEY) return;
+    SavedHub.updateUI();
+    const modal = document.getElementById('saved-hub-modal');
+    if (modal?.classList.contains('open')) modal._renderSavedTab?.(modal.querySelector('.saved-tab.active')?.dataset.tab || 'articles');
+  });
+
+  window.addEventListener('valhan:saved-change', event => {
+    const key = event.detail?.key;
+    if (key !== ARTICLES_KEY && key !== EXERCISES_KEY) return;
+    SavedHub.updateUI();
+    const modal = document.getElementById('saved-hub-modal');
+    if (modal?.classList.contains('open')) modal._renderSavedTab?.(modal.querySelector('.saved-tab.active')?.dataset.tab || 'articles');
+  });
 
   document.addEventListener('DOMContentLoaded', () => {
     ensureHeaderButton();

@@ -1,64 +1,36 @@
 # VALHAN MUSCLES — Implementation Progress
-**Release candidate:** November 17, 2026
+**Updated:** November 17, 2026
 
-## Architecture
-- Browser-only application using semantic HTML, CSS, Vanilla JavaScript, and LocalStorage.
-- Arabic RTL / English LTR and dark/light themes remain supported by the existing shell.
-- Shared page integration is loaded on all 12 site pages.
-- Dashboard entry point: `pages/dashboard.html`.
-- New feature controller: `js/features/platform.js`.
+## Current baseline
+- Browser-only app: semantic HTML, CSS, Vanilla JavaScript, LocalStorage.
+- Arabic RTL / English LTR and dark/light themes are retained.
+- Existing anatomy artwork and mapping retained.
+- Existing Academy article content is preserved byte-for-byte against supplied `all.zip` baseline.
 
-## Completed scope
-### Foundation and existing systems
-- Updates 1–10 remain in the supplied project foundation.
-- Update 11 Related Content System: retained and stabilized; stable IDs connect exercises, muscles, equipment, plans, and articles.
-- Update 12 Saved Articles & Exercises: hardened, shared across all pages, write failures reported, UI refresh event added.
-- Anatomy visual and current muscle mapping retained. No silent replacement of the approved anatomy asset.
+## Implemented surfaces
+- Updates 1–10: supplied project foundation retained.
+- Update 11: related-content/data relation layer retained and stabilized in prior delivery.
+- Update 12: saved articles and exercises; latest pass adds identifier validation, accessible toast fallback, and same-tab/cross-tab UI refresh for an open drawer.
+- Update 13: dashboard layout and summary.
+- Update 14: recent activity for supported navigation/actions.
+- Update 15: versioned JSON export/import with allow-list and non-destructive merge flow.
+- Update 16: basic manual workout completion logging from selected builder-plan day.
+- Update 17: training history with session notes and deletion.
+- Update 18: current-month training calendar.
+- Update 19: progress summary from logged sessions/sets.
+- Update 20: personal notes with optional links to exercise/plan/day.
+- Update 21: side-by-side exercise comparison from available data.
+- Update 22: data-driven exercise suggestions; not asserted equivalent.
+- Update 23: timestamp-based rest countdown.
+- Update 24: persistent superset group definitions.
+- Update 25: bilingual SVG workout share card.
+- Update 26: equipment-to-exercise explorer using available normalized references.
+- Update 27: bilingual starter fitness glossary.
+- Update 28: introductory nutrition education; coach review pending.
+- Update 29: BMR/TDEE education only; no individualized calorie calculator or targets.
 
-### New platform features
-- Update 13 Dashboard Layout: complete initial dashboard.
-- Update 14 Recent Activity: supported navigation and platform actions.
-- Update 15 Export/Import JSON: schema-versioned allow-list, validation, explicit merge confirmation; unrelated keys are not cleared.
-- Update 16 Workout Completion: log a selected non-rest day from the saved builder plan.
-- Update 17 Training History: list, editable session notes, deletion.
-- Update 18 Workout Calendar: current-month calendar with logged session counts.
-- Update 19 Progress Dashboard: six-week logged-session consistency and aggregate logged working sets.
-- Update 20 Personal Notes: general or linked to exercise, plan, or builder day.
-- Update 21 Exercise Comparison: side-by-side available data.
-- Update 22 Exercise Alternatives: shared-primary-muscle suggestions, clearly not equivalence claims.
-- Update 23 Rest Timer: timestamp-based countdown; recalculates after background throttling.
-- Update 24 Superset Builder: persistent create/list/delete of exercise groups.
-- Update 25 Share Card: downloadable bilingual SVG plan summary.
-- Update 26 Equipment Explorer: equipment-to-exercise filtering using normalized IDs.
-- Update 27 Glossary: bilingual searchable starter glossary.
-- Update 28 Nutrition Education: general educational material added to Dashboard; existing Academy article content untouched.
-- Update 29 Energy Education: BMR/TDEE concepts only; no personal calorie calculator or target, especially for minors.
+## Deferred / partial items
+See `KNOWN_ISSUES.md`. In particular, full guided workout sessions, full workout timer, superset-to-builder integration, multi-month calendar navigation, saved muscles/equipment, and broader coach-reviewed educational content remain incomplete.
 
-## Data keys
-Existing keys preserved:
-- `valhan-lang`
-- `valhan-theme`
-- `valhan-builder-v3`
-- `valhan-builder-import`
-- `valhan-builder-backup`
-- `valhan-saved-articles-v1`
-- `valhan-reading-progress-v1`
-
-New keys:
-- `valhan-saved-exercises-v1`
-- `valhan-activity-v1`
-- `valhan-training-history-v1`
-- `valhan-personal-notes-v1`
-- `valhan-training-calendar-v1`
-- `valhan-supersets-v1`
-- `valhan-comparisons-v1` (reserved for future saved comparisons; comparison currently runs live)
-
-## Content and safety constraints
-- `js/articles-data.js` remains byte-for-byte identical to the supplied project source.
-- Do not remove or rewrite existing Academy content without coach review and owner approval.
-- Training Volume educational article remains; Training Volume Calculator is not reintroduced.
-- No review-status fields/badges or invented reviewer metadata are added.
-- No personalized calorie targets are generated. Energy feature is educational-only.
-
-## Release status
-All planned update surfaces are implemented at an initial integrated level. Static validation is complete; manual visual and interaction QA remains necessary before treating this as production-ready. See `TEST_REPORT.md` for exact checks and limitations.
+## Current delivery state
+This is a consolidated development build, not a production-certified release. Static validation can be run locally; browser interaction and visual QA remain outstanding. No claim of browser-console cleanliness is made.

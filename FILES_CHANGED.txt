@@ -1,10 +1,12 @@
-VALHAN MUSCLES — changed/new files compared with all.zip + assets.zip
-
-Total: 28 files (including this list)
+VALHAN MUSCLES — changed/new files compared with supplied all.zip + assets.zip baseline
 
 CHANGES.md
 COMMIT_MESSAGE.md
+FILES_CHANGED.txt
 IMPLEMENTATION_PROGRESS.md
+KNOWN_ISSUES.md
+PREVIOUS_COMMIT_MESSAGE.md
+README.txt
 TEST_REPORT.md
 assets/anatomy/LICENSE-RN-MIT.txt
 assets/anatomy/SOURCE.txt

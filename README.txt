@@ -1,19 +1,9 @@
-VALHAN MUSCLES — Browser-only website
+VALHAN MUSCLES — Consolidated Development Build
 
-Open index.html directly in a modern browser. No backend or build step is required.
+This archive is a complete project tree assembled from the supplied all.zip + assets.zip baseline, overlaid with the current integrated development files.
 
-Structure:
-- pages/: workout plans, builder, exercise library, academy, about
-- css/: global, header, footer and page styles
-- js/: shared shell, storage, builder, exercise library and calculator stub (calculator page removed)
-- assets/images/exercises/: categorized WebP exercise/equipment visuals
+Installation: extract this archive into a clean folder. Do not merge into an existing working tree without first making a backup.
 
-Features:
-- Arabic/English toggle (saved in localStorage)
-- Dark/light theme toggle (saved in localStorage)
-- Six workout templates including requested PPL 5-day volume template
-- Builder with local saving, image exercise picker, notes, reordering and print-to-PDF export
-- Dynamic exercise detail pages using ?exercise=<id>, with instructional cues and YouTube tutorial search links
-- Responsive layout and reveal/movement animations
+Important: see IMPLEMENTATION_PROGRESS.md, KNOWN_ISSUES.md, and TEST_REPORT.md. This is not a production-certified release; several features remain partial and browser QA is outstanding.
 
-Note: Exercise images are illustrative equipment renders, not anatomical demonstrations. Video links open YouTube search results rather than embedding a specific creator's video.
+The previous platform implementation commit message is in PREVIOUS_COMMIT_MESSAGE.md. The latest saved-content hardening commit message is in COMMIT_MESSAGE.md.

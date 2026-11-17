@@ -1,48 +1,31 @@
 # VALHAN MUSCLES — Test Report
-**Date:** November 17, 2026
+**Updated:** November 17, 2026
 
-## Automated checks performed
+## Automated checks performed in this delivery
+- `node --check` on the updated `js/features/saved-content.js`: PASS.
+- Existing project-wide JavaScript syntax checks from the previous delivery: PASS at that time; must be rerun after any further edits.
+- Existing static local-reference and data-relation checks from the previous delivery: PASS at that time.
 
-| Check | Result | Notes |
-|---|---|---|
-| JavaScript syntax | PASS | Every `.js` file under `js/` passes `node --check`. |
-| Local HTML references | PASS | All local `src` and `href` references across 12 HTML pages resolve. |
-| Shared feature integration | PASS | `platform.js` and `saved-content.js` are included on all 12 pages. |
-| Dashboard assets | PASS | Dashboard HTML and platform stylesheet exist at referenced paths. |
-| Exercise records | PASS | 25 exercise records load. |
-| Muscle records | PASS | 19 muscle records load. |
-| Equipment records | PASS | 9 equipment records load. |
-| Workout plans | PASS | 8 plan records load. |
-| Exercise → muscle references | PASS | No primary/secondary muscle IDs missing from muscle data. |
-| Exercise → equipment references | PASS | No equipment IDs missing from equipment data. |
-| Plan → exercise references | PASS | No normalized plan exercise references missing from exercise data. |
-| Article content preservation | PASS | `js/articles-data.js` is byte-for-byte unchanged from supplied `all.zip`. |
-| Review-state remnants | PASS with note | No review workflow was reintroduced. Historical documentation may describe prior removal. |
-| Training Volume Calculator | PASS | Not present/reintroduced; educational article retained. |
+## Not verified in this delivery
+- Full browser end-to-end behavior.
+- Cross-tab storage behavior in a real browser.
+- Storage quota/private browsing failures.
+- Keyboard/screen-reader accessibility.
+- Mobile-device and cross-browser visual QA.
+- Coach review of nutrition, glossary, and exercise alternatives.
 
-## Browser / runtime checks
-- A local HTTP server returned HTTP 200 for `pages/dashboard.html`.
-- A headless Chromium dump attempt did not complete within the environment timeout; no browser console-clean claim is made.
-- No successful real-browser interaction test, visual regression, keyboard-only, screen-reader, mobile-device, or cross-browser test was completed in this environment.
+## Required manual QA
+1. Save an article on Academy, open Saved Content from Home, About, Anatomy, Exercises, Dashboard, and confirm it appears.
+2. Save/remove an exercise and confirm bookmark state and drawer update after reload and in a second tab.
+3. Keep Saved Content drawer open while changing saved items in another tab; confirm the drawer refreshes.
+4. Test storage disabled/full and verify the UI reports failure without showing a false success.
+5. Export/import JSON using a test browser profile; test valid, malformed, old-version, and large files.
+6. Log/edit/delete a workout session and verify history, calendar, and dashboard counts.
+7. Test timer start/pause/resume/reset and tab-background behavior.
+8. Test superset persistence and confirm the documented limitation that it does not yet insert into the builder.
+9. Verify Arabic/English, RTL/LTR, dark/light, keyboard navigation, and mobile layouts.
+10. Obtain coach review before treating educational material or exercise alternatives as authoritative.
 
-## Manual QA required before production
-1. Open Dashboard in Arabic and English; check RTL/LTR and mobile layout.
-2. Save and remove an article and exercise from their respective pages; verify the header count and saved drawer update on every page and after reload.
-3. Confirm browser storage failure behavior if storage is disabled/full.
-4. Export JSON, import into a test browser profile, and verify merge prompts and data preservation.
-5. Log a workout, edit a session note, delete a session, and verify calendar/progress update.
-6. Add/delete notes linked to a real exercise, plan, and builder day.
-7. Compare exercises and inspect alternatives; verify wording does not imply equivalence.
-8. Run the timer, switch tabs, return, pause, and reset.
-9. Save/delete a superset; create a bilingual SVG share card.
-10. Verify equipment explorer and glossary search.
-11. Have the coach review all fitness/nutrition educational wording and all exercise alternatives before publication.
-12. Re-check anatomy mapping and its license/provenance before commercial distribution.
-
-## Known limitations
-- All data is local to the current browser/device unless exported.
-- Supersets are saved as group definitions and are not automatically inserted into builder days.
-- Alternatives are data-driven suggestions based on shared primary muscles; not certified equivalents.
-- Progress reflects recorded sessions/sets only and does not infer physical outcomes.
-- Glossary and new nutrition education are starter content requiring coach review.
-- Energy section is education-only and intentionally has no personalized calorie calculation.
+## Additional checks for the current saved-content pass
+- `node --check` across all JavaScript files in the working project: PASS.
+- Local `src`/`href` references across the 12 HTML pages: PASS (0 missing references) after restoring the logo/profile assets required by the pages.

@@ -1,8 +1,7 @@
-feat(platform): add unified dashboard and training management tools
+fix(saved-content): improve validation and cross-page bookmark synchronization
 
-- add activity, workout history, calendar, and progress overview
-- add personal notes, safe JSON backup/restore, and exercise comparison
-- add alternatives, equipment explorer, superset groups, and resilient rest timer
-- add bilingual SVG workout share card and searchable fitness glossary
-- add age-safe nutrition and energy education
-- harden saved content and load shared platform features across all pages
+- validate article and exercise identifiers before changing saved state
+- create accessible toast feedback when a page has no toast host
+- refresh saved-content UI when LocalStorage changes in another tab
+- refresh an open saved-content drawer after same-tab or cross-tab changes
+- preserve existing saved-content storage keys and stored records
