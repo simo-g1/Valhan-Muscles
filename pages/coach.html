@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="../css/header.css">
   <link rel="stylesheet" href="../css/footer.css">
   <link rel="stylesheet" href="../css/pages/pages.css">
+  <link rel="stylesheet" href="../css/pages/coach-packages.css">
 </head>
 
 <body data-root=".." data-page="coach">
@@ -82,17 +83,8 @@
             الاستمرار وتحقيق نتائج حقيقية بعيدًا عن العشوائية.
           </p>
 
-          <!-- Prominently Visible Instagram Button in Hero -->
-          <div style="margin-top: 14px;">
-            <a class="social-btn btn-ig" href="https://www.instagram.com/_mohameddhatem1" target="_blank"
-              rel="noopener noreferrer"
-              style="padding: 13px 24px; font-size: 1rem; border-radius: 12px; display: inline-flex; align-items: center; gap: 10px;">
-              <i class="fa-brands fa-instagram" style="font-size: 1.3rem;"></i>
-              <span>تواصل عبر Instagram (@_mohameddhatem1)</span>
-              <i class="fa-solid fa-arrow-up-right-from-square"
-                style="font-size: .85rem; margin-inline-start: 4px;"></i>
-            </a>
-          </div>
+          <!-- Top contact area (WhatsApp + Instagram), rendered from js/data/coach-config.js -->
+          <div id="coach-contact-top" style="margin-top: 14px;"></div>
         </div>
       </div>
     </section>
@@ -120,6 +112,11 @@
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- Online Coaching Packages + contact block (rendered by js/features/coach-packages.js) -->
+    <section class="section" id="coach-packages" style="border-top: 1px solid var(--line);">
+      <div class="container" id="coach-packages-root"></div>
     </section>
 
     <!-- Coaching Philosophy Section -->
@@ -196,10 +193,11 @@
           <p>للاستفسارات الرياضية ومتابعة المحتوى التدريبي اليومي والنصائح العملية، يمكنك التواصل مباشرة عبر الحساب
             الرسمي على Instagram:</p>
 
-          <!-- Instagram Button in Contact Section -->
+          <!-- Instagram Button in Contact Section (href is set from js/data/coach-config.js) -->
           <div style="margin-bottom: 24px;">
-            <a class="social-btn btn-ig" href="https://www.instagram.com/_mohameddhatem1" target="_blank"
-              rel="noopener noreferrer" style="padding: 14px 28px; font-size: 1.05rem; display: inline-flex;">
+            <a class="social-btn btn-ig" href="https://www.instagram.com/_mohameddhatem1" data-coach-link="instagram"
+              target="_blank" rel="noopener noreferrer"
+              style="padding: 14px 28px; font-size: 1.05rem; display: inline-flex;">
               <i class="fa-brands fa-instagram" style="font-size: 1.4rem;"></i>
               <span>Instagram: @_mohameddhatem1</span>
               <i class="fa-solid fa-arrow-up-right-from-square"
@@ -272,6 +270,8 @@
   </footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="../js/main.js" defer></script>
+  <script src="../js/data/coach-config.js" defer></script>
+  <script src="../js/features/coach-packages.js" defer></script>
   <script src="../js/features/page-interactions.js" defer></script>
 </body>
 
