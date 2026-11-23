@@ -24,6 +24,7 @@
 
   let plan = null;
   let pickTarget = null;
+  const collapsedDays = new Set();
 
   const makeDay = n => ({ name: n, notes: '', exercises: [] });
 
@@ -227,21 +228,26 @@ ${dayHtml}
     const host = $('#builder-days');
     if (!host) return;
     host.innerHTML = plan.days.map((d, di) => `
-      <article class="day-card reveal is-visible${d.rest ? ' is-rest' : ''}" data-day="${di}">
+      <article class="day-card reveal is-visible${d.rest ? ' is-rest' : ''}${collapsedDays.has(d) ? ' is-collapsed' : ''}" data-day="${di}">
         <div class="day-head">
-          <h3>${esc(d.name)}${d.rest ? ' · ' + T('راحة', 'Rest') : ''}</h3>
+          <div class="day-title-wrap"><span class="day-index">${T('اليوم', 'DAY')} ${di + 1}</span><h3>${esc(d.name)}${d.rest ? ' · ' + T('راحة', 'Rest') : ''}</h3><small class="day-summary">${d.rest ? T('يوم استشفاء', 'Recovery day') : `${d.exercises.length} ${T('تمارين', 'exercises')}`}</small></div>
+          <div class="day-head-actions">
+            <button type="button" class="day-collapse-btn" data-action="toggle-day" aria-expanded="${!collapsedDays.has(d)}" aria-label="${collapsedDays.has(d) ? T('توسيع اليوم','Expand day') : T('تصغير اليوم','Collapse day')}">${collapsedDays.has(d) ? '⌄' : '⌃'}</button>
           <div class="reorder">
             <button type="button" data-action="up-day" ${di === 0 ? 'disabled' : ''} aria-label="${T('تحريك اليوم لأعلى', 'Move day up')}">↑</button>
             <button type="button" data-action="down-day" ${di === plan.days.length - 1 ? 'disabled' : ''} aria-label="${T('تحريك اليوم لأسفل', 'Move day down')}">↓</button>
             <button type="button" class="remove-btn" data-action="remove-day" ${plan.days.length === 1 ? 'disabled' : ''} aria-label="${T('حذف اليوم', 'Delete day')}">×</button>
           </div>
+          </div>
         </div>
+        <div class="day-content">
         <label class="field day-note">${T('اسم اليوم', 'Day name')}<input class="day-name" value="${esc(d.name)}"></label>
         <label class="field day-note">${T('ملاحظات اليوم', 'Day notes')}<textarea class="day-notes" rows="2">${esc(d.notes)}</textarea></label>
         ${d.rest
         ? `<p class="rest-note">${T('يوم راحة: لا توجد تمارين. يمكنك حذفه أو تحريكه.', 'Rest day: no exercises. You can move or delete it.')}</p>`
         : `${d.exercises.map((x, ei) => exercise(x, di, ei)).join('')}
              <button type="button" class="btn btn-outline" data-action="add-ex" style="margin-top:12px">＋ ${T('إضافة تمرين', 'Add exercise')}</button>`}
+        </div>
       </article>`).join('');
     $('#builder-name').value = plan.name;
     set(plan);
@@ -388,6 +394,7 @@ ${dayHtml}
     toast(T('تم تحميل الخطة المختارة في المنشئ.', 'Selected plan loaded into the builder.'));
   }
 
+
   function init() {
     if (document.body.dataset.page !== 'builder') return;
     plan = get();
@@ -430,6 +437,11 @@ ${dayHtml}
       sync();
       const di = +b.closest('.day-card').dataset.day, day = plan.days[di];
       const row = b.closest('.exercise-row'), ei = row ? +row.dataset.ex : -1, a = b.dataset.action;
+      if (a === 'toggle-day') {
+        if (collapsedDays.has(d)) collapsedDays.delete(di); else collapsedDays.add(di);
+        render();
+        return;
+      }
       if (a === 'add-ex') day.exercises.push({ id: '', name: '', sets: 3, reps: '8-12', warm: 1, warmReps: '10', notes: '' });
       if (a === 'remove-day' && plan.days.length > 1) plan.days.splice(di, 1);
       if (a === 'up-day' || a === 'down-day') move(plan.days, di, di + (a === 'up-day' ? -1 : 1));

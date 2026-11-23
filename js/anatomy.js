@@ -15,7 +15,7 @@
     { id: 'all', ar: 'الكل', en: 'All Muscles', icon: 'fa-solid fa-shapes', color: 'all', ids: muscles.map(m => m.id) },
     { id: 'chest', ar: 'الصدر', en: 'Chest', icon: 'fa-solid fa-heart-pulse', color: 'chest', ids: ['chest'] },
     { id: 'back', ar: 'الظهر', en: 'Back', icon: 'fa-solid fa-person', color: 'back', ids: ['traps', 'mid-back', 'lats', 'lower-back'] },
-    { id: 'shoulders', ar: 'الأكتاف', en: 'Shoulders', icon: 'fa-solid fa-dumbbell', color: 'shoulders', ids: ['front-delts', 'side-delts', 'rear-delts'] },
+    { id: 'shoulders', ar: 'الأكتاف', en: 'Shoulders', icon: 'fa-solid fa-dumbbell', color: 'shoulders', ids: ['shoulders', 'front-delts', 'side-delts', 'rear-delts'] },
     { id: 'arms', ar: 'الذراعين', en: 'Arms', icon: 'fa-solid fa-hand-fist', color: 'arms', ids: ['biceps', 'triceps', 'forearms'] },
     { id: 'legs', ar: 'الساقين والفخذ', en: 'Legs & Hips', icon: 'fa-solid fa-person-walking', color: 'legs', ids: ['quads', 'hamstrings', 'glutes', 'adductors', 'calves'] },
     { id: 'core', ar: 'البطن والجذع', en: 'Core & Abs', icon: 'fa-solid fa-shield-halved', color: 'core', ids: ['core', 'obliques'] }
@@ -124,6 +124,7 @@
     selectedMuscle = null;
     groupList.querySelectorAll('[data-group]').forEach(button => {
       button.classList.toggle('active', button.dataset.group === group.id);
+      button.setAttribute('aria-pressed', String(button.dataset.group === group.id));
     });
     title.textContent = lang() === 'ar' ? group.ar : group.en;
     description.textContent = t(
@@ -166,15 +167,15 @@
             )}</p>
           </div>
         </div>`;
-    } else if (id === 'side-delts') {
+    } else if (id === 'side-delts' || id === 'adductors' || id === 'shoulders') {
       metaHtml = `
         <div class="anatomy-note-box side-delts-notice">
           <i class="fa-solid fa-circle-exclamation"></i>
           <div>
-            <strong>${t('الكتف الجانبي (Side Delts):', 'Side Delts (Lateral Deltoid):')}</strong>
+            <strong>${t('ملاحظة حول العرض التشريحي:', 'Anatomy display note:')}</strong>
             <p>${t(
-              'الكتف الجانبي غير مخصص بمنطقة مستقلة في الرسم التوضيحي السطحي لمنع التداخل مع الكتف الأمامي والخلفي، والتمارين المستهدفة له مسجلة بدقة أدناه.',
-              'Side delts are not given a separate surface polygon to avoid visual distortion with front/rear delts; targeted exercises are accurately listed below.'
+              'بعض العضلات أو الرؤوس العضلية لا تملك منطقة مستقلة في الرسم الحالي؛ لذلك اخترها من القائمة لعرض بياناتها وتمارينها دون تغيير شكل الخريطة.',
+              'Some muscles or muscle heads do not have a dedicated polygon in the current illustration. Select them from the list to view their data and exercises without altering the map.'
             )}</p>
           </div>
         </div>`;
@@ -279,7 +280,7 @@
 
   // Build group buttons
   groupList.innerHTML = groups.map(group => `
-    <button type="button" class="anatomy-group-option ${group.color}" data-group="${group.id}">
+    <button type="button" class="anatomy-group-option ${group.color}" data-group="${group.id}" aria-pressed="false">
       <span class="anatomy-group-icon"><i class="${group.icon}" aria-hidden="true"></i></span>
       <span>${lang() === 'ar' ? group.ar : group.en}</span>
       <i class="fa-solid fa-circle anatomy-group-dot" aria-hidden="true"></i>

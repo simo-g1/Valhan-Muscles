@@ -1,7 +1,8 @@
-fix(saved-content): improve validation and cross-page bookmark synchronization
+feat: add consolidated VALHAN training dashboard and tools
 
-- validate article and exercise identifiers before changing saved state
-- create accessible toast feedback when a page has no toast host
-- refresh saved-content UI when LocalStorage changes in another tab
-- refresh an open saved-content drawer after same-tab or cross-tab changes
-- preserve existing saved-content storage keys and stored records
+- Add session logging, guided set tracking, history, calendar, progress, and activity
+- Add workout/rest timers, reusable supersets, and builder handoff
+- Add notes, comparison, alternatives, equipment explorer, and saved muscle/equipment items
+- Add glossary, nutrition education, adult-only BMR/TDEE estimates, and share cards
+- Add validated non-destructive JSON backup import/export
+- Link dashboard throughout the site and document remaining QA limitations

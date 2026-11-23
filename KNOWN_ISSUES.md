@@ -1,30 +1,24 @@
-# VALHAN MUSCLES — Known Issues & Deferred Work
+# VALHAN MUSCLES — Remaining QA & Product Limitations
 
-This file deliberately separates implemented surfaces from work that remains incomplete or requires manual verification.
-
-## Known implementation limitations
-- Workout completion is currently a manual log of a selected non-rest day from the saved builder plan; there is no guided live workout session with per-set completion, rest transitions, or exercise-by-exercise progression.
-- The timer is a rest countdown, not a full workout/session timer with interval programming or persistent session state.
-- Superset groups can be saved, listed, and deleted, but are not yet inserted into Workout Builder days or reflected in plan exports.
-- Calendar currently renders the current month; navigation across months is not implemented.
-- Activity tracking covers supported navigation and selected platform actions, not every user interaction.
-- Exercise alternatives are data-driven suggestions based on available shared primary-muscle/movement-pattern fields; they are not coach-certified substitutions.
-- Equipment Explorer depends on normalized equipment references already present in exercise data; incomplete mappings may produce empty results.
-- The glossary is a starter glossary, not a comprehensive reference.
-- Nutrition content is introductory and requires coach review before publication as authoritative fitness guidance.
-- Energy education explains BMR/TDEE concepts but does not calculate personal energy requirements or calorie targets. This is intentional for a teen-accessible product.
-- Saved content supports articles and exercises only; saving muscles/equipment was discussed but is not implemented as a distinct saved-item type.
-- JSON import uses a safe merge flow but needs manual testing with malformed, older-version, and large backup files.
+## Functional limitations
+- Guided workout mode currently tracks one exercise per run. A full multi-exercise session flow with automatic rest transitions remains future work.
+- Superset handoff inserts exercises into the first non-rest builder day with editable defaults; the builder/PDF does not yet visually preserve paired superset blocks.
+- Comparison and alternative suggestions depend on the available legacy muscle/equipment fields; incomplete data may yield limited results. Suggestions are not coach-certified substitutions.
+- Equipment Explorer only shows existing normalized/legacy mappings and does not infer missing equipment.
+- Recent activity records dashboard visits and supported session actions, not every click across the entire site.
+- Personal notes are currently standalone notes; direct entity linking to exercise/plan/day is not yet available.
+- Glossary and nutrition content are starter educational material and require coach review before publication as authoritative guidance.
+- Adult BMR/TDEE output uses Mifflin–St Jeor estimates and activity multipliers; it is not a medical measurement or prescription. The form enforces age 18+.
 
 ## Verification limitations
-- No completed real-browser end-to-end test was available in this run.
-- No confirmed screen-reader, keyboard-only, or physical mobile-device QA.
-- Storage quota/private-browsing failure behavior needs manual verification in target browsers.
-- Cross-tab storage synchronization was improved in code but needs manual browser verification.
-- Anatomy mapping provenance and license attribution should be reviewed before commercial distribution.
-- All educational content and exercise substitution wording should be reviewed by the coach.
+- JavaScript syntax and static link checks can be run locally; this does not replace full manual browser interaction testing.
+- Screen-reader, keyboard-only, and physical mobile-device QA remain outstanding.
+- Storage quota/private-browsing failure behavior requires manual verification in target browsers.
+- Cross-tab synchronization of all new data stores requires manual browser verification.
+- Anatomy artwork provenance/license attribution should be reviewed before commercial distribution.
 
-## Data and content safeguards
-- Existing Academy article data is preserved byte-for-byte relative to the supplied project baseline.
+## Preserved data safeguards
+- Academy article data is not modified by this release.
 - Existing Training Volume educational content remains; the removed Training Volume Calculator is not reintroduced.
-- Existing LocalStorage keys are preserved. New platform data remains browser/device-local unless exported.
+- Existing LocalStorage keys remain preserved; new data uses separate versioned keys.
+- JSON import uses an allow-list, schema version check, size limit, and non-destructive merge.
