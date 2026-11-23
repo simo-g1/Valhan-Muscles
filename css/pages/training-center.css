@@ -14,3 +14,9 @@
 .vc-plan-metrics{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
 .vc-plan-metrics span{padding:6px 9px;border:1px solid var(--line);border-radius:8px;color:var(--muted);font-size:.78rem}
 @media(max-width:560px){.vc-consistency-chart{gap:5px}.vc-consistency-week small{font-size:.62rem}.vc-consistency-track{width:min(30px,100%)}}
+
+.vc-layout { grid-template-columns:repeat(2,minmax(0,1fr)); align-items:stretch; }
+.vc-panel { min-width:0; width:100%; box-sizing:border-box; }
+.vc-wide { grid-column:1 / -1; }
+.vc-panel-head > * { min-width:0; }
+@media(max-width:800px){.vc-layout{grid-template-columns:minmax(0,1fr)}.vc-wide{grid-column:1}}

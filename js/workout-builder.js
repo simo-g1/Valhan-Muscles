@@ -228,11 +228,11 @@ ${dayHtml}
     const host = $('#builder-days');
     if (!host) return;
     host.innerHTML = plan.days.map((d, di) => `
-      <article class="day-card reveal is-visible${d.rest ? ' is-rest' : ''}${collapsedDays.has(d) ? ' is-collapsed' : ''}" data-day="${di}">
+      <article class="day-card reveal is-visible${d.rest ? ' is-rest' : ''}${collapsedDays.has(di) ? ' is-collapsed' : ''}" data-day="${di}">
         <div class="day-head">
           <div class="day-title-wrap"><span class="day-index">${T('اليوم', 'DAY')} ${di + 1}</span><h3>${esc(d.name)}${d.rest ? ' · ' + T('راحة', 'Rest') : ''}</h3><small class="day-summary">${d.rest ? T('يوم استشفاء', 'Recovery day') : `${d.exercises.length} ${T('تمارين', 'exercises')}`}</small></div>
           <div class="day-head-actions">
-            <button type="button" class="day-collapse-btn" data-action="toggle-day" aria-expanded="${!collapsedDays.has(d)}" aria-label="${collapsedDays.has(d) ? T('توسيع اليوم','Expand day') : T('تصغير اليوم','Collapse day')}">${collapsedDays.has(d) ? '⌄' : '⌃'}</button>
+            <button type="button" class="day-collapse-btn" data-action="toggle-day" aria-expanded="${!collapsedDays.has(di)}" aria-label="${collapsedDays.has(di) ? T('توسيع اليوم','Expand day') : T('تصغير اليوم','Collapse day')}">${collapsedDays.has(di) ? '⌄' : '⌃'}</button>
           <div class="reorder">
             <button type="button" data-action="up-day" ${di === 0 ? 'disabled' : ''} aria-label="${T('تحريك اليوم لأعلى', 'Move day up')}">↑</button>
             <button type="button" data-action="down-day" ${di === plan.days.length - 1 ? 'disabled' : ''} aria-label="${T('تحريك اليوم لأسفل', 'Move day down')}">↓</button>
@@ -261,7 +261,7 @@ ${dayHtml}
         <div class="exercise-head">
           <div class="picked">${img ? `<img src="${img}" alt="">` : ''}<span>${esc(x.name || T('اختر تمرينًا', 'Choose exercise'))}${x.type === 'muscle-focus' ? `<small class="focus-type">${T('تركيز عضلي — ليس تمرينًا محددًا', 'Muscle focus — not a specific exercise')}</small>` : ''}</span></div>
           <div class="reorder">
-            <button type="button" data-action="pick" aria-label="${T('اختيار من المكتبة', 'Pick from library')}">▧</button>
+            <button type="button" data-action="pick" aria-label="${T('تغيير التمرين', 'Change exercise')}"><i class="fa-solid fa-dumbbell" aria-hidden="true"></i><span>${T('لو عايز تغير التمرين', 'Change exercise')}</span></button>
             <button type="button" data-action="up-ex" ${ei === 0 ? 'disabled' : ''} aria-label="${T('تحريك لأعلى', 'Move up')}">↑</button>
             <button type="button" data-action="down-ex" ${ei === n - 1 ? 'disabled' : ''} aria-label="${T('تحريك لأسفل', 'Move down')}">↓</button>
             <button type="button" class="remove-btn" data-action="remove-ex" aria-label="${T('حذف التمرين', 'Remove exercise')}">×</button>
@@ -438,7 +438,7 @@ ${dayHtml}
       const di = +b.closest('.day-card').dataset.day, day = plan.days[di];
       const row = b.closest('.exercise-row'), ei = row ? +row.dataset.ex : -1, a = b.dataset.action;
       if (a === 'toggle-day') {
-        if (collapsedDays.has(d)) collapsedDays.delete(di); else collapsedDays.add(di);
+        if (collapsedDays.has(di)) collapsedDays.delete(di); else collapsedDays.add(di);
         render();
         return;
       }

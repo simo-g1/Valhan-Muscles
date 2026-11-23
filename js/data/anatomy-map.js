@@ -131,7 +131,8 @@
   "view": "front",
   "source": "FRONT_DELTOIDS",
   "muscleIds": [
-   "front-delts"
+   "front-delts",
+   "side-delts"
   ],
   "precision": "exact",
   "points": "78.3673469 53.0612245 79.5918367 47.755102 79.1836735 41.2244898 75.9183673 37.9591837 71.0204082 36.3265306 72.244898 42.8571429 71.4285714 47.3469388"
@@ -141,7 +142,8 @@
   "view": "front",
   "source": "FRONT_DELTOIDS",
   "muscleIds": [
-   "front-delts"
+   "front-delts",
+   "side-delts"
   ],
   "precision": "exact",
   "points": "28.1632653 47.3469388 21.2244898 53.0612245 20 47.755102 20.4081633 40.8163265 24.4897959 37.1428571 28.5714286 37.1428571 26.9387755 43.2653061"
@@ -158,18 +160,18 @@
   "id": "front-abductors-1",
   "view": "front",
   "source": "ABDUCTORS",
-  "muscleIds": [],
-  "precision": "unmapped",
-  "note": "Library label says abductors but the polygon sits on the inner thigh. Not linked to adductors or abductors until the owner decides.",
+  "muscleIds": ["adductors"],
+  "precision": "partial",
+  "note": "Inner-thigh region represented as the adductor group.",
   "points": "52.6530612 110.204082 54.2857143 124.897959 60 110.204082 62.0408163 100 64.8979592 94.2857143 60 92.6530612 56.7346939 104.489796"
  },
  {
   "id": "front-abductors-2",
   "view": "front",
   "source": "ABDUCTORS",
-  "muscleIds": [],
-  "precision": "unmapped",
-  "note": "Library label says abductors but the polygon sits on the inner thigh. Not linked to adductors or abductors until the owner decides.",
+  "muscleIds": ["adductors"],
+  "precision": "partial",
+  "note": "Inner-thigh region represented as the adductor group.",
   "points": "47.755102 110.612245 44.8979592 125.306122 42.0408163 115.918367 40.4081633 113.061224 39.5918367 107.346939 37.9591837 102.44898 34.6938776 93.877551 39.5918367 92.244898 41.6326531 99.1836735 43.6734694 105.306122"
  },
  {
@@ -501,7 +503,8 @@
   "view": "back",
   "source": "GLUTEAL",
   "muscleIds": [
-   "glutes"
+   "glutes",
+   "abductors"
   ],
   "precision": "exact",
   "points": "44.6808511 99.5744681 30.212766 108.510638 29.787234 118.723404 31.4893617 125.957447 47.2340426 121.276596 49.3617021 114.893617"
@@ -511,7 +514,8 @@
   "view": "back",
   "source": "GLUTEAL",
   "muscleIds": [
-   "glutes"
+   "glutes",
+   "abductors"
   ],
   "precision": "exact",
   "points": "55.3191489 99.1489362 51.0638298 114.468085 52.3404255 120.851064 68.0851064 125.957447 69.787234 119.148936 69.3617021 108.510638"

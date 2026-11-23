@@ -2573,3 +2573,32 @@ body.light {
   .exercise-fields { grid-template-columns: repeat(2, minmax(0,1fr)); }
   .exercise-fields label:first-child { grid-column: 1 / -1; }
 }
+
+
+/* SVG anatomy zones are polygons, not paths */
+.anatomy-zones polygon.anatomy-zone { fill: #252b39; fill-opacity: .13; stroke: #46516a; stroke-width: 2.2; stroke-linejoin: round; cursor: pointer; transition: fill .2s ease, fill-opacity .2s ease, stroke .2s ease, filter .2s ease; }
+.anatomy-zones polygon.anatomy-zone:hover { fill: #ff922e; fill-opacity: .48; stroke: #ffad56; }
+.anatomy-zones polygon.anatomy-zone.is-selected { fill: #ff922e; fill-opacity: 1; stroke: #ffc078; stroke-width: 3; filter: drop-shadow(0 0 5px #ff922e88); }
+.anatomy-zones polygon.anatomy-zone.group-highlight { fill: #ff922e; fill-opacity: .35; stroke: #ffad56; }
+.anatomy-stage-grid { display:flex; justify-content:center; align-items:center; width:100%; }
+.anatomy-figure-box { width:min(100%, 340px); }
+.anatomy-figure-box[hidden] { display:none !important; }
+.anatomy-carousel { display:grid; grid-template-columns:36px minmax(0,1fr) 36px; align-items:center; gap:8px; }
+.anatomy-carousel-window { min-width:0; overflow:hidden; }
+.anatomy-carousel-track { display:flex; transition:transform .24s ease; direction:ltr; }
+.anatomy-carousel-slide { flex:0 0 100%; min-width:0; }
+.anatomy-carousel-slide .anatomy-exercise-card { height:100%; }
+.anatomy-carousel-arrow { width:34px; height:34px; border:1px solid var(--line); border-radius:9px; background:var(--card2); color:var(--text); cursor:pointer; transition:background .2s,border-color .2s,opacity .2s; }
+.anatomy-carousel-arrow:hover:not(:disabled) { background:var(--red); border-color:var(--red); color:#fff; }
+.anatomy-carousel-arrow:disabled { opacity:.3; cursor:not-allowed; }
+.anatomy-carousel-count { text-align:center; color:var(--muted); font-size:.75rem; margin:7px 0 0; }
+.day-collapse-btn { transition:transform .22s ease, background .22s ease; }
+.day-content,.day-summary { transition:opacity .2s ease; }
+
+.day-head-actions [data-action="pick"] { display:inline-flex; align-items:center; justify-content:center; gap:7px; }
+.day-head-actions [data-action="pick"] i { font-size:.95rem; }
+.day-head-actions [data-action="pick"] span { font-size:.78rem; }
+
+.exercise-head .reorder [data-action="pick"] { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding-inline:9px; white-space:nowrap; }
+.exercise-head .reorder [data-action="pick"] i { font-size:.9rem; }
+.exercise-head .reorder [data-action="pick"] span { font-size:.72rem; }

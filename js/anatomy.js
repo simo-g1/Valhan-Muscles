@@ -17,7 +17,7 @@
     { id: 'back', ar: 'الظهر', en: 'Back', icon: 'fa-solid fa-person', color: 'back', ids: ['traps', 'mid-back', 'lats', 'lower-back'] },
     { id: 'shoulders', ar: 'الأكتاف', en: 'Shoulders', icon: 'fa-solid fa-dumbbell', color: 'shoulders', ids: ['shoulders', 'front-delts', 'side-delts', 'rear-delts'] },
     { id: 'arms', ar: 'الذراعين', en: 'Arms', icon: 'fa-solid fa-hand-fist', color: 'arms', ids: ['biceps', 'triceps', 'forearms'] },
-    { id: 'legs', ar: 'الساقين والفخذ', en: 'Legs & Hips', icon: 'fa-solid fa-person-walking', color: 'legs', ids: ['quads', 'hamstrings', 'glutes', 'adductors', 'calves'] },
+    { id: 'legs', ar: 'الساقين والفخذ', en: 'Legs & Hips', icon: 'fa-solid fa-person-walking', color: 'legs', ids: ['quads', 'hamstrings', 'glutes', 'adductors', 'abductors', 'calves'] },
     { id: 'core', ar: 'البطن والجذع', en: 'Core & Abs', icon: 'fa-solid fa-shield-halved', color: 'core', ids: ['core', 'obliques'] }
   ];
 
@@ -32,7 +32,8 @@
 
   let activeGroup = 'all';
   let selectedMuscle = null;
-  let currentView = 'all';
+  let currentView = 'front';
+  let exercisePage = 0;
 
   // Render SVG Body Models (Candidate B Direction)
   function renderSvgFigures() {
@@ -87,8 +88,7 @@
 
     stage.innerHTML = `
       <div class="anatomy-stage-grid view-${currentView}">
-        ${buildFigure('front')}
-        ${buildFigure('back')}
+        ${buildFigure(currentView)}
       </div>`;
   }
 
@@ -97,13 +97,14 @@
   const clearSelection = () => {
     selectedMuscle = null;
     document.querySelectorAll('.anatomy-zone').forEach(zone => {
-      zone.classList.remove('is-selected');
+      zone.classList.remove('is-selected', 'group-highlight');
     });
     muscleList.querySelectorAll('[data-muscle]').forEach(button => {
       button.setAttribute('aria-pressed', 'false');
     });
     meta.innerHTML = '';
     count.textContent = '0';
+    exercisePage = 0;
     related.innerHTML = `<p class="muted">${t('اختر عضلة من القائمة أو من خريطة الجسم لعرض التمارين المرتبطة بها.', 'Choose a muscle from the list or body map to view related exercises.')}</p>`;
   };
 
@@ -146,7 +147,9 @@
     const muscle = muscles.find(item => item.id === id);
     if (!muscle) return;
 
+    const sameMuscle = selectedMuscle === id;
     selectedMuscle = id;
+    if (!sameMuscle) exercisePage = 0;
     title.textContent = nameOf(muscle);
     description.textContent = muscle.description?.[lang()] || muscle.description?.ar || t(
       'التمارين المرتبطة بهذه العضلة معروضة أدناه مع التمييز بين الاستهداف الأساسي والثانوي.',
@@ -167,15 +170,15 @@
             )}</p>
           </div>
         </div>`;
-    } else if (id === 'side-delts' || id === 'adductors' || id === 'shoulders') {
+    } else if (id === 'side-delts' || id === 'adductors' || id === 'abductors' || id === 'shoulders') {
       metaHtml = `
         <div class="anatomy-note-box side-delts-notice">
           <i class="fa-solid fa-circle-exclamation"></i>
           <div>
             <strong>${t('ملاحظة حول العرض التشريحي:', 'Anatomy display note:')}</strong>
             <p>${t(
-              'بعض العضلات أو الرؤوس العضلية لا تملك منطقة مستقلة في الرسم الحالي؛ لذلك اخترها من القائمة لعرض بياناتها وتمارينها دون تغيير شكل الخريطة.',
-              'Some muscles or muscle heads do not have a dedicated polygon in the current illustration. Select them from the list to view their data and exercises without altering the map.'
+              'بعض الرؤوس والمجموعات لا تملك حدودًا مستقلة في الرسم الحالي؛ يتم تمييز أقرب منطقة ممثلة لها مع إبقاء شكل الخريطة كما هو.',
+              'Some muscle heads and groups do not have dedicated boundaries in this illustration. Their closest represented region is highlighted without changing the map geometry.'
             )}</p>
           </div>
         </div>`;
@@ -192,15 +195,18 @@
     document.querySelectorAll('.anatomy-zone').forEach(zone => {
       const zoneMuscles = (zone.dataset.muscle || '').split(/\s+/).filter(Boolean);
       // Strictly prevent side-delts from lighting on front/rear delts, and vice versa (Rule 4)
-      const isMatch = zoneMuscles.includes(id);
+      const isMatch = zoneMuscles.includes(id) || (id === 'shoulders' && zoneMuscles.some(m => ['front-delts','side-delts','rear-delts'].includes(m))); 
       zone.classList.toggle('is-selected', isMatch);
       zone.classList.remove('group-highlight');
     });
 
     // Auto-view hint if target muscle is only on the opposite view
-    const matchingZones = [...document.querySelectorAll(`.anatomy-zone.is-selected`)];
-    if (matchingZones.length) {
-      const views = [...new Set(matchingZones.map(z => z.dataset.view))];
+    const matchingRegions = anatomyMap.regions.filter(region => {
+      const ids = region.muscleIds || [];
+      return ids.includes(id) || (id === 'shoulders' && ids.some(m => ['front-delts','side-delts','rear-delts'].includes(m)));
+    });
+    if (matchingRegions.length) {
+      const views = [...new Set(matchingRegions.map(region => region.view))];
       if (currentView !== 'all' && !views.includes(currentView)) {
         // Target muscle is on the other side
         const targetView = views[0];
@@ -217,12 +223,13 @@
     let secondaryEx = [];
 
     if (relations) {
-      const res = relations.getExercisesForMuscle(id);
+      const res = relations.getExercisesForMuscle(id === 'abductors' ? 'glutes' : id);
       primaryEx = res.primary;
       secondaryEx = res.secondary;
     } else {
-      primaryEx = exercises.filter(ex => (ex.primaryMuscles || []).includes(id));
-      secondaryEx = exercises.filter(ex => (ex.secondaryMuscles || []).includes(id));
+      const relationId = id === 'abductors' ? 'glutes' : id;
+      primaryEx = exercises.filter(ex => (ex.primaryMuscles || []).includes(relationId));
+      secondaryEx = exercises.filter(ex => (ex.secondaryMuscles || []).includes(relationId));
     }
 
     const totalCount = primaryEx.length + secondaryEx.length;
@@ -275,7 +282,15 @@
         </div>`;
     }
 
-    related.innerHTML = html;
+    const cards = [...primaryEx.map(e => renderCard(e, 'primary')), ...secondaryEx.map(e => renderCard(e, 'secondary'))];
+    exercisePage = Math.min(exercisePage, Math.max(0, cards.length - 1));
+    related.innerHTML = `
+      <div class="anatomy-carousel" aria-label="${t('التمارين المرتبطة','Related exercises')}">
+        <button type="button" class="anatomy-carousel-arrow" data-exercise-step="-1" aria-label="${t('التمرين السابق','Previous exercise')}" ${exercisePage === 0 ? 'disabled' : ''}><i class="fa-solid fa-chevron-right"></i></button>
+        <div class="anatomy-carousel-window"><div class="anatomy-carousel-track" style="transform:translateX(${-exercisePage * 100}%)">${cards.map((card, index) => `<div class="anatomy-carousel-slide" data-slide="${index}">${card}</div>`).join('')}</div></div>
+        <button type="button" class="anatomy-carousel-arrow" data-exercise-step="1" aria-label="${t('التمرين التالي','Next exercise')}" ${exercisePage >= cards.length - 1 ? 'disabled' : ''}><i class="fa-solid fa-chevron-left"></i></button>
+      </div>
+      <p class="anatomy-carousel-count">${exercisePage + 1} / ${cards.length}</p>`;
   };
 
   // Build group buttons
@@ -297,10 +312,17 @@
     if (button) selectMuscle(button.dataset.muscle);
   });
 
+  related.addEventListener('click', event => {
+    const button = event.target.closest('[data-exercise-step]');
+    if (!button || button.disabled) return;
+    exercisePage += Number(button.dataset.exerciseStep);
+    selectMuscle(selectedMuscle);
+  });
+
   // Body figure interaction
   stage?.addEventListener('click', event => {
     const zone = event.target.closest('.anatomy-zone.is-interactive');
-    if (!zone) return;
+    if (!zone) { clearSelection(); return; }
 
     const muscleIds = (zone.dataset.muscle || '').split(/\s+/).filter(Boolean);
     if (!muscleIds.length) return;
@@ -340,18 +362,14 @@
         tab.setAttribute('aria-pressed', String(active));
       });
 
-      const grid = stage.querySelector('.anatomy-stage-grid');
-      if (grid) {
-        grid.className = `anatomy-stage-grid view-${view}`;
+      renderSvgFigures();
+      if (selectedMuscle) {
+        const selected = selectedMuscle;
+        document.querySelectorAll('.anatomy-zone').forEach(zone => {
+          const ids = (zone.dataset.muscle || '').split(/\s+/).filter(Boolean);
+          zone.classList.toggle('is-selected', ids.includes(selected) || (selected === 'shoulders' && ids.some(id => ['front-delts','side-delts','rear-delts'].includes(id))));
+        });
       }
-
-      stage.querySelectorAll('[data-figure]').forEach(fig => {
-        if (view === 'all') {
-          fig.hidden = false;
-        } else {
-          fig.hidden = fig.dataset.figure !== view;
-        }
-      });
     });
   });
 

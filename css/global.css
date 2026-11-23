@@ -356,3 +356,11 @@ textarea:focus {
     transition-duration: .01ms !important
   }
 }
+
+/* Consistent navigation transitions and themed scrollbars */
+.site-header a, .main-nav a, nav a { transition: color .22s ease, background-color .22s ease, border-color .22s ease, opacity .22s ease; }
+:root { scrollbar-color: var(--red, #e10600) var(--surface, #171719); scrollbar-width: thin; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--surface, #171719); }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--muted, #777) 65%, var(--red, #e10600)); border: 2px solid var(--surface, #171719); border-radius: 20px; }
+::-webkit-scrollbar-thumb:hover { background: var(--red, #e10600); }
