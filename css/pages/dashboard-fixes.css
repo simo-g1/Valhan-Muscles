@@ -1,0 +1,130 @@
+/* ===== Calendar: days are buttons ===== */
+.vc-day {
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: background .2s ease, box-shadow .2s ease;
+}
+
+.vc-day.muted-day {
+  cursor: default;
+}
+
+button.vc-day:hover {
+  background: color-mix(in srgb, var(--red) 14%, var(--surface));
+}
+
+button.vc-day.has-session:hover {
+  background: color-mix(in srgb, var(--green) 36%, var(--surface));
+}
+
+.vc-day.is-today {
+  box-shadow: inset 0 0 0 1px var(--red2);
+}
+
+.vc-day.is-selected {
+  box-shadow: inset 0 0 0 2px var(--red2);
+  background: color-mix(in srgb, var(--red) 20%, var(--surface));
+  font-weight: 800;
+}
+
+.vc-day.has-session.is-selected {
+  background: color-mix(in srgb, var(--green) 36%, var(--surface));
+}
+
+/* ===== Selected day details ===== */
+.vc-day-detail {
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-inline-start: 4px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.vc-day-detail.is-done {
+  border-inline-start-color: var(--green);
+}
+
+.vc-day-detail.is-future {
+  border-inline-start-color: var(--muted);
+}
+
+.vc-day-detail.is-empty {
+  border-inline-start-color: var(--red);
+}
+
+.vc-day-detail-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.vc-day-detail.is-done .vc-pill {
+  background: color-mix(in srgb, var(--green) 22%, transparent);
+  color: var(--green);
+}
+
+.vc-day-totals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: .84rem;
+}
+
+.vc-day-totals b {
+  color: var(--text);
+}
+
+#calendar-grid [data-date]:focus-visible {
+  outline-offset: 1px;
+}
+
+/* ===== Progress summary: use the full width on larger screens ===== */
+.vc-progress-layout {
+  display: block;
+}
+
+@media (min-width: 801px) {
+  #progress-panel {
+    grid-column: 1 / -1;
+  }
+
+  #progress-panel .vc-progress-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1fr);
+    gap: 32px;
+    align-items: center;
+  }
+
+  #progress-panel .vc-consistency-chart {
+    gap: 18px;
+    min-height: 0;
+    margin: 0;
+  }
+
+  #progress-panel .vc-consistency-week {
+    height: 185px;
+  }
+
+  #progress-panel .vc-consistency-track {
+    height: 135px;
+    width: min(56px, 100%);
+  }
+
+  #progress-panel .vc-progress-stats {
+    padding-inline-start: 28px;
+    border-inline-start: 1px solid var(--line);
+  }
+
+  #progress-panel .vc-stat-row strong {
+    font-size: 1.5rem;
+  }
+}

@@ -39,10 +39,43 @@
 
   function renderActivity(){const list=read(KEYS.activity,[]).slice(0,8);$('#activity-list').innerHTML=list.length?list.map(x=>`<div class="vc-list-item"><div><strong>${safe(x.label||x.type)}</strong><p>${new Intl.DateTimeFormat(ar()?'ar-EG':'en-US',{dateStyle:'short',timeStyle:'short'}).format(new Date(x.at))}</p></div><span class="vc-pill">${safe(x.type)}</span></div>`).join(''):`<div class="vc-empty">${tr('لا يوجد نشاط مسجل بعد.','No recent activity yet.')}</div>`;}
 
-  // Calendar and real progress metrics
+  // Calendar (clickable days) and real progress metrics
   let calDate=new Date();
-  function renderCalendar(){const y=calDate.getFullYear(),m=calDate.getMonth(),first=new Date(y,m,1),last=new Date(y,m+1,0),offset=(first.getDay()+6)%7, days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];$('#cal-label').textContent=new Intl.DateTimeFormat(ar()?'ar-EG':'en-US',{month:'long',year:'numeric'}).format(calDate);const set=new Set(sessions().map(x=>x.date));let html=days.map((d)=>`<div class="vc-day-name">${ar()?['إث','ثلا','أر','خم','جم','سب','أح'][days.indexOf(d)]:d}</div>`).join('');for(let i=0;i<offset;i++)html+='<div class="vc-day muted-day"></div>';for(let n=1;n<=last.getDate();n++){const key=dateISO(new Date(y,m,n));html+=`<div class="vc-day ${set.has(key)?'has-session':''}" title="${set.has(key)?tr('جلسة مسجلة','Workout logged'):''}">${n}</div>`;}$('#calendar-grid').innerHTML=html;}
-  $('#cal-prev').addEventListener('click',()=>{calDate=new Date(calDate.getFullYear(),calDate.getMonth()-1,1);renderCalendar();});$('#cal-next').addEventListener('click',()=>{calDate=new Date(calDate.getFullYear(),calDate.getMonth()+1,1);renderCalendar();});
+  let selectedDay=null;
+  function renderCalendar(){
+    const y=calDate.getFullYear(),m=calDate.getMonth(),first=new Date(y,m,1),last=new Date(y,m+1,0),offset=(first.getDay()+6)%7, days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    $('#cal-label').textContent=new Intl.DateTimeFormat(ar()?'ar-EG':'en-US',{month:'long',year:'numeric'}).format(calDate);
+    const perDay=new Map();sessions().forEach(x=>perDay.set(x.date,(perDay.get(x.date)||0)+1));
+    const today=dateISO(new Date());
+    let html=days.map((d)=>`<div class="vc-day-name">${ar()?['إث','ثلا','أر','خم','جم','سب','أح'][days.indexOf(d)]:d}</div>`).join('');
+    for(let i=0;i<offset;i++)html+='<div class="vc-day muted-day"></div>';
+    for(let n=1;n<=last.getDate();n++){
+      const key=dateISO(new Date(y,m,n)),c=perDay.get(key)||0;
+      const label=`${fmtDate(key)} — ${c?tr(`${c} جلسة مسجلة`,`${c} session(s) logged`):tr('لا توجد جلسات','No sessions')}`;
+      html+=`<button type="button" class="vc-day${c?' has-session':''}${key===today?' is-today':''}${key===selectedDay?' is-selected':''}" data-date="${key}" aria-pressed="${key===selectedDay}" aria-label="${safe(label)}">${n}</button>`;
+    }
+    $('#calendar-grid').innerHTML=html;
+  }
+  function renderDayDetail(){
+    const host=$('#calendar-detail');if(!host)return;
+    if(!selectedDay){host.innerHTML=`<p class="vc-help muted">${tr('اضغط على أي يوم لعرض حالة التدريب والنشاط المسجل فيه.','Select a day to see its training status and logged activity.')}</p>`;return;}
+    const list=sessions().filter(x=>x.date===selectedDay).sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));
+    const today=dateISO(new Date());
+    let status,cls;
+    if(list.length){status=tr(`تم التدريب — ${list.length} جلسة مسجلة`,`Trained — ${list.length} session(s) logged`);cls='is-done';}
+    else if(selectedDay>today){status=tr('يوم قادم — لا يوجد تسجيل بعد','Upcoming day — nothing logged yet');cls='is-future';}
+    else{status=tr('لا توجد جلسة مسجلة في هذا اليوم','No session logged on this day');cls='is-empty';}
+    const mins=list.reduce((n,x)=>n+(Number(x.duration)||0),0),sets=list.reduce((n,x)=>n+(Number(x.sets)||0),0);
+    const time=x=>x.createdAt?new Intl.DateTimeFormat(ar()?'ar-EG':'en-US',{timeStyle:'short'}).format(new Date(x.createdAt)):'';
+    host.innerHTML=`<div class="vc-day-detail ${cls}"><div class="vc-day-detail-head"><strong>${fmtDate(selectedDay)}</strong><span class="vc-pill">${status}</span></div>`+
+      (list.length?`<div class="vc-day-totals"><span>${tr('المدة','Duration')}: <b>${mins} min</b></span><span>${tr('المجموعات','Sets')}: <b>${sets}</b></span></div><div class="vc-list">${list.map(x=>`<article class="vc-list-item"><div><strong>${safe(x.name)}</strong><p>${x.duration} min · ${x.sets} ${tr('مجموعة','sets')}${time(x)?` · ${tr('وقت التسجيل','Logged at')} ${time(x)}`:''}${x.notes?`<br>${safe(x.notes)}`:''}</p></div></article>`).join('')}</div>`:'')+`</div>`;
+  }
+  $('#cal-prev').addEventListener('click',()=>{calDate=new Date(calDate.getFullYear(),calDate.getMonth()-1,1);selectedDay=null;renderCalendar();renderDayDetail();});$('#cal-next').addEventListener('click',()=>{calDate=new Date(calDate.getFullYear(),calDate.getMonth()+1,1);selectedDay=null;renderCalendar();renderDayDetail();});
+  $('#calendar-grid').addEventListener('click',e=>{
+    const b=e.target.closest('[data-date]');if(!b)return;
+    selectedDay=b.dataset.date;renderCalendar();renderDayDetail();
+    $(`#calendar-grid [data-date="${selectedDay}"]`)?.focus();
+  });
   function renderProgress(){
     const list=sessions().sort((a,b)=>a.date.localeCompare(b.date));
     const buckets=[];
@@ -55,7 +88,7 @@
     }
     const max=Math.max(1,...buckets.map(x=>x.count));
     const sets=list.reduce((n,x)=>n+(+x.sets||0),0),mins=list.reduce((n,x)=>n+(+x.duration||0),0);
-    $('#progress-content').innerHTML=`<div class="vc-consistency-chart">${buckets.map(x=>`<div class="vc-consistency-week"><div class="vc-consistency-track"><span style="height:${Math.max(4,x.count/max*100)}%"></span></div><b>${x.count}</b><small>${x.label}</small></div>`).join('')}</div><div class="vc-stat-row"><span>${tr('إجمالي الجلسات المسجلة','Total logged sessions')}</span><strong>${list.length}</strong></div><div class="vc-stat-row"><span>${tr('إجمالي المجموعات المسجلة','Total logged sets')}</span><strong>${sets}</strong></div><div class="vc-stat-row"><span>${tr('إجمالي الساعات المسجلة','Total hours logged')}</span><strong>${(mins/60).toFixed(1)}</strong></div><p class="vc-help muted">${tr('يعرض المخطط الجلسات المسجلة خلال آخر 6 أسابيع فقط، ولا يستنتج تغيرًا عضليًا أو تقدمًا غير موجود في البيانات.','The chart shows logged sessions from the last 6 weeks only; it does not infer muscle changes or progress absent from the data.')}</p>`;
+    $('#progress-content').innerHTML=`<div class="vc-progress-layout"><div class="vc-progress-chart"><div class="vc-consistency-chart">${buckets.map(x=>`<div class="vc-consistency-week"><div class="vc-consistency-track"><span style="height:${Math.max(4,x.count/max*100)}%"></span></div><b>${x.count}</b><small>${x.label}</small></div>`).join('')}</div></div><div class="vc-progress-stats"><div class="vc-stat-row"><span>${tr('إجمالي الجلسات المسجلة','Total logged sessions')}</span><strong>${list.length}</strong></div><div class="vc-stat-row"><span>${tr('إجمالي المجموعات المسجلة','Total logged sets')}</span><strong>${sets}</strong></div><div class="vc-stat-row"><span>${tr('إجمالي الساعات المسجلة','Total hours logged')}</span><strong>${(mins/60).toFixed(1)}</strong></div></div></div><p class="vc-help muted">${tr('يعرض المخطط الجلسات المسجلة خلال آخر 6 أسابيع فقط، ولا يستنتج تغيرًا عضليًا أو تقدمًا غير موجود في البيانات.','The chart shows logged sessions from the last 6 weeks only; it does not infer muscle changes or progress absent from the data.')}</p>`;
   }
 
   function renderCurrentPlan(){
@@ -121,7 +154,7 @@
   // Shareable SVG workout card (text-only, no external image dependency)
   $('#share-card').addEventListener('click',()=>{const list=sessions().slice().sort((a,b)=>b.date.localeCompare(a.date)).slice(0,4);const lines=list.length?list.map((x,i)=>`<text x="600" y="${310+i*62}" text-anchor="middle" fill="#e9e9ec" font-size="27">${safe(x.name)} · ${safe(x.date)}</text>`).join(''):`<text x="600" y="330" text-anchor="middle" fill="#aaa" font-size="25">${tr('ابدأ بتسجيل أول جلسة تدريب','Log your first workout')}</text>`;const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675"><defs><linearGradient id="g"><stop stop-color="#171719"/><stop offset="1" stop-color="#351111"/></linearGradient></defs><rect width="1200" height="675" rx="36" fill="url(#g)"/><text x="600" y="135" text-anchor="middle" fill="#ff5149" font-family="Arial" font-size="30" font-weight="700">VALHAN MUSCLES</text><text x="600" y="220" text-anchor="middle" fill="white" font-family="Arial" font-size="54" font-weight="700">${tr('رحلة التدريب','TRAINING JOURNEY')}</text>${lines}<text x="600" y="610" text-anchor="middle" fill="#aaa" font-family="Arial" font-size="20">Build Your Strength. Master Your Fitness.</text></svg>`;download('valhan-training-card.svg','image/svg+xml',svg);});
   function download(name,type,content){const blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
-  function renderAll(){renderKPIs();renderHistory();renderCalendar();renderProgress();renderCurrentPlan();renderActivity();renderNotes();renderSaved();}
+  function renderAll(){renderKPIs();renderHistory();renderCalendar();renderDayDetail();renderProgress();renderCurrentPlan();renderActivity();renderNotes();renderSaved();}
   renderAll();renderEquipment();renderAlternatives();
   logActivity('visit','Training Dashboard');
 })();

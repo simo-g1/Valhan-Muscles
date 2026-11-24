@@ -1,0 +1,104 @@
+/* ===== Workout Builder: separated day cards ===== */
+#builder-days {
+  display: grid;
+  gap: 24px;
+}
+
+#builder-days > .day-card {
+  margin: 0;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-inline-start: 5px solid var(--red);
+  border-radius: 14px;
+  background: linear-gradient(145deg, var(--surface), var(--card));
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .2);
+}
+
+#builder-days > .day-card:nth-child(even) {
+  border-inline-start-color: color-mix(in srgb, var(--red) 50%, #8a8a92);
+  background: linear-gradient(145deg, var(--card), var(--surface));
+}
+
+#builder-days > .day-card.is-rest {
+  border-style: dashed;
+  border-inline-start-style: solid;
+}
+
+.day-index {
+  display: inline-block;
+  width: fit-content;
+  padding: 2px 10px;
+  border-radius: 99px;
+  background: color-mix(in srgb, var(--red) 16%, transparent);
+}
+
+.day-title-wrap h3 {
+  overflow-wrap: anywhere;
+}
+
+.day-head-actions {
+  flex: none;
+}
+
+/* ===== Collapse / expand button ===== */
+.day-collapse-btn {
+  display: grid;
+  place-items: center;      /* icon exactly in the middle */
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  line-height: 1;
+  font-size: 1rem;
+  border-radius: 10px;
+}
+
+.day-collapse-btn i {
+  display: block;
+  line-height: 1;
+  transition: transform .25s ease;
+}
+
+/* expanded -> arrow points up (collapse), collapsed -> arrow points down (expand) */
+.day-card:not(.is-collapsed) .day-collapse-btn i {
+  transform: rotate(180deg);
+}
+
+.day-card.is-collapsed .day-collapse-btn {
+  transform: none;
+}
+
+@media (pointer: coarse) {
+  .day-collapse-btn {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* ===== Smooth collapse (grid 1fr -> 0fr) ===== */
+.day-content {
+  display: grid;
+  grid-template-rows: 1fr;
+  padding-top: 14px;
+  transition: grid-template-rows .28s ease, padding-top .28s ease, opacity .22s ease;
+}
+
+.day-content-inner {
+  min-height: 0;
+  overflow: hidden;
+  padding: 3px;
+  margin: -3px;
+}
+
+.day-card.is-collapsed .day-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  padding-top: 0;
+  opacity: 0;
+  visibility: hidden;      /* keeps hidden inputs out of the tab order */
+  transition: grid-template-rows .28s ease, padding-top .28s ease, opacity .22s ease, visibility 0s linear .28s;
+}
+
+/* keep the exercise count visible while collapsed */
+.day-card.is-collapsed .day-summary {
+  display: block;
+}

@@ -24,9 +24,11 @@
 
   let plan = null;
   let pickTarget = null;
-  const collapsedDays = new Set();
+  const collapsedDays = new Set();   // holds day uids, so collapse state survives reordering/deleting days
 
-  const makeDay = n => ({ name: n, notes: '', exercises: [] });
+  const newUid = () => 'd' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  const makeDay = n => ({ uid: newUid(), name: n, notes: '', exercises: [] });
+  const ensureDayIds = () => plan.days.forEach(d => { if (!d.uid) d.uid = newUid(); });
 
   function blank(split = 'Upper / Lower — 4 Days') {
     const list = defaults[split] || defaults['Upper / Lower — 4 Days'];
@@ -224,31 +226,39 @@ ${dayHtml}
   window.ValhanPDF = printPlan;
 
   // ---- Rendering ---------------------------------------------------------
+  const collapseLabel = collapsed => collapsed ? T('توسيع اليوم', 'Expand day') : T('تصغير اليوم', 'Collapse day');
+
   function render() {
     const host = $('#builder-days');
     if (!host) return;
-    host.innerHTML = plan.days.map((d, di) => `
-      <article class="day-card reveal is-visible${d.rest ? ' is-rest' : ''}${collapsedDays.has(di) ? ' is-collapsed' : ''}" data-day="${di}">
+    ensureDayIds();
+    host.innerHTML = plan.days.map((d, di) => {
+      const collapsed = collapsedDays.has(d.uid);
+      return `
+      <article class="day-card reveal is-visible${d.rest ? ' is-rest' : ''}${collapsed ? ' is-collapsed' : ''}" data-day="${di}">
         <div class="day-head">
           <div class="day-title-wrap"><span class="day-index">${T('اليوم', 'DAY')} ${di + 1}</span><h3>${esc(d.name)}${d.rest ? ' · ' + T('راحة', 'Rest') : ''}</h3><small class="day-summary">${d.rest ? T('يوم استشفاء', 'Recovery day') : `${d.exercises.length} ${T('تمارين', 'exercises')}`}</small></div>
           <div class="day-head-actions">
-            <button type="button" class="day-collapse-btn" data-action="toggle-day" aria-expanded="${!collapsedDays.has(di)}" aria-label="${collapsedDays.has(di) ? T('توسيع اليوم','Expand day') : T('تصغير اليوم','Collapse day')}">${collapsedDays.has(di) ? '⌄' : '⌃'}</button>
-          <div class="reorder">
-            <button type="button" data-action="up-day" ${di === 0 ? 'disabled' : ''} aria-label="${T('تحريك اليوم لأعلى', 'Move day up')}">↑</button>
-            <button type="button" data-action="down-day" ${di === plan.days.length - 1 ? 'disabled' : ''} aria-label="${T('تحريك اليوم لأسفل', 'Move day down')}">↓</button>
-            <button type="button" class="remove-btn" data-action="remove-day" ${plan.days.length === 1 ? 'disabled' : ''} aria-label="${T('حذف اليوم', 'Delete day')}">×</button>
-          </div>
+            <button type="button" class="day-collapse-btn" data-action="toggle-day" aria-expanded="${!collapsed}" aria-controls="day-body-${di}" aria-label="${collapseLabel(collapsed)}"><i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>
+            <div class="reorder">
+              <button type="button" data-action="up-day" ${di === 0 ? 'disabled' : ''} aria-label="${T('تحريك اليوم لأعلى', 'Move day up')}">↑</button>
+              <button type="button" data-action="down-day" ${di === plan.days.length - 1 ? 'disabled' : ''} aria-label="${T('تحريك اليوم لأسفل', 'Move day down')}">↓</button>
+              <button type="button" class="remove-btn" data-action="remove-day" ${plan.days.length === 1 ? 'disabled' : ''} aria-label="${T('حذف اليوم', 'Delete day')}">×</button>
+            </div>
           </div>
         </div>
-        <div class="day-content">
-        <label class="field day-note">${T('اسم اليوم', 'Day name')}<input class="day-name" value="${esc(d.name)}"></label>
-        <label class="field day-note">${T('ملاحظات اليوم', 'Day notes')}<textarea class="day-notes" rows="2">${esc(d.notes)}</textarea></label>
-        ${d.rest
-        ? `<p class="rest-note">${T('يوم راحة: لا توجد تمارين. يمكنك حذفه أو تحريكه.', 'Rest day: no exercises. You can move or delete it.')}</p>`
-        : `${d.exercises.map((x, ei) => exercise(x, di, ei)).join('')}
-             <button type="button" class="btn btn-outline" data-action="add-ex" style="margin-top:12px">＋ ${T('إضافة تمرين', 'Add exercise')}</button>`}
+        <div class="day-content" id="day-body-${di}">
+          <div class="day-content-inner">
+            <label class="field day-note">${T('اسم اليوم', 'Day name')}<input class="day-name" value="${esc(d.name)}"></label>
+            <label class="field day-note">${T('ملاحظات اليوم', 'Day notes')}<textarea class="day-notes" rows="2">${esc(d.notes)}</textarea></label>
+            ${d.rest
+              ? `<p class="rest-note">${T('يوم راحة: لا توجد تمارين. يمكنك حذفه أو تحريكه.', 'Rest day: no exercises. You can move or delete it.')}</p>`
+              : `${d.exercises.map((x, ei) => exercise(x, di, ei)).join('')}
+                 <button type="button" class="btn btn-outline" data-action="add-ex" style="margin-top:12px">＋ ${T('إضافة تمرين', 'Add exercise')}</button>`}
+          </div>
         </div>
-      </article>`).join('');
+      </article>`;
+    }).join('');
     $('#builder-name').value = plan.name;
     set(plan);
   }
@@ -420,7 +430,7 @@ ${dayHtml}
       render();
     };
     $('#add-day').onclick = () => { sync(); plan.days.push(makeDay(T('يوم ', 'Day ') + (plan.days.length + 1))); render(); };
-    $('#add-rest').onclick = () => { sync(); plan.days.push({ name: T('راحة', 'Rest'), notes: '', rest: true, exercises: [] }); render(); };
+    $('#add-rest').onclick = () => { sync(); plan.days.push({ uid: newUid(), name: T('راحة', 'Rest'), notes: '', rest: true, exercises: [] }); render(); };
     $('#clear-plan').onclick = () => {
       if (confirm(T('هل ترغب في مسح جميع التمارين؟', 'Clear all exercises?'))) {
         plan.days.forEach(d => { d.exercises = []; });
@@ -438,8 +448,13 @@ ${dayHtml}
       const di = +b.closest('.day-card').dataset.day, day = plan.days[di];
       const row = b.closest('.exercise-row'), ei = row ? +row.dataset.ex : -1, a = b.dataset.action;
       if (a === 'toggle-day') {
-        if (collapsedDays.has(di)) collapsedDays.delete(di); else collapsedDays.add(di);
-        render();
+        // toggled in place (no re-render) so the CSS transition runs and focus stays on the button
+        const collapsed = !collapsedDays.has(day.uid);
+        if (collapsed) collapsedDays.add(day.uid); else collapsedDays.delete(day.uid);
+        const card = b.closest('.day-card');
+        card.classList.toggle('is-collapsed', collapsed);
+        b.setAttribute('aria-expanded', String(!collapsed));
+        b.setAttribute('aria-label', collapseLabel(collapsed));
         return;
       }
       if (a === 'add-ex') day.exercises.push({ id: '', name: '', sets: 3, reps: '8-12', warm: 1, warmReps: '10', notes: '' });

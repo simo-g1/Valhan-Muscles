@@ -1,0 +1,166 @@
+/* ===== Anatomy: remove the white focus/tap frame ===== */
+.anatomy-stage,
+.anatomy-stage-canvas,
+.anatomy-body-svg,
+.anatomy-zone {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.anatomy-stage-canvas,
+.anatomy-body-svg {
+  outline: none;
+}
+
+.anatomy-zones polygon.anatomy-zone {
+  outline: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.anatomy-zones polygon.anatomy-zone:focus {
+  outline: none;
+}
+
+/* keyboard users still get a clear (non-white) indicator */
+.anatomy-zones polygon.anatomy-zone:focus-visible {
+  outline: none;
+  stroke: #ffb35c;
+  stroke-width: 3.2;
+  filter: drop-shadow(0 0 4px #ff922eaa);
+}
+
+.anatomy-zones polygon.anatomy-zone.is-base,
+.anatomy-zones polygon.anatomy-zone.is-unmapped {
+  cursor: default;
+}
+
+/* ===== Related exercises: arrows instead of scrolling ===== */
+#anatomy-exercises.anatomy-exercise-list {
+  display: block;
+  max-height: none;
+  overflow: visible;
+}
+
+.anatomy-carousel-track {
+  direction: inherit;
+  will-change: transform;
+}
+
+.anatomy-carousel-window {
+  touch-action: pan-y;
+  border-radius: 12px;
+}
+
+.anatomy-carousel-slide {
+  padding: 2px;
+}
+
+.anatomy-carousel-arrow {
+  display: grid;
+  place-items: center;
+  padding: 0;
+  width: 38px;
+  height: 38px;
+}
+
+.anatomy-carousel-arrow i {
+  line-height: 1;
+  font-size: .9rem;
+}
+
+/* ===== Exercise card inside the carousel ===== */
+.anatomy-exercise-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card2);
+}
+
+.anatomy-exercise-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  color: var(--text);
+}
+
+.anatomy-ex-thumb {
+  flex: none;
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #303034, #151517);
+}
+
+.anatomy-ex-info {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.anatomy-ex-title {
+  font-weight: 800;
+  font-size: .92rem;
+  line-height: 1.4;
+}
+
+.anatomy-ex-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.anatomy-exercise-link:hover .anatomy-ex-title {
+  color: var(--red2);
+}
+
+.tag-sm {
+  padding: 2px 8px;
+  font-size: .7rem;
+}
+
+.tag-primary {
+  background: color-mix(in srgb, var(--red) 22%, transparent);
+  color: var(--red2);
+}
+
+.tag-secondary {
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.anatomy-exercise-card .bookmark-btn {
+  flex: none;
+}
+
+/* ===== Notes inside the details panel ===== */
+.anatomy-note-box {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin: 6px 0;
+  padding: 11px 13px;
+  border: 1px solid var(--line);
+  border-inline-start: 3px solid var(--red);
+  border-radius: 10px;
+  background: var(--card2);
+  font-size: .8rem;
+  line-height: 1.7;
+}
+
+.anatomy-note-box i {
+  margin-top: 4px;
+  color: var(--red2);
+}
+
+.anatomy-note-box p {
+  margin: 2px 0 0;
+  color: var(--muted);
+}
