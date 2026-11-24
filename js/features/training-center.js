@@ -70,7 +70,7 @@
     host.innerHTML=`<div class="vc-day-detail ${cls}"><div class="vc-day-detail-head"><strong>${fmtDate(selectedDay)}</strong><span class="vc-pill">${status}</span></div>`+
       (list.length?`<div class="vc-day-totals"><span>${tr('المدة','Duration')}: <b>${mins} min</b></span><span>${tr('المجموعات','Sets')}: <b>${sets}</b></span></div><div class="vc-list">${list.map(x=>`<article class="vc-list-item"><div><strong>${safe(x.name)}</strong><p>${x.duration} min · ${x.sets} ${tr('مجموعة','sets')}${time(x)?` · ${tr('وقت التسجيل','Logged at')} ${time(x)}`:''}${x.notes?`<br>${safe(x.notes)}`:''}</p></div></article>`).join('')}</div>`:'')+`</div>`;
   }
-  $('#cal-prev').addEventListener('click',()=>{calDate=new Date(calDate.getFullYear(),calDate.getMonth()-1,1);selectedDay=null;renderCalendar();renderDayDetail();});$('#cal-next').addEventListener('click',()=>{calDate=new Date(calDate.getFullYear(),calDate.getMonth()+1,1);selectedDay=null;renderCalendar();renderDayDetail();});
+  $('#cal-prev').addEventListener('click',()=>{calDate=new Date(calDate.getFullYear(),calDate.getMonth()-1,1);renderCalendar();});$('#cal-next').addEventListener('click',()=>{calDate=new Date(calDate.getFullYear(),calDate.getMonth()+1,1);renderCalendar();});
   $('#calendar-grid').addEventListener('click',e=>{
     const b=e.target.closest('[data-date]');if(!b)return;
     selectedDay=b.dataset.date;renderCalendar();renderDayDetail();
