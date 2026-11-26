@@ -1,332 +1,1061 @@
-[
-  {
-    "category": "additional-equipment",
-    "name": "Adjustable Bench",
-    "src": "additional-equipment/adjustable-bench.webp"
-  },
-  {
-    "category": "additional-equipment",
-    "name": "Aerobic Step",
-    "src": "additional-equipment/aerobic-step.webp"
-  },
-  {
-    "category": "additional-equipment",
-    "name": "Back Extension Bench",
-    "src": "additional-equipment/back-extension-bench.webp"
-  },
-  {
-    "category": "additional-equipment",
-    "name": "Barbell With Plates",
-    "src": "additional-equipment/barbell-with-plates.webp"
-  },
-  {
-    "category": "additional-equipment",
-    "name": "Bumper Plates",
-    "src": "additional-equipment/bumper-plates.webp"
-  },
-  {
-    "category": "additional-equipment",
-    "name": "Chest Press Machine",
-    "src": "additional-equipment/chest-press-machine.webp"
-  },
-  {
-    "category": "additional-equipment",
-    "name": "Dumbbells Pair",
-    "src": "additional-equipment/dumbbells-pair.webp"
-  },
-  {
-    "category": "additional-equipment",
-    "name": "Ez Curl Barbell",
-    "src": "additional-equipment/ez-curl-barbell.webp"
-  },
-  {
-    "category": "additional-equipment",
-    "name": "Hack Squat Machine",
-    "src": "additional-equipment/hack-squat-machine.webp"
-  },
-  {
-    "category": "additional-equipment",
-    "name": "Hex Dumbbells",
-    "src": "additional-equipment/hex-dumbbells.webp"
-  },
-  {
-    "category": "additional-equipment",
-    "name": "Hip Abductor Machine",
-    "src": "additional-equipment/hip-abductor-machine.webp"
-  },
-  {
-    "category": "additional-equipment",
-    "name": "Hip Adductor Machine",
-    "src": "additional-equipment/hip-adductor-machine.webp"
-  },
-  {
-    "category": "additional-equipment",
-    "name": "Incline Bench",
-    "src": "additional-equipment/incline-bench.webp"
-  },
-  {
-    "category": "additional-equipment",
-    "name": "Kettlebells",
-    "src": "additional-equipment/kettlebells.webp"
-  },
-  {
-    "category": "additional-equipment",
-    "name": "Leg Curl Machine",
-    "src": "additional-equipment/leg-curl-machine.webp"
-  },
-  {
-    "category": "additional-equipment",
-    "name": "Leg Extension Machine",
-    "src": "additional-equipment/leg-extension-machine.webp"
-  },
-  {
-    "category": "additional-equipment",
-    "name": "Pec Deck Machine",
-    "src": "additional-equipment/pec-deck-machine.webp"
-  },
-  {
-    "category": "additional-equipment",
-    "name": "Preacher Curl Machine",
-    "src": "additional-equipment/preacher-curl-machine.webp"
-  },
-  {
-    "category": "additional-equipment",
-    "name": "Seated Row Machine",
-    "src": "additional-equipment/seated-row-machine.webp"
-  },
-  {
-    "category": "additional-equipment",
-    "name": "Smith Machine",
-    "src": "additional-equipment/smith-machine.webp"
-  },
-  {
-    "category": "attachments-accessories",
-    "name": "Ankle Strap",
-    "src": "attachments-accessories/ankle-strap.webp"
-  },
-  {
-    "category": "attachments-accessories",
-    "name": "Cable Row Handle",
-    "src": "attachments-accessories/cable-row-handle.webp"
-  },
-  {
-    "category": "attachments-accessories",
-    "name": "D Handle",
-    "src": "attachments-accessories/d-handle.webp"
-  },
-  {
-    "category": "attachments-accessories",
-    "name": "Lat Pulldown Bar",
-    "src": "attachments-accessories/lat-pulldown-bar.webp"
-  },
-  {
-    "category": "attachments-accessories",
-    "name": "Straight Bar",
-    "src": "attachments-accessories/straight-bar.webp"
-  },
-  {
-    "category": "attachments-accessories",
-    "name": "Triceps Rope",
-    "src": "attachments-accessories/triceps-rope.webp"
-  },
-  {
-    "category": "attachments-accessories",
-    "name": "V Bar",
-    "src": "attachments-accessories/v-bar.webp"
-  },
-  {
-    "category": "benches-racks",
-    "name": "Aerobic Step",
-    "src": "benches-racks/aerobic-step.webp"
-  },
-  {
-    "category": "benches-racks",
-    "name": "Dip Station",
-    "src": "benches-racks/dip-station.webp"
-  },
-  {
-    "category": "benches-racks",
-    "name": "Medicine Ball",
-    "src": "benches-racks/medicine-ball.webp"
-  },
-  {
-    "category": "benches-racks",
-    "name": "Power Rack",
-    "src": "benches-racks/power-rack.webp"
-  },
-  {
-    "category": "benches-racks",
-    "name": "Preacher Curl Bench",
-    "src": "benches-racks/preacher-curl-bench.webp"
-  },
-  {
-    "category": "benches-racks",
-    "name": "Pull Up Station",
-    "src": "benches-racks/pull-up-station.webp"
-  },
-  {
-    "category": "benches-racks",
-    "name": "Resistance Bands",
-    "src": "benches-racks/resistance-bands.webp"
-  },
-  {
-    "category": "benches-racks",
-    "name": "Squat Rack",
-    "src": "benches-racks/squat-rack.webp"
-  },
-  {
-    "category": "cardio",
-    "name": "Elliptical Trainer",
-    "src": "cardio/elliptical-trainer.webp"
-  },
-  {
-    "category": "cardio",
-    "name": "Recumbent Bike",
-    "src": "cardio/recumbent-bike.webp"
-  },
-  {
-    "category": "cardio",
-    "name": "Rowing Ergometer",
-    "src": "cardio/rowing-ergometer.webp"
-  },
-  {
-    "category": "cardio",
-    "name": "Spin Bike",
-    "src": "cardio/spin-bike.webp"
-  },
-  {
-    "category": "cardio",
-    "name": "Stair Climber",
-    "src": "cardio/stair-climber.webp"
-  },
-  {
-    "category": "cardio",
-    "name": "Treadmill",
-    "src": "cardio/treadmill.webp"
-  },
-  {
-    "category": "cardio",
-    "name": "Upright Bike",
-    "src": "cardio/upright-bike.webp"
-  },
-  {
-    "category": "free-weights",
-    "name": "Adjustable Dumbbells",
-    "src": "free-weights/adjustable-dumbbells.webp"
-  },
-  {
-    "category": "free-weights",
-    "name": "Adjustable Incline Bench",
-    "src": "free-weights/adjustable-incline-bench.webp"
-  },
-  {
-    "category": "free-weights",
-    "name": "Decline Bench",
-    "src": "free-weights/decline-bench.webp"
-  },
-  {
-    "category": "free-weights",
-    "name": "Ez Curl Bar",
-    "src": "free-weights/ez-curl-bar.webp"
-  },
-  {
-    "category": "free-weights",
-    "name": "Flat Bench",
-    "src": "free-weights/flat-bench.webp"
-  },
-  {
-    "category": "free-weights",
-    "name": "Kettlebell",
-    "src": "free-weights/kettlebell.webp"
-  },
-  {
-    "category": "free-weights",
-    "name": "Olympic Barbell",
-    "src": "free-weights/olympic-barbell.webp"
-  },
-  {
-    "category": "free-weights",
-    "name": "Weight Plates",
-    "src": "free-weights/weight-plates.webp"
-  },
-  {
-    "category": "machines",
-    "name": "Assisted Pull Up",
-    "src": "machines/assisted-pull-up.webp"
-  },
-  {
-    "category": "machines",
-    "name": "Cable Crossover",
-    "src": "machines/cable-crossover.webp"
-  },
-  {
-    "category": "machines",
-    "name": "Chest Press",
-    "src": "machines/chest-press.webp"
-  },
-  {
-    "category": "machines",
-    "name": "Hack Squat",
-    "src": "machines/hack-squat.webp"
-  },
-  {
-    "category": "machines",
-    "name": "Hip Abductor",
-    "src": "machines/hip-abductor.webp"
-  },
-  {
-    "category": "machines",
-    "name": "Hip Adductor",
-    "src": "machines/hip-adductor.webp"
-  },
-  {
-    "category": "machines",
-    "name": "Lat Pulldown",
-    "src": "machines/lat-pulldown.webp"
-  },
-  {
-    "category": "machines",
-    "name": "Leg Extension",
-    "src": "machines/leg-extension.webp"
-  },
-  {
-    "category": "machines",
-    "name": "Leg Press",
-    "src": "machines/leg-press.webp"
-  },
-  {
-    "category": "machines",
-    "name": "Lying Leg Curl",
-    "src": "machines/lying-leg-curl.webp"
-  },
-  {
-    "category": "machines",
-    "name": "Pec Deck",
-    "src": "machines/pec-deck.webp"
-  },
-  {
-    "category": "machines",
-    "name": "Seated Leg Curl",
-    "src": "machines/seated-leg-curl.webp"
-  },
-  {
-    "category": "machines",
-    "name": "Seated Row",
-    "src": "machines/seated-row.webp"
-  },
-  {
-    "category": "machines",
-    "name": "Shoulder Press",
-    "src": "machines/shoulder-press.webp"
-  },
-  {
-    "category": "machines",
-    "name": "Smith Machine",
-    "src": "machines/smith-machine.webp"
-  },
-  {
-    "category": "machines",
-    "name": "Standing Calf Raise",
-    "src": "machines/standing-calf-raise.webp"
-  }
-]
+{
+  "name": "exercises",
+  "version": "2.0",
+  "image_count": 104,
+  "folders": [
+    "additional-equipment",
+    "attachments-accessories",
+    "benches-racks",
+    "cardio",
+    "free-weights",
+    "machines"
+  ],
+  "image_format": "WebP",
+  "image_dimensions": {
+    "width": 600,
+    "height": 600
+  },
+  "people_policy": "Any visible person is male, wearing a non-tight T-shirt and loose athletic trousers or track pants.",
+  "images": [
+    {
+      "id": "ab-wheel",
+      "file": "additional-equipment/ab-wheel.webp",
+      "category": "additional-equipment",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: ab wheel.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "barbell-collars",
+      "file": "additional-equipment/barbell-collars.webp",
+      "category": "additional-equipment",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: barbell collars.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "battle-ropes",
+      "file": "additional-equipment/battle-ropes.webp",
+      "category": "additional-equipment",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: battle ropes.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "dumbbell-pair",
+      "file": "additional-equipment/dumbbell-pair.webp",
+      "category": "additional-equipment",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: dumbbell pair.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "exercise-mat",
+      "file": "additional-equipment/exercise-mat.webp",
+      "category": "additional-equipment",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: exercise mat.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "foam-roller",
+      "file": "additional-equipment/foam-roller.webp",
+      "category": "additional-equipment",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: foam roller.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "kettlebell-pair",
+      "file": "additional-equipment/kettlebell-pair.webp",
+      "category": "additional-equipment",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: kettlebell pair.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "mini-resistance-bands",
+      "file": "additional-equipment/mini-resistance-bands.webp",
+      "category": "additional-equipment",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: mini resistance bands.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "plyometric-box",
+      "file": "additional-equipment/plyometric-box.webp",
+      "category": "additional-equipment",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: plyometric box.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "push-up-handles",
+      "file": "additional-equipment/push-up-handles.webp",
+      "category": "additional-equipment",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: push up handles.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "suspension-trainer",
+      "file": "additional-equipment/suspension-trainer.webp",
+      "category": "additional-equipment",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: suspension trainer.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "water-bottle",
+      "file": "additional-equipment/water-bottle.webp",
+      "category": "additional-equipment",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: water bottle.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "ankle-cuff",
+      "file": "attachments-accessories/ankle-cuff.webp",
+      "category": "attachments-accessories",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: ankle cuff.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "cable-cuff",
+      "file": "attachments-accessories/cable-cuff.webp",
+      "category": "attachments-accessories",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: cable cuff.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "close-grip-row-handle",
+      "file": "attachments-accessories/close-grip-row-handle.webp",
+      "category": "attachments-accessories",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: close grip row handle.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "curl-cable-bar",
+      "file": "attachments-accessories/curl-cable-bar.webp",
+      "category": "attachments-accessories",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: curl cable bar.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "double-d-handle",
+      "file": "attachments-accessories/double-d-handle.webp",
+      "category": "attachments-accessories",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: double d handle.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "lat-pulldown-bar",
+      "file": "attachments-accessories/lat-pulldown-bar.webp",
+      "category": "attachments-accessories",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: lat pulldown bar.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "rotating-handle",
+      "file": "attachments-accessories/rotating-handle.webp",
+      "category": "attachments-accessories",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: rotating handle.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "single-d-handle",
+      "file": "attachments-accessories/single-d-handle.webp",
+      "category": "attachments-accessories",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: single d handle.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "straight-cable-bar",
+      "file": "attachments-accessories/straight-cable-bar.webp",
+      "category": "attachments-accessories",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: straight cable bar.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "triceps-rope",
+      "file": "attachments-accessories/triceps-rope.webp",
+      "category": "attachments-accessories",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: triceps rope.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "v-bar-handle",
+      "file": "attachments-accessories/v-bar-handle.webp",
+      "category": "attachments-accessories",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: v bar handle.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "wide-row-handle",
+      "file": "attachments-accessories/wide-row-handle.webp",
+      "category": "attachments-accessories",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: wide row handle.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "adjustable-bench",
+      "file": "benches-racks/adjustable-bench.webp",
+      "category": "benches-racks",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: adjustable bench.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "decline-bench",
+      "file": "benches-racks/decline-bench.webp",
+      "category": "benches-racks",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: decline bench.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "dumbbell-rack",
+      "file": "benches-racks/dumbbell-rack.webp",
+      "category": "benches-racks",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: dumbbell rack.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "flat-bench",
+      "file": "benches-racks/flat-bench.webp",
+      "category": "benches-racks",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: flat bench.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "half-rack",
+      "file": "benches-racks/half-rack.webp",
+      "category": "benches-racks",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: half rack.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "incline-bench",
+      "file": "benches-racks/incline-bench.webp",
+      "category": "benches-racks",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: incline bench.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "olympic-bench",
+      "file": "benches-racks/olympic-bench.webp",
+      "category": "benches-racks",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: olympic bench.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "power-rack",
+      "file": "benches-racks/power-rack.webp",
+      "category": "benches-racks",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: power rack.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "preacher-bench",
+      "file": "benches-racks/preacher-bench.webp",
+      "category": "benches-racks",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: preacher bench.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "smith-rack",
+      "file": "benches-racks/smith-rack.webp",
+      "category": "benches-racks",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: smith rack.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "squat-rack",
+      "file": "benches-racks/squat-rack.webp",
+      "category": "benches-racks",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: squat rack.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "weight-plate-tree",
+      "file": "benches-racks/weight-plate-tree.webp",
+      "category": "benches-racks",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: weight plate tree.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "air-bike",
+      "file": "cardio/air-bike.webp",
+      "category": "cardio",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: air bike.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "cross-trainer",
+      "file": "cardio/cross-trainer.webp",
+      "category": "cardio",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: cross trainer.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "curved-treadmill",
+      "file": "cardio/curved-treadmill.webp",
+      "category": "cardio",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: curved treadmill.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "elliptical-trainer",
+      "file": "cardio/elliptical-trainer.webp",
+      "category": "cardio",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: elliptical trainer.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "recumbent-bike",
+      "file": "cardio/recumbent-bike.webp",
+      "category": "cardio",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: recumbent bike.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "rowing-ergometer",
+      "file": "cardio/rowing-ergometer.webp",
+      "category": "cardio",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: rowing ergometer.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "ski-erg",
+      "file": "cardio/ski-erg.webp",
+      "category": "cardio",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: ski erg.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "spin-bike",
+      "file": "cardio/spin-bike.webp",
+      "category": "cardio",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: spin bike.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "stair-climber",
+      "file": "cardio/stair-climber.webp",
+      "category": "cardio",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: stair climber.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "stepper",
+      "file": "cardio/stepper.webp",
+      "category": "cardio",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: stepper.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "treadmill",
+      "file": "cardio/treadmill.webp",
+      "category": "cardio",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: treadmill.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "upright-exercise-bike",
+      "file": "cardio/upright-exercise-bike.webp",
+      "category": "cardio",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: upright exercise bike.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "barbell-with-plates",
+      "file": "free-weights/barbell-with-plates.webp",
+      "category": "free-weights",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: barbell with plates.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "curl-bar",
+      "file": "free-weights/curl-bar.webp",
+      "category": "free-weights",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: curl bar.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "dumbbell-pair-metal",
+      "file": "free-weights/dumbbell-pair-metal.webp",
+      "category": "free-weights",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: dumbbell pair metal.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "dumbbell-rack-closeup",
+      "file": "free-weights/dumbbell-rack-closeup.webp",
+      "category": "free-weights",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: dumbbell rack closeup.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "ez-curl-bar",
+      "file": "free-weights/ez-curl-bar.webp",
+      "category": "free-weights",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: ez curl bar.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "fixed-dumbbell-set",
+      "file": "free-weights/fixed-dumbbell-set.webp",
+      "category": "free-weights",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: fixed dumbbell set.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "hex-dumbbells",
+      "file": "free-weights/hex-dumbbells.webp",
+      "category": "free-weights",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: hex dumbbells.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "kettlebell-pair-heavy",
+      "file": "free-weights/kettlebell-pair-heavy.webp",
+      "category": "free-weights",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: kettlebell pair heavy.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "kettlebell-set",
+      "file": "free-weights/kettlebell-set.webp",
+      "category": "free-weights",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: kettlebell set.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "olympic-barbell",
+      "file": "free-weights/olympic-barbell.webp",
+      "category": "free-weights",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: olympic barbell.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "weight-plates-stack",
+      "file": "free-weights/weight-plates-stack.webp",
+      "category": "free-weights",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: weight plates stack.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "weight-room-dumbbells",
+      "file": "free-weights/weight-room-dumbbells.webp",
+      "category": "free-weights",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: weight room dumbbells.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "45-degree-leg-press",
+      "file": "machines/45-degree-leg-press.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: 45 degree leg press.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "assisted-dip-machine",
+      "file": "machines/assisted-dip-machine.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: assisted dip machine.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "assisted-pull-up",
+      "file": "machines/assisted-pull-up.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: assisted pull up.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "back-extension-bench",
+      "file": "machines/back-extension-bench.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: back extension bench.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "back-extension",
+      "file": "machines/back-extension.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: back extension.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "cable-crossover-station",
+      "file": "machines/cable-crossover-station.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: cable crossover station.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "cable-crossover",
+      "file": "machines/cable-crossover.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: cable crossover.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "cable-station",
+      "file": "machines/cable-station.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: cable station.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "calf-raise",
+      "file": "machines/calf-raise.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: calf raise.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "chest-press-machine",
+      "file": "machines/chest-press-machine.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: chest press machine.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "chest-press",
+      "file": "machines/chest-press.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: chest press.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "dual-adjustable-pulley",
+      "file": "machines/dual-adjustable-pulley.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: dual adjustable pulley.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "glute-kickback-machine",
+      "file": "machines/glute-kickback-machine.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: glute kickback machine.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "hack-squat-machine",
+      "file": "machines/hack-squat-machine.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: hack squat machine.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "hack-squat",
+      "file": "machines/hack-squat.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: hack squat.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "hip-abductor-machine",
+      "file": "machines/hip-abductor-machine.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: hip abductor machine.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "hip-abductor",
+      "file": "machines/hip-abductor.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: hip abductor.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "hip-adductor",
+      "file": "machines/hip-adductor.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: hip adductor.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "incline-press-machine",
+      "file": "machines/incline-press-machine.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: incline press machine.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "lat-pulldown-station",
+      "file": "machines/lat-pulldown-station.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: lat pulldown station.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "lat-pulldown",
+      "file": "machines/lat-pulldown.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: lat pulldown.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "leg-extension-machine",
+      "file": "machines/leg-extension-machine.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: leg extension machine.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "leg-extension",
+      "file": "machines/leg-extension.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: leg extension.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "leg-press-machine-side",
+      "file": "machines/leg-press-machine-side.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: leg press machine side.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "leg-press",
+      "file": "machines/leg-press.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: leg press.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "lying-leg-curl",
+      "file": "machines/lying-leg-curl.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: lying leg curl.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "machine-chest-press",
+      "file": "machines/machine-chest-press.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: machine chest press.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "machine-preacher-curl",
+      "file": "machines/machine-preacher-curl.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: machine preacher curl.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "machine-shoulder-press",
+      "file": "machines/machine-shoulder-press.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: machine shoulder press.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "multi-gym-station",
+      "file": "machines/multi-gym-station.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: multi gym station.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "pec-deck-fly",
+      "file": "machines/pec-deck-fly.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: pec deck fly.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "pec-deck-machine",
+      "file": "machines/pec-deck-machine.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: pec deck machine.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "preacher-curl-machine",
+      "file": "machines/preacher-curl-machine.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: preacher curl machine.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "seated-cable-row",
+      "file": "machines/seated-cable-row.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: seated cable row.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "seated-leg-curl-machine",
+      "file": "machines/seated-leg-curl-machine.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: seated leg curl machine.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "seated-leg-extension",
+      "file": "machines/seated-leg-extension.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: seated leg extension.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "seated-row-machine",
+      "file": "machines/seated-row-machine.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: seated row machine.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "selectorized-chest-machine",
+      "file": "machines/selectorized-chest-machine.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: selectorized chest machine.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "shoulder-press",
+      "file": "machines/shoulder-press.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: shoulder press.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "smith-machine",
+      "file": "machines/smith-machine.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: smith machine.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "smith-squat",
+      "file": "machines/smith-squat.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: smith squat.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "standing-cable-station",
+      "file": "machines/standing-cable-station.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: standing cable station.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "standing-calf-machine",
+      "file": "machines/standing-calf-machine.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: standing calf machine.",
+      "source": "original_generated_image_crop"
+    },
+    {
+      "id": "vertical-knee-raise",
+      "file": "machines/vertical-knee-raise.webp",
+      "category": "machines",
+      "format": "webp",
+      "width": 600,
+      "height": 600,
+      "description": "AI-generated photorealistic gym image: vertical knee raise.",
+      "source": "original_generated_image_crop"
+    }
+  ]
+}

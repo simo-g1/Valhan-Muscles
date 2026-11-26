@@ -20,6 +20,7 @@
     { id: "calves", name: { ar: "السمانة", en: "Calves" }, groupId: "lower-body", description: { ar: 'عضلات الساق الخلفية (السمانة والنعلية) المسؤولة عن رفع الكعب وثبات الكاحل.', en: 'Gastrocnemius and soleus muscles responsible for ankle plantarflexion.' } },
     { id: "core", name: { ar: "عضلات الجذع والبطن", en: "Core & Abs" }, groupId: "core", description: { ar: 'عضلات البطن المستقيمة والعميقة المسؤولة عن ثبات الجذع وحماية العمود الفقري.', en: 'Rectus abdominis and deep core musculature responsible for trunk stability.' } },
     { id: "obliques", name: { ar: "عضلات البطن الجانبية", en: "Obliques" }, groupId: "core", description: { ar: 'عضلات البطن المائلة المسؤولة عن تدوير الجذع والثبات ضد الانحناء الجانبي.', en: 'Internal and external obliques responsible for trunk rotation and lateral stability.' } },
-    { id: "shoulders", name: { ar: "الأكتاف كاملة", en: "Shoulders" }, groupId: "shoulders", description: { ar: 'المجموعة الكاملة لعضلات الكتف (الأمامي، الجانبي، الخلفي).', en: 'The complete deltoid muscle complex comprising anterior, lateral, and posterior heads.' } }
+    { id: "shoulders", name: { ar: "الأكتاف كاملة", en: "Shoulders" }, groupId: "shoulders", description: { ar: 'المجموعة الكاملة لعضلات الكتف (الأمامي، الجانبي، الخلفي).', en: 'The complete deltoid muscle complex comprising anterior, lateral, and posterior heads.' } },
+    { id: "cardiovascular", name: { ar: "الجهاز القلبي الوعائي (الكارديو)", en: "Cardiovascular" }, groupId: "cardio", description: { ar: 'تمارين الكارديو لتحسين اللياقة القلبية والتنفسية وزيادة التحمل.', en: 'Cardiovascular exercises to improve heart and lung fitness and endurance.' } }
   ];
 })();

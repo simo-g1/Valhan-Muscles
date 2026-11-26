@@ -9,6 +9,7 @@
     { id: "dumbbells", name: { ar: "دمبلز", en: "Dumbbells" }, category: "free-weight", image: null },
     { id: "bench", name: { ar: "بنش", en: "Bench" }, category: "bench", image: null },
     { id: "barbell", name: { ar: "بار", en: "Barbell" }, category: "free-weight", image: null },
-    { id: "bodyweight", name: { ar: "وزن الجسم", en: "Bodyweight" }, category: "bodyweight", image: null }
+    { id: "bodyweight", name: { ar: "وزن الجسم", en: "Bodyweight" }, category: "bodyweight", image: null },
+    { id: "cardio", name: { ar: "أجهزة الكارديو", en: "Cardio Machine" }, category: "cardio", image: null }
   ];
 })();

@@ -1,6 +1,9 @@
 (() => {
   'use strict';
 
+  if (window.__valhanSavedHubLoaded) return;
+  window.__valhanSavedHubLoaded = true;
+
   const ARTICLES_KEY = 'valhan-saved-articles-v1';
   const EXERCISES_KEY = 'valhan-saved-exercises-v1';
 
@@ -150,9 +153,8 @@
           const savedData = SavedHub.getSavedArticles();
           const slugs = Object.keys(savedData);
           const allArticles = window.ValhanArticles?.list || [];
-          const list = slugs.map(slug => allArticles.find(a => a.slug === slug)).filter(Boolean);
 
-          if (!list.length) {
+          if (!slugs.length) {
             content.innerHTML = `
               <div class="saved-empty-state">
                 <i class="fa-regular fa-bookmark"></i>
@@ -165,30 +167,46 @@
 
           content.innerHTML = `
             <div class="saved-items-grid">
-              ${list.map(a => `
-                <div class="saved-item-card">
-                  <div class="saved-item-info">
-                    <span class="tag" style="margin-bottom:6px;">${a.min} ${t('دقائق قراءة', 'min read')}</span>
-                    <h4><a href="${root}/pages/article.html?a=${encodeURIComponent(a.slug)}">${lang() === 'ar' ? a.title[0] : a.title[1]}</a></h4>
-                    <p class="muted" style="font-size:.84rem; margin:4px 0 0;">${lang() === 'ar' ? a.intro[0] : a.intro[1]}</p>
-                  </div>
-                  <div class="saved-item-actions">
-                    <a class="btn btn-outline btn-sm" href="${root}/pages/article.html?a=${encodeURIComponent(a.slug)}">${t('قراءة', 'Read')}</a>
-                    <button class="icon-btn remove-saved-btn" data-remove-article="${a.slug}" title="${t('حذف من المحفوظات', 'Remove')}">
-                      <i class="fa-solid fa-trash-can"></i>
-                    </button>
-                  </div>
-                </div>
-              `).join('')}
+              ${slugs.map(slug => {
+                const a = allArticles.find(item => item.slug === slug);
+                if (!a) {
+                  return `
+                    <div class="saved-item-card">
+                      <div class="saved-item-info">
+                        <h4><a href="${root}/pages/article.html?a=${encodeURIComponent(slug)}">${slug}</a></h4>
+                        <p class="muted" style="font-size:.84rem; margin:4px 0 0;">${t('قد يكون هذا المقال غير متاح حاليًا.', 'This article may no longer be available.')}</p>
+                      </div>
+                      <div class="saved-item-actions">
+                        <a class="btn btn-outline btn-sm" href="${root}/pages/article.html?a=${encodeURIComponent(slug)}">${t('فتح', 'Open')}</a>
+                        <button class="icon-btn remove-saved-btn" data-remove-article="${slug}" title="${t('حذف من المحفوظات', 'Remove')}">
+                          <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                      </div>
+                    </div>`;
+                }
+                return `
+                  <div class="saved-item-card">
+                    <div class="saved-item-info">
+                      <span class="tag" style="margin-bottom:6px;">${a.min} ${t('دقائق قراءة', 'min read')}</span>
+                      <h4><a href="${root}/pages/article.html?a=${encodeURIComponent(a.slug)}">${lang() === 'ar' ? a.title[0] : a.title[1]}</a></h4>
+                      <p class="muted" style="font-size:.84rem; margin:4px 0 0;">${lang() === 'ar' ? a.intro[0] : a.intro[1]}</p>
+                    </div>
+                    <div class="saved-item-actions">
+                      <a class="btn btn-outline btn-sm" href="${root}/pages/article.html?a=${encodeURIComponent(a.slug)}">${t('قراءة', 'Read')}</a>
+                      <button class="icon-btn remove-saved-btn" data-remove-article="${a.slug}" title="${t('حذف من المحفوظات', 'Remove')}">
+                        <i class="fa-solid fa-trash-can"></i>
+                      </button>
+                    </div>
+                  </div>`;
+              }).join('')}
             </div>`;
         } else {
           // Exercises tab
           const savedData = SavedHub.getSavedExercises();
           const ids = Object.keys(savedData);
           const allExercises = window.ValhanExercises || [];
-          const list = ids.map(id => allExercises.find(e => e.id === id)).filter(Boolean);
 
-          if (!list.length) {
+          if (!ids.length) {
             content.innerHTML = `
               <div class="saved-empty-state">
                 <i class="fa-solid fa-dumbbell"></i>
@@ -201,15 +219,33 @@
 
           content.innerHTML = `
             <div class="saved-items-grid">
-              ${list.map(e => {
-                const img = window.ValhanExerciseImage ? window.ValhanExerciseImage(e.id) : '';
+              ${ids.map(id => {
+                const e = allExercises.find(item => item.id === id);
+                if (!e) {
+                  return `
+                    <div class="saved-item-card">
+                      <div class="saved-item-info">
+                        <h4><a href="${root}/pages/exercises.html?exercise=${encodeURIComponent(id)}">${id}</a></h4>
+                        <p class="muted" style="font-size:.84rem; margin:4px 0 0;">${t('قد يكون هذا التمرين غير متاح حاليًا.', 'This exercise may no longer be available.')}</p>
+                      </div>
+                      <div class="saved-item-actions">
+                        <a class="btn btn-outline btn-sm" href="${root}/pages/exercises.html?exercise=${encodeURIComponent(id)}">${t('فتح', 'Open')}</a>
+                        <button class="icon-btn remove-saved-btn" data-remove-exercise="${id}" title="${t('حذف من المحفوظات', 'Remove')}">
+                          <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                      </div>
+                    </div>`;
+                }
+                const img = window.ValhanExerciseImage
+                  ? window.ValhanExerciseImage(e.id)
+                  : (e.image ? `${root}/assets/images/exercises/${e.image}` : '');
                 const name = lang() === 'ar' ? (e.name?.ar || e.legacyName || e.name) : (e.name?.en || e.legacyName || e.name);
                 return `
                   <div class="saved-item-card">
                     <div style="display:flex; gap:12px; align-items:center;">
                       ${img ? `<img src="${img}" alt="${name}" style="width:54px; height:54px; border-radius:8px; object-fit:cover; background:#222;">` : ''}
                       <div class="saved-item-info">
-                        <h4><a href="${root}/pages/exercises.html?exercise=${e.id}">${name}</a></h4>
+                        <h4><a href="${root}/pages/exercises.html?exercise=${encodeURIComponent(e.id)}">${name}</a></h4>
                         <div style="display:flex; gap:6px; flex-wrap:wrap; margin-top:4px;">
                           <span class="tag">${e.muscle || e.legacy?.muscle || ''}</span>
                           <span class="tag">${e.equipment || e.legacy?.equipment || ''}</span>
@@ -217,7 +253,7 @@
                       </div>
                     </div>
                     <div class="saved-item-actions">
-                      <a class="btn btn-outline btn-sm" href="${root}/pages/exercises.html?exercise=${e.id}">${t('التفاصيل', 'Details')}</a>
+                      <a class="btn btn-outline btn-sm" href="${root}/pages/exercises.html?exercise=${encodeURIComponent(e.id)}">${t('التفاصيل', 'Details')}</a>
                       <button class="icon-btn remove-saved-btn" data-remove-exercise="${e.id}" title="${t('حذف من المحفوظات', 'Remove')}">
                         <i class="fa-solid fa-trash-can"></i>
                       </button>

@@ -2524,6 +2524,19 @@ body.light {
   color: var(--accent, #f08a32);
 }
 
+.exercise-bookmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 12px 0 16px;
+}
+
+.exercise-bookmark p {
+  margin: 0;
+  font-size: .92rem;
+  color: var(--muted);
+}
+
 .exercise-card-link:focus-visible,
 .bookmark-btn:focus-visible,
 .header-saved-btn:focus-visible {

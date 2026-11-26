@@ -30,6 +30,7 @@
 
   const detailFor = exercise => {
     const query = encodeURIComponent(`${exName(exercise)} exercise tutorial`);
+    const saved = window.ValhanSavedHub?.isExerciseSaved(exercise.id) || false;
     return `
       <section class="page-hero"><div class="container">
         <span class="eyebrow">EXERCISE GUIDE</span><h1>${exName(exercise)}</h1>
@@ -38,9 +39,12 @@
       <section class="section"><div class="container detail-layout">
         <img class="detail-image" src="${imageFor(exercise.id)}" alt="${exName(exercise)}">
         <div><span class="eyebrow">HOW TO PERFORM</span><h2>${exName(exercise)}</h2>
-          <button type="button" class="btn btn-outline bookmark-btn ${window.ValhanSavedHub?.isExerciseSaved(exercise.id) ? 'is-saved' : ''}" data-bookmark-exercise="${exercise.id}" aria-pressed="${window.ValhanSavedHub?.isExerciseSaved(exercise.id) || false}">
-            <i class="fa-${window.ValhanSavedHub?.isExerciseSaved(exercise.id) ? 'solid' : 'regular'} fa-bookmark" aria-hidden="true"></i> ${t('حفظ التمرين', 'Save exercise')}
-          </button>
+          <div class="exercise-bookmark">
+            <button type="button" class="btn btn-outline bookmark-btn ${saved ? 'is-saved' : ''}" data-bookmark-exercise="${exercise.id}" aria-pressed="${saved}" aria-label="${saved ? t('إزالة من المحفوظات', 'Remove bookmark') : t('حفظ التمرين', 'Save exercise')}">
+              <i class="fa-${saved ? 'solid' : 'regular'} fa-bookmark" aria-hidden="true"></i>
+            </button>
+            <p>${t('حفظ التمرين', 'Save Exercise')}</p>
+          </div>
           <p>${exercise.how}</p>
           <div class="badge-row"><span class="tag">${muscleName(exercise)}</span><span class="tag">${exercise.equipment}</span><span class="tag">${exercise.target}</span></div>
           <h3>${t('خطوات الأداء', 'Execution cues')}</h3>
@@ -88,6 +92,7 @@
         detail.hidden = false;
         detail.innerHTML = detailFor(exercise);
         document.title = `${exName(exercise)} | VALHAN MUSCLES`;
+        window.ValhanSavedHub?.updateUI();
         return;
       }
     }
