@@ -8,7 +8,26 @@
   const exName = ex => window.ValhanExerciseName?.(ex) || ex.legacyName || ex.name?.en || '';
   const muscleName = ex => ex.muscle;
 
-  const imageFor = id => `${root}/assets/images/exercises/${exercises.find(item => item.id === id)?.image || 'machines/chest-press.webp'}`;
+  const PLACEHOLDER_SVG = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">' +
+    '<rect width="600" height="600" fill="#141518"/>' +
+    '<rect x="24" y="24" width="552" height="552" rx="24" fill="none" stroke="#262830" stroke-width="2"/>' +
+    '<g fill="none" stroke="#e63946" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" opacity="0.85">' +
+    '<line x1="210" y1="300" x2="390" y2="300"/>' +
+    '<rect x="176" y="245" width="34" height="110" rx="8"/>' +
+    '<rect x="142" y="265" width="34" height="70" rx="6"/>' +
+    '<rect x="390" y="245" width="34" height="110" rx="8"/>' +
+    '<rect x="424" y="265" width="34" height="70" rx="6"/>' +
+    '</g>' +
+    '<text x="300" y="430" text-anchor="middle" fill="#9ca3af" font-family="sans-serif" font-size="22" font-weight="600">VALHAN MUSCLES</text>' +
+    '</svg>'
+  );
+
+  const imageFor = id => {
+    const img = exercises.find(item => item.id === id)?.image;
+    return img ? `${root}/assets/images/exercises/${img}` : PLACEHOLDER_SVG;
+  };
+  window.ValhanExercisePlaceholder = PLACEHOLDER_SVG;
   window.ValhanExerciseImage = imageFor;
   const cardFor = exercise => {
     const saved = window.ValhanSavedHub?.isExerciseSaved(exercise.id) || false;

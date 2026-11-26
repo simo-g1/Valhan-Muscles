@@ -238,7 +238,9 @@
                 }
                 const img = window.ValhanExerciseImage
                   ? window.ValhanExerciseImage(e.id)
-                  : (e.image ? `${root}/assets/images/exercises/${e.image}` : '');
+                  : (e.image
+                    ? `${root}/assets/images/exercises/${e.image}`
+                    : (window.ValhanExercisePlaceholder || 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600"><rect width="600" height="600" fill="#141518"/><g fill="none" stroke="#e63946" stroke-width="18" stroke-linecap="round"><line x1="210" y1="300" x2="390" y2="300"/><rect x="176" y="245" width="34" height="110" rx="8"/><rect x="390" y="245" width="34" height="110" rx="8"/></g></svg>')));
                 const name = lang() === 'ar' ? (e.name?.ar || e.legacyName || e.name) : (e.name?.en || e.legacyName || e.name);
                 return `
                   <div class="saved-item-card">
